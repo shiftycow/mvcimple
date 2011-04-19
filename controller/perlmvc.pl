@@ -11,7 +11,7 @@ $MODLES = { "ticket" => {
             password  => {type => "password" } }  
           };
 
-#This is the list of the default controllers
+#This is the list of the default controllers, more can be added
 $CONTROLLERS = {"add"=>'',"delete"=>''}; 
 
 
