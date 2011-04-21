@@ -1,8 +1,6 @@
 #!/usr/bin/perl
 #Code to generate web application 
-#
-# test comment
-#
+
 #This will be read by there one files eventually, perhaps even XML
 $MODLES = { "ticket" => { 
             firstName => {type => "name" },
@@ -13,7 +11,7 @@ $MODLES = { "ticket" => {
             password  => {type => "password" } }  
           };
 
-#This is the list of the default controllers
+#This is the list of the default controllers, more can be added
 $CONTROLLERS = {"add"=>'',"delete"=>''}; 
 
 
