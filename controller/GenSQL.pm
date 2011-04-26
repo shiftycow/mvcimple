@@ -21,14 +21,17 @@ sub generate_sql
     
     print "-- MVCimple SQL Generator --\n";
     
-    foreach($models)
+    foreach my $model_name keys($models)
     {
-        my $model = $_;
-        print "-- Generating SQL for '$model' table --\n";
+        print "-- Generating SQL for '$model_name' table --\n";
 
-        print "DROP TABLE IF EXISTS $model\n";
-        print "CREATE TABLE $model(\n";
+        print "DROP TABLE IF EXISTS $model_name\n";
+        print "CREATE TABLE $model_name(\n";
         
+        foreach my $column = keys ($models->{$model_name})
+        {
+            print "$column\n";
+        }
         print ")ENGINE = InnoDB\n";
     }#end model loop
 }#end generate sql
