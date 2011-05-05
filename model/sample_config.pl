@@ -70,7 +70,10 @@ GenSQL::generate_sql($models);
 ## A default set of controllers is generated from each model, but custom ones can be 
 ## added here and skeleton frameworks will be generated from it. 
 ##
+# Controllers from modelss will always start with the model name and be automatiaclly added to the controllers
+# Example userAdd,userDelete,listUser
 my $email_users = {"parameters" => ""};
+my $controllers = {"email_Users" => $email_users}
 
 ##
 ## [Views]
