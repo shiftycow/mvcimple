@@ -35,5 +35,3 @@ sub render {
     return $output;
 } #end render
 
-
-
