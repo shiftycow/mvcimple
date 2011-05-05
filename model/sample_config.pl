@@ -11,6 +11,10 @@ use strict;
 
 use XML::Dumper;
 
+# include local controllers for generation
+use lib "../controller";
+use GenSQL;
+
 ##
 ## [Models]
 ## 
@@ -51,7 +55,8 @@ my $user = {"fname" => {"type" => "string", "length" => 64},
 ## models need to be packed into this hash at the end
 my $models = {"item"=>$item, "user"=>$user};
 
-print XML::Dumper::pl2xml($models);
+#print XML::Dumper::pl2xml($models->{"user"}->{"email"});
+GenSQL::generate_sql($models);
 
 ## 
 ## [Controllers]
