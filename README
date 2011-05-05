@@ -1,0 +1,5 @@
+=pod
+=head1 MVCimple
+=head2 A simple model-view-controller framework generator for Perl
+
+=cut
