@@ -1,5 +1,18 @@
-<app_title>
-Inventory App
-</app_title>
+<?xml version="1.0"?>
+<app title="Inventory App">
+<model name="item">
+    <manufacturer_part_number type="string" length="64" />
+    <upc type="string" length="12" />
+    <vendor_part_number type="string" length="64" />
+    <property_tag type="string" length="64" />
+    <location type="string" length="128" />
+    <description type="string" length="256" />
+    <id type="number" length="12" primary_key="yes" />
+</model><!--end item-->
+
+<model name="user">
+</model>
+    
+</app>
 
 
