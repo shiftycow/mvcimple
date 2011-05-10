@@ -31,12 +31,14 @@ standard Perl distribution or be a quick CPAN/apt/yum installation away.
 
 =back
 
+In addition to Perl dependencies, MVCimple applications rely heavily on
+L<Jquery> and L<JqueryUI> for AJAX communication between the browser and
+the server. 
+
 =head3 App Configuration
 
-Sample Configur
-
 =head4 App
-Each configuration
+
 =head4 Model
 
 At the core of any application are the data I<models> that define what data
