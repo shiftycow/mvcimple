@@ -7,10 +7,38 @@
     <property_tag type="string" length="64" />
     <location type="string" length="128" />
     <description type="string" length="256" />
-    <id type="number" length="12" primary_key="yes" />
+    
+    <id>
+        <type>number</type>
+        <length>12</length>
+        <primary_key>yes</primary_key>
+    </id>
+    
+    <entered_by foreign_key_model="user" foreign_key_data="username" />
 </model><!--end item-->
 
 <model name="user">
+    <fname>
+        <type>string</type>
+        <length>64</length>
+    </fname>
+
+    <lname>
+        <type>string</type>
+        <length>64</length>
+    </lname>
+
+    <username>
+        <type>string</type>
+        <length>64</length>
+        <primary_key>yes</primary_key>
+    </username>
+
+    <password>
+        <type>password</type>
+        <hash_type>sha1</type>
+        <salt>16</salt>
+    </password>
 </model>
     
 </app>

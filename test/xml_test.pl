@@ -17,5 +17,6 @@ if($filename eq undef)
 }
 
 my $data = $xml->XMLin($filename);
-my $xml_output = XML::Dumper::pl2xml($data);
-print $xml_output;
+print Dumper($data);
+#my $xml_output = XML::Dumper::pl2xml($data);
+#print $xml_output;

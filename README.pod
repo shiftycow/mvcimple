@@ -1,4 +1,14 @@
-=head1 MVCimple
+=head1 Name
+MVCimple - A simple model-view-controller framework generator for Perl
 
-=head3 A simple model-view-controller framework generator for Perl
+=head3 Synopsis
 
+=head3 Description
+
+=head3 Dependencies
+L<XML::Simple>
+
+=head3 App Configuration
+
+=head4 Models
+At the core of any application are the data I<models>.
