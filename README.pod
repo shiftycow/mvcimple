@@ -33,6 +33,13 @@ standard Perl distribution or be a quick CPAN/apt/yum installation away.
 
 =head3 App Configuration
 
-=head4 Models
+Sample Configur
 
-At the core of any application are the data I<models> that define what data are stored and how they are related to one-another. MVCimple uses XML files to define data models and then automatically generates I<views> and C<Controllers> for them. 
+=head4 App
+Each configuration
+=head4 Model
+
+At the core of any application are the data I<models> that define what data
+are stored and how they are related to one-another. MVCimple uses XML files
+to define data models and then automatically generates I<views> and 
+C<Controllers> for them.
