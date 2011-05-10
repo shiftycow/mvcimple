@@ -24,8 +24,11 @@ of dependencies. The following dependencies should be either included in the
 standard Perl distribution or be a quick CPAN/apt/yum installation away.
 
 =over 4
+
 =item *L<XML::Simple>
+
 =item *L<CGI>
+
 =back
 
 =head3 App Configuration
