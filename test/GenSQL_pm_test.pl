@@ -8,9 +8,7 @@ This script provides testing functions for GenSQL.pm
 
 =cut
 
-use lib "../controllers";
+use lib "../controller";
 
 use GenSQL;
-
-
 

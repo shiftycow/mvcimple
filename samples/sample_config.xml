@@ -7,7 +7,9 @@
     <property_tag type="string" length="64" />
     <location type="string" length="128" />
     <description type="string" length="256" />
-    
+    <ip_address type="ip_address" />
+    <mac_address type="mac_address" />
+
     <id>
         <type>number</type>
         <length>12</length>
