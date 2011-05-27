@@ -17,6 +17,9 @@ mvcimple.pl --config-file <filename> [--app_path </path/to/app> --sql, --alter, 
 use Getopt::Long;
 
 #local includes
+#TODO: find the installed path of MVCimple
+use lib "../lib";
+use MVCimple::GenSQL;
 
 #get CLI options
 my $debug = 0;
