@@ -34,8 +34,8 @@ sub generate_sql
 DEBUG: foreach my $column (keys %$model)
         {
             #next DEBUG;
-            my $type = lc $model->{$column}->{"type"};
-            my $length = lc $model->{$column}->{"length"};
+            my $type = $model->{$column}->{"type"};
+            my $length = $model->{$column}->{"length"};
             
             #check for database constraints
             my $PRIMARY_KEY = lc $model->{$column}->{"PRIMARY_KEY"};
@@ -48,20 +48,18 @@ DEBUG: foreach my $column (keys %$model)
             if($FOREIGN_KEY)
             {
                 ($fk_model,$fk_column) = split(/\./,$FOREIGN_KEY);
-                $type = lc $models->{$fk_model}->{$fk_column}->{"type"};
-                $length = lc $models->{$fk_model}->{$fk_column}->{"length"};
+                $type = $models->{$fk_model}->{$fk_column}->{"type"};
+                $length = $models->{$fk_model}->{$fk_column}->{"length"};
             }
             
             #create an object representing the data model to use
-            my $model = {};
+            my $data_model = {};
             
             #TODO check available types
-            bless $model,"$type";
+            bless $data_model,"MVCimple::$type";
 
-            my $object = $model->new($length,$column);
+            my $object = $data_model->new($length,$column);
 
-            print "    $column";
-            
             print $object->to_sql();
 
             #define data type

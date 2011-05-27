@@ -26,7 +26,7 @@ sub new
 sub to_sql
 {
     my ($self) = @_;
-    return "varchar(".$self->{"length"}.")";
+    return $self->{"name"}." varchar(".$self->{"length"}.")";
 }#end to_sql
 
 # 
