@@ -21,8 +21,7 @@ sub generate_sql
 {
     my ($models,$method,$db) = @_;
     
-    print "-- MVCimple SQL Generator --\n";
-    
+    print "-- MVCimple SQL Generator --\n"; 
     foreach my $model_name (keys %$models)
     {
         print "-- Generating SQL for `$model_name` table --\n";

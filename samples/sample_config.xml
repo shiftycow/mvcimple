@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<app title="Inventory App" />
+<app title="Inventory App">
+
 <model name="item">
     <manufacturer_part_number type="string" length="64" />
     <upc type="string" length="12" />
@@ -38,7 +39,10 @@
 
     <password>
         <type>password</type>
-        <hash_type>sha1</type>
+        <hash_type>sha1</hash_type>
         <salt>16</salt>
     </password>
 </model>
+
+</app>
+
