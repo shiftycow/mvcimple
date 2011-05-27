@@ -3,13 +3,13 @@
 
 <model name="item">
     <manufacturer_part_number type="string" length="64" />
-    <upc type="string" length="12" />
-    <vendor_part_number type="string" length="64" />
-    <property_tag type="string" length="64" />
-    <location type="string" length="128" />
-    <description type="string" length="256" />
-    <ip_address type="ip_address" />
-    <mac_address type="mac_address" />
+    <upc type="String" length="12" />
+    <vendor_part_number type="String" length="64" />
+    <property_tag type="String" length="64" />
+    <location type="String" length="128" />
+    <description type="String" length="256" />
+    <ip_address type="IPAddress" />
+    <mac_address type="MACAddress" />
 
     <id>
         <type>number</type>

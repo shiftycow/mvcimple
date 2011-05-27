@@ -52,19 +52,21 @@ DEBUG: foreach my $column (keys %$model)
                 $length = lc $models->{$fk_model}->{$fk_column}->{"length"};
             }
             
-            #create an object representing this data element
+            #create an object representing the data model to use
             my $model = {};
             
             #TODO check available types
-            if($available
             bless $model,"$type";
 
+            my $object = $model->new($length,$column);
+
             print "    $column";
-             
+            
+            print $object->to_sql();
+
             #define data type
-            #TODO: use Type objects for this
-            print MVCimple::String::to_sql($length) if $type eq "string";
-            print MVCimple::Number::to_sql($length) if $type eq "number";            
+            #print MVCimple::String::to_sql($length) if $type eq "string";
+            #print MVCimple::Number::to_sql($length) if $type eq "number";            
         
             #output database constraints if specified
             print " PRIMARY KEY" if($PRIMARY_KEY);
