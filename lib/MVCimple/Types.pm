@@ -22,7 +22,7 @@ way to handle different data types passed around MVCimple-based applications
 #use IP;
 #use Password;
 use MVCimple::String;
-#use Number;
+use MVCimple::Number;
 
 #TODO: add some more!
 

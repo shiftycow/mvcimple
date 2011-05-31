@@ -11,9 +11,9 @@ package MVCimple::String;
 # returns: blessed reference to a new String object
 sub new
 {
-    my ($class,$length,$name) = @_;
+    my ($class,$name,$model) = @_;
 
-    my $self = {"length" => $length,
+    my $self = {"length" => $model->{length},
                 "name" => $name};
     bless $self;
     return $self;
