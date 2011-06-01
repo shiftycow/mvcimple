@@ -8,7 +8,7 @@ package MVCimple::Number;
 
 #
 # constructor
-# returns: blessed reference to a new String object
+# returns: blessed reference to a new Number object
 sub new
 {
     my ($class,$name,$model) = @_;
@@ -52,7 +52,7 @@ sub validate
 
 # 
 # to_input
-# returns: HTML code representing an <input> element for a String object
+# returns: HTML code representing an <input> element for a Number object
 #
 sub to_input
 {

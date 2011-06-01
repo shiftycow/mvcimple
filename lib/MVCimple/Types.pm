@@ -23,7 +23,8 @@ way to handle different data types passed around MVCimple-based applications
 #use Password;
 use MVCimple::String;
 use MVCimple::Number;
-
+use MVCimple::IP;
+use MVCimple::EMail;
 #TODO: add some more!
 
 print "foo\n";

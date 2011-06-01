@@ -34,4 +34,4 @@ sub render {
     close(FH);
     return $output;
 } #end render
-
+1;
