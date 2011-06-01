@@ -25,8 +25,5 @@ use MVCimple::String;
 use MVCimple::Number;
 use MVCimple::IP;
 use MVCimple::EMail;
-#TODO: add some more!
-
-print "foo\n";
 
 1;
