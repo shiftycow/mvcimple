@@ -25,5 +25,7 @@ use MVCimple::String;
 use MVCimple::Number;
 use MVCimple::IP;
 use MVCimple::EMail;
+use MVCimple::EtherMAC;
+use MVCimple::Password;
 
 1;

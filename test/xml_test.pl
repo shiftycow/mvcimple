@@ -7,7 +7,6 @@ use Getopt::Long;
 use Data::Dumper;
 
 my $filename = @ARGV[0];
-
 my $xml = new XML::Simple;
 
 #if($filename eq undef)
@@ -16,7 +15,7 @@ my $xml = new XML::Simple;
 #    exit 1;
 #}
 
-my $data = $xml->XMLin($filename,ForceArray=> qr/_employee$/ );
+my $data = $xml->XMLin($filename);
 
 #my $data = {};
 #$data->{"employee"} = [];
@@ -25,7 +24,7 @@ my $data = $xml->XMLin($filename,ForceArray=> qr/_employee$/ );
 
 print Dumper($data);
 
-print $xml->XMLout($data,NoAttr => 1);
+#print $xml->XMLout($data,NoAttr => 1);
 
 #my $xml_output = XML::Dumper::pl2xml($data);
 #print $xml_output;

@@ -2,43 +2,43 @@
 <app title="Inventory App">
 
 <model name="item">
-    <manufacturer_part_number type="string" length="64" />
+    <manufacturer_part_number type="String" length="64" />
     <upc type="String" length="12" />
     <vendor_part_number type="String" length="64" />
     <property_tag type="String" length="64" />
     <location type="String" length="128" />
     <description type="String" length="256" />
-    <ip_address type="IPAddress" />
-    <mac_address type="MACAddress" />
+    <ip_address type="IP" />
+    <mac_address type="EtherMAC" />
 
     <id>
-        <type>number</type>
-        <length>12</length>
+        <type>Number</type>
+        <scale>0</scale>
+        <precision>0</precision>
         <primary_key>yes</primary_key>
     </id>
-    
     <entered_by foreign_key_model="user" foreign_key_data="username" />
 </model><!--end item-->
 
 <model name="user">
     <fname>
-        <type>string</type>
+        <type>String</type>
         <length>64</length>
     </fname>
 
     <lname>
-        <type>string</type>
+        <type>String</type>
         <length>64</length>
     </lname>
 
     <username>
-        <type>string</type>
+        <type>String</type>
         <length>64</length>
         <primary_key>yes</primary_key>
     </username>
 
     <password>
-        <type>password</type>
+        <type>Password</type>
         <hash_type>sha1</hash_type>
         <salt>16</salt>
     </password>
