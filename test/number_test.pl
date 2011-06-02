@@ -12,5 +12,8 @@ my $number = new MVCimple::Number("mynum",{'length'=>9,'precision'=>16,'scale'=>
 
 print $number->to_sql()."\n";
 print $number->to_input()."\n";
-print "asfd is a valid number\n" if($number->validate('asdf'));
-print "5.5 is a valid number\n" if($number->validate(5.5));
+
+$number->set_value('asdf');
+print "asfd is a valid number\n" if($number->validate());
+$number->set_value(5.5);
+print "5.5 is a valid number\n" if($number->validate());
