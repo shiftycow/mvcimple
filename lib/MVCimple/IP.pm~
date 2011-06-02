@@ -33,7 +33,7 @@ sub new
 
 #
 # get_as_string
-# returns: The IP address represented as a string regardless of it's initial datatype declaration. 
+# returns: The IP address represented as a string regardless of what it was initially declared as. 
 #
 sub get_as_string
 {
@@ -49,7 +49,7 @@ sub get_as_string
 
 #
 # get_as_number
-# returns: The IP address represented as a number regardless of it's initial datatype declaration. 
+# returns: The IP address represented as a number regardless of what it was initially declared as. 
 #
 sub get_as_number
 {

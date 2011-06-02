@@ -59,7 +59,7 @@ sub validate
     my ($self) = @_;
     
     #check length
-    return (length $self->{'value'} <= $self->{"length"});
+    return (length $self->{'value'} > $self->{"length"});
 }#end validate
 
 # 

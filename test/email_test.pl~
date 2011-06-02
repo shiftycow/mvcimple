@@ -15,14 +15,13 @@ print $email->to_input()."\n";
 
 $email->set_value('foo@bar.com');
 if($email->validate()){
-    print $email->get_value();
-    print " This email address is valid \n"; 
-}
+ print $email->get_value() if ($email->validate());
+print " This email address is valid \n" if ($email->validate());
 
+   
+
+}
 $email->set_value('not an email address');
-if($email->validate()){
-    print $email->get_value();
-    print " This email address is valid \n"; 
-}
-
+print $email->get_value() if ($email->validate());
+print "The email address is valid \n" if ($email->validate());
 
