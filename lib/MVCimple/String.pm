@@ -14,10 +14,31 @@ sub new
     my ($class,$name,$model) = @_;
 
     my $self = {"length" => $model->{length},
-                "name" => $name};
+                "name" => $name,
+                "value" => $model->{value}};
     bless $self;
     return $self;
 }#end constructor
+
+#
+#set_value($value)
+#
+#
+sub set_value {
+    my ($self,$value) = @_;
+    $self->{'value'} = $value; 
+}
+
+
+#
+#get_value()
+#returns: the value of the object
+#
+sub get_value {
+    
+    my ($self) = @_;
+    return $self->{'value'};
+}
 
 #
 # to_sql($length)
@@ -35,10 +56,10 @@ sub to_sql
 #
 sub validate
 {
-    my ($self,$string) = @_;
+    my ($self) = @_;
     
     #check length
-    return (length $string > $self->{"length"});
+    return (length $self->{'value'} > $self->{"length"});
 }#end validate
 
 # 

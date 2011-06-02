@@ -15,6 +15,7 @@ sub new
     my ($class,$name,$model) = @_;
 
     my $self = {"name" => $name};
+    $self->{"value"} = $model->{'value'};
     #Default length of e-mail as per RFC
     $self->{'length'}    = ($model->{'length'} eq undef)    ? 254 : $model->{'length'};
     bless $self;
@@ -27,7 +28,7 @@ sub new
 sub validate
 {
     my ($self,$email) = @_;
-    $email = lc($email);
+    $email = lc($self->{'value'});
     if($email =~ /^[a-z0-9._%+-]+\@[a-z0-9.-]+\.[a-z]{2,6}$/) {
         #return (length $email => $self->{"length"});        
         return (length $email => $self->{"length"});        

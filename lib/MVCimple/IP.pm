@@ -18,7 +18,7 @@ sub new
     my ($class,$name,$model) = @_;
 
     my $self = {"name" => $name};
-
+    $self->{'value'} = $model->{'value'}; 
     #defaults 
     $self->{'length'}    = ($model->{'length'} eq undef)    ? 15 : $model->{'length'};
     $self->{'precision'} = ($model->{'precision'} eq undef) ? 32 : $model->{'precision'};
@@ -37,7 +37,8 @@ sub new
 #
 sub validate
 {
-  my ($self,$ip) = @_;
+  my ($self) = @_;
+  my $ip = $self->{'value'};
   if($self->{'datatype'} eq "String") {
         return checkIP($self,$ip);
         }

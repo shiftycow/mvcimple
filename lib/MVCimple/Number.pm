@@ -22,11 +22,32 @@ sub new
 
     $self->{'precision'} = $model->{'precision'} if($model->{'precision'} ne undef);
     $self->{'scale'} = $model->{'scale'} if($model->{'scale'} ne undef);
-    $self->{'length'} = $model->{'length'} if($model->{'length'} ne undef);
+    $self->{'value'} = $model->{'value'} if($model->{'value'} ne undef);
    
     bless $self;
     return $self;
 }#end constructor
+
+#
+#set_value($value)
+#
+#
+sub set_value {
+    my ($self,$value) = @_;
+    $self->{'value'} = $value;
+}
+
+
+#
+#get_value()
+#returns: the value of the object
+#
+sub get_value {
+
+    my ($self) = @_;
+    return $self->{'value'};
+}
+
 
 #
 # to_sql()
@@ -44,8 +65,8 @@ sub to_sql
 #
 sub validate
 {
-    my ($self,$number) = @_;
-    return 1 if(($number * 1) eq $number);
+    my ($self) = @_;
+    return 1 if(($self->{value} * 1) eq $self->{value});
     return 0;   
     
 }#end validate
