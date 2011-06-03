@@ -50,11 +50,23 @@ sub store_forms {
 	my ($self,$co) = @_;
     my $modelname = $self->{'name'};
 	
-	while( my($name,$column_data) = each(%{$self->{columns}})) {
-        $column_data->set_value($co->param($name)); 
+    while( my($name,$column_data) = each(%{$self->{columns}})) {
+            $column_data->set_value($co->param($name)); 
     }
 }
 
+#
+#Return a hash with all the columns and values;
+#
+sub get_values {
+    my ($self,$co) = @_;
+
+    my $data = {};
+    while( my($name,$column_data) = each(%{$self->{columns}})) {
+        $data->{$name} = $column_data->get_value();
+    }
+    return $data;
+}
 1;
 
 
