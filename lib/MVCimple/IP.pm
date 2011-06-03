@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 use strict;
+ #This is needed to check errors on the package
 use lib "../";
 use MVCimple::String;
 use MVCimple::Number;
