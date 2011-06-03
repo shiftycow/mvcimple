@@ -51,7 +51,7 @@ sub store_forms {
     my $modelname = $self->{'name'};
 	
 	while( my($name,$column_data) = each(%{$self->{columns}})) {
-        $column_data->value($co->param("$modelname\_$name\_form")); 
+        $column_data->set_value($co->param("$modelname\_$name\_form")); 
     }
 }
 
