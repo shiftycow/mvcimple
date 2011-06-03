@@ -16,7 +16,7 @@ IP address are unique in that they can be stored in a database in two different 
 # returns: blessed reference to a new IP object
 
 sub new
-{
+{   
     my ($class,$name,$model) = @_;
 
     my $self = {"name" => $name};

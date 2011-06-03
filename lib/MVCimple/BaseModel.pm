@@ -45,6 +45,16 @@ sub get_forms {
     return $forms;
 }
 
+#Store the values submitted for each column from CGI
+sub store_forms {
+	my ($self,$co) = @_;
+    my $modelname = $self->{'name'};
+	
+	while( my($name,$column_data) = each(%{$self->{columns}})) {
+        $column_data->value($co->param("$modelname\_$name\_form")); 
+    }
+}
+
 1;
 
 
