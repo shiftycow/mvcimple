@@ -1,6 +1,9 @@
 #!/usr/bin/perl
 use strict;
 package MVCimple::GenSQL;
+#include the built-in type libraries
+use lib "../";
+use MVCimple::Types;
 =pod
 GenSQL.pm
 

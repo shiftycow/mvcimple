@@ -21,6 +21,7 @@ way to handle different data types passed around MVCimple-based applications
 #use EthernetMAC;
 #use IP;
 #use Password;
+use lib "../";
 use MVCimple::String;
 use MVCimple::Number;
 use MVCimple::IP;

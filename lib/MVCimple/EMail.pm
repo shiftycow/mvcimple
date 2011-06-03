@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 use strict;
+use lib "../";
 use MVCimple::String;
 package MVCimple::EMail;
 our @ISA = qw/MVCimple::String/;

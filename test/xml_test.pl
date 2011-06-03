@@ -6,7 +6,7 @@ use XML::Dumper;
 use Getopt::Long;
 use Data::Dumper;
 
-my $filename = @ARGV[0];
+my $filename = $ARGV[0];
 my $xml = new XML::Simple;
 
 #if($filename eq undef)
