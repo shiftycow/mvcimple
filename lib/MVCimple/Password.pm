@@ -19,11 +19,31 @@ sub new
     my ($class,$name,$model) = @_;
 
     my $self = {"name" => $name};
-    $self->{'value'} = $model->{'value'}; 
-    $self->{'length'} = $model->{'length'}; 
     $self->{'hash_type'} = $model->{'hash_type'};
     $self->{'salt_length'} = $model->{'salt_length'};
+    
+    #the salt used to hash the password
     $self->{'salt'} = $model->{'salt'};
+    
+    #plaintext version of the password - irretrivable from hashed version
+    $self->{'plaintext'} = $model->{'plaintext'};
+
+    #hashed version of the password - derived from plaintext if present
+    $self->{'hash'} = $model->{'hash'};
+
+    if($self->{'salt'} ne undef and $self->{'plaintext'} ne undef})
+    {
+        
+    }
+
+    #the "value" of the password is its storable value in the form: $salt$hash
+    $self->{'value'} = $model->{'value'}; 
+    
+    #
+    #figure out the length of the database column 
+    #based on the hash type and salt length
+    #
+    $self->{'length'} = $model->{'length'}; 
 
     return bless $self;
 }#end constructor
@@ -49,5 +69,26 @@ sub to_input
 
     return $html;
 }#end input
+
+#
+# set_value
+# sets the value of the password to the string specified
+# 
+
+#
+# get_hash
+# returns the hash of the password object based on it's hash type, salt, and value
+#
+
+#
+# set_salt
+# sets the salt used to hash the password
+#
+
+#
+# export
+# returns the string representation of the password to store in the database
+#
+
 1;
 
