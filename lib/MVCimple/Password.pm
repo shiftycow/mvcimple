@@ -21,7 +21,10 @@ sub new
     my $self = {"name" => $name};
     $self->{'value'} = $model->{'value'}; 
     $self->{'length'} = $model->{'length'}; 
-    
+    $self->{'hash_type'} = $model->{'hash_type'};
+    $self->{'salt_length'} = $model->{'salt_length'};
+    $self->{'salt'} = $model->{'salt'};
+
     return bless $self;
 }#end constructor
 
