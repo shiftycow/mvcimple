@@ -23,9 +23,28 @@ sub new
     $self->{'length'} = $model->{'length'}; 
     
     return bless $self;
-    
+}#end constructor
 
-}
+# 
+# to_input
+# returns: HTML code representing an <input> element for a password object
+#
+sub to_input
+{
+    my ($self) = @_;
 
+    my $html = "";
+    my $name = $self->{"name"};
+    my $id = $name."_input";
+    my $length = $self->{"length"};
+
+    $html .= "<input type=\"password\"";
+    $html .= " id=\"$id\"";
+    $html .= " name=\"$name\"";
+    $html .= " onkeyup=\"check_password($id,$length)\"";
+    $html .= " />\n";
+
+    return $html;
+}#end input
 1;
 

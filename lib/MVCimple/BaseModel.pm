@@ -5,7 +5,6 @@ package MVCimple::BaseModel;
 #This is the base model for any model Class
 
 
-
 sub new {
    my ($class,$name,$modeldata) = @_;
    my $self = {'name' => $name};
@@ -32,7 +31,7 @@ sub get_column {
 #This will return all the forms from a model that can easily be used with our template engine
 sub get_forms {
  
-    my($self) = @_;    
+    my ($self) = @_; 
     my $forms = {};
     my $modelname = $self->{'name'};
 
