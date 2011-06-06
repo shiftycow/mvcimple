@@ -13,6 +13,10 @@ my $string = new MVCimple::String("test_string",{'length'=>30});
 print $string->to_sql()."\n";
 print $string->to_input()."\n";
 
-$string->set_value('This is a string');
+$string->set_value('trololol');
 
-print" 'This is a string' is a valid string.\n" if($string->validate());
+print $string->get_value() . " is a valid string.\n" if($string->validate());
+
+$string->set_value("");
+print $string->get_value() . " is a valid string.\n" if($string->validate());
+

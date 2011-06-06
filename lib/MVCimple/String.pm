@@ -57,7 +57,9 @@ sub to_sql
 sub validate
 {
     my ($self) = @_;
-    
+  
+    return 0 if(!$self->{'value'}); 
+
     #check length
     return (length $self->{'value'} <= $self->{"length"});
 }#end validate

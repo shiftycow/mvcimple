@@ -67,6 +67,7 @@ sub validate
 {
     my ($self) = @_;
     return 1 if(($self->{value} * 1) eq $self->{value});
+    return 0 if(!$self->{value});
     return 0;   
     
 }#end validate
