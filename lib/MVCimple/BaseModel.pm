@@ -1,7 +1,15 @@
 #!/usr/bin/perl
 use strict;
-use Data::Dumper;
 package MVCimple::BaseModel;
+
+#system includes 
+use Data::Dumper;
+use DBI;
+
+#local includes
+use lib "../lib"
+use MVCimple::Config;
+
 #This is the base model for any model Class
 
 
