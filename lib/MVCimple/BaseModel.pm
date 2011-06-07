@@ -45,7 +45,7 @@ sub get_forms {
 }
 
 #Store the values submitted for each column from CGI
-sub store_forms {
+sub store_input{
 	my ($self,$co) = @_;
     my $modelname = $self->{'name'};
 	
@@ -66,6 +66,19 @@ sub get_values {
     }
     return $data;
 }
+
+#
+#
+#
+#
+sub save {
+    my ($self) = @_;
+    my $dbhost = MVCimple::Config::get_config_element('dbhost');    
+    my $dbpassword = MVCimple::Config::get_config_element('dbpassword');    
+    my $dbsuser = MVCimple::Config::get_config_element('dbuser');    
+    my $database = MVCimple::Config::get_config_element('database');    
+}
+
 1;
 
 
