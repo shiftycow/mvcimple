@@ -16,7 +16,7 @@ use MVCimple::Config;
 sub new {
    my ($class,$name,$modeldata) = @_;
    my $self = {'name' => $name};
-   $self->{'columns'} = {}; 
+   $self->{'columns'} = {};
  
    #Go though each of the model elements and bless along with returning the constructor; 
    while( my($column_name,$modelcolumn) = each(%{$modeldata})) 
@@ -80,7 +80,7 @@ sub get_values {
 #
 #
 sub save {
-    my ($self) = @_;
+    my ($self,$dbh) = @_;
     my $dbhost = MVCimple::Config::get_config_element('dbhost');    
     my $dbpassword = MVCimple::Config::get_config_element('dbpassword');    
     my $dbsuser = MVCimple::Config::get_config_element('dbuser');    
@@ -91,7 +91,6 @@ sub save {
 
     my $modelname = $self->{'name'};
     # my $dbh = DBI->connect("dbi:$driver:$dbname:$dbhost:$dbport",$dbuser,$dbpassword);
-    my $dbh = DBI->connect("dbi:SQLite:dbname=/tmp/database","","");
 
     
     my $sql = "";
@@ -119,7 +118,7 @@ sub save {
         $i++;
     }
     $sql .= ")";
-    print $sql; #DEBUG
+#    print $sql; #DEBUG
     
     my $sth = $dbh->prepare($sql)
          or die "Can't prepare SQL statement: $DBI::errstr\n";
@@ -129,14 +128,12 @@ sub save {
     while( my($name,$column_data) = each(%{$self->{columns}})) {
        push @data, $column_data->get_value();
     }
-    print "@data"; #DEBUG
+#    print "@data"; #DEBUG
 
     $sth->execute(@data)
         or die "Can't execute SQL statement: $DBI::errstr\n";
     $dbh->commit();
 
-    $sth = $dbh->prepare("SELECT * FROM $modelname");
-    $sth->execute();     
     ##retrieve the returned rows of data
     my @row;
     while (@row = $sth->fetchrow_array()){
