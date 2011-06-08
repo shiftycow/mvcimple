@@ -76,26 +76,25 @@ sub to_input
 # sets the value of the password to the string specified
 # returns: a hashref containing either the value just set
 # or an error condition
-
+#
 sub set_value
 {
     my ($self,$value) = @_;
      
     #parse out the salt and hash
-    if($value ~= /\$(.+)\$(.+)/)
+    if($value =~ /\$(.+)\$(.+)/)
     {
-        $self->{"value"} = $value;
+        $self->{'value'} = $value;
         $self->{'salt'} = $1;
         $self->{'hash'} = $2;
 
-        return {value => $value};
+        return {"value" => $self->{"value"}};
     }
     
     else
     {
-        return {error => "Invalid Value"};
+        return {"error" => "Invalid Value"};
     }
-
 }#end set_value
 
 #
