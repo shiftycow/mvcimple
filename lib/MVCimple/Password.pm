@@ -31,14 +31,15 @@ sub new
     #hashed version of the password - derived from plaintext if present
     $self->{'hash'} = $model->{'hash'};
 
-    if($self->{'salt'} ne undef and $self->{'plaintext'} ne undef})
+    if($self->{'salt'} ne undef and $self->{'plaintext'} ne undef)
     {
         
     }
 
     #the "value" of the password is its storable value in the form: $salt$hash
-    $self->{'value'} = $model->{'value'}; 
-    
+    #setting it also changes the hash and the salt
+    $self->set_value($model->{'value'}) if($model->{'value'} ne undef);
+
     #
     #figure out the length of the database column 
     #based on the hash type and salt length
@@ -73,7 +74,28 @@ sub to_input
 #
 # set_value
 # sets the value of the password to the string specified
-# 
+# returns: a hashref containing either the value just set
+# or an error condition
+#
+sub set_value
+{
+    my ($self,$value) = @_;
+     
+    #parse out the salt and hash
+    if($value =~ /\$(.+)\$(.+)/)
+    {
+        $self->{'value'} = $value;
+        $self->{'salt'} = $1;
+        $self->{'hash'} = $2;
+
+        return {"value" => $self->{"value"}};
+    }
+    
+    else
+    {
+        return {"error" => "Invalid Value"};
+    }
+}#end set_value
 
 #
 # get_hash
