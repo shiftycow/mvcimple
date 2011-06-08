@@ -35,7 +35,7 @@ use File::Spec;
 #path to make it portable
 my $APP_PATH = File::Spec->rel2abs($0);
 (undef, $APP_PATH, undef) = File::Spec->splitpath($APP_PATH);
-my $CONFIG_FILE = "$APP_PATH/../lib/MVCimple/mvcimple.conf";
+my $CONFIG_FILE = "$APP_PATH/../samples/mvcimple_config.sample.conf";
 
 #Read the config file
 my %config = read_config($CONFIG_FILE);
@@ -68,7 +68,12 @@ sub get_config_element
 sub read_config {
     my ($file) = @_;
     my %config;
+
+    #stat the config file and check it's modification time
     open(CONFIG, "<$file");
+    my $disk_file_mtime = stat($CONFIG);
+    my $cache_file_mtime = stat($CONFIG);
+    
     while (<CONFIG>) {
        # chomp;                  # no newline
         s/#.*//;                # no comments
@@ -78,6 +83,7 @@ sub read_config {
         my ($var, $value) = split(/\s*=\s*/, $_, 2);
         $config{$var} = $value;
     }
+    close CONFIG;
     return %config;
 }
 
