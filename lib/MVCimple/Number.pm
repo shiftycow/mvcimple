@@ -19,11 +19,12 @@ sub new
     $self->{'scale'} = 0;
     $self->{'precision'} = 32;
     $self->{'length'} = 8;
-
+    
     $self->{'precision'} = $model->{'precision'} if($model->{'precision'} ne undef);
     $self->{'scale'} = $model->{'scale'} if($model->{'scale'} ne undef);
     $self->{'value'} = $model->{'value'} if($model->{'value'} ne undef);
-   
+    $self->{'null'}= $model->{null};    
+
     bless $self;
     return $self;
 }#end constructor
@@ -66,7 +67,8 @@ sub to_sql
 sub validate
 {
     my ($self) = @_;
-    return 1 if(($self->{value} * 1) eq $self->{value});
+    return 1 if(($self->{value} * 1) eq $self->{value} || ($self->{'null'}==1 && !$self->{value}));
+    return 0 if($self->{'null'}==0 && !$self->{value});
     return 0;   
     
 }#end validate

@@ -15,7 +15,8 @@ sub new
 
     my $self = {"length" => $model->{length},
                 "name" => $name,
-                "value" => $model->{value}};
+                "value" => $model->{value},
+                "null"=> $model->{null}};
     bless $self;
     return $self;
 }#end constructor
@@ -57,7 +58,9 @@ sub to_sql
 sub validate
 {
     my ($self) = @_;
-    
+  
+    return 1 if($self->{'null'}==1 && !$self->{'value'}); 
+    return 0 if($self->{'null'}!=1 && !$self->{'value'});
     #check length
     return (length $self->{'value'} <= $self->{"length"});
 }#end validate

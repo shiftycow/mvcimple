@@ -15,5 +15,10 @@ print $number->to_input()."\n";
 
 $number->set_value('asdf');
 print "asfd is a valid number\n" if($number->validate());
+
 $number->set_value(5.5);
 print "5.5 is a valid number\n" if($number->validate());
+
+$number->set_value();
+print "Null is a valid number\n" if($number->validate());
+
