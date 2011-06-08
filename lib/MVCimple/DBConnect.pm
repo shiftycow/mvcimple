@@ -21,7 +21,12 @@ sub connect{
     my $table_prefix = MVCimple::Config::get_config_element('table_prefix');
     my $driver = MVCimple::Config::get_config_element('driver');
 
-    my $dbh = DBI->connect("dbi:$driver:$dbname:$dbhost:$dbport",$dbuser,$dbpassword);
+    print $dbhost; #DEBUG
+    print $dbpassword; #DEBUG
+    print $dbname; #DEBUG
+
+    my $dbh = DBI->connect("dbi:$driver:$dbname",$dbuser,$dbpassword)
+        or die "Can't connect to the database: $DBI::errstr\n";
     #TODO Handle error
 
     return $dbh;
