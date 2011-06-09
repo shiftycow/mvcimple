@@ -17,11 +17,12 @@ use MVCimple::Config; #stock Config file reader
 
 my $elapsed = Time::HiRes::tv_interval($t0,[Time::HiRes::gettimeofday]);
 print "Loaded Config.pm in $elapsed\n";
+print "dbuser = ".MVCimple::Config::get_config_element('dbuser');
 
 #load cachine config module
 $t0 = [Time::HiRes::gettimeofday];
 
-use MVCimple::ConfigCache; #config file reader that is caching-aware
+#use MVCimple::ConfigCache; #config file reader that is caching-aware
 
 my $elapsed = Time::HiRes::tv_interval($t0,[Time::HiRes::gettimeofday]);
 print "Loaded ConfigCache.pm in $elapsed\n";

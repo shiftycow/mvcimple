@@ -1,4 +1,6 @@
 #! /usr/bin/perl
+package MVCimple::Config;
+use strict;
 #
 # Config.pm
 #
@@ -18,27 +20,28 @@
 ###############################################################################
 
 
+##################################
+###    USER DEFINES            ###
+##################################
+my $FILENAME = "app_config.conf"; #name of the config file, usually no need to change
 
-
-package MVCimple::Config;
-use strict;
-
-
+##############################################
+### DO NOT CHANGE ANYTHING BELOW THIS LINE ###
+##############################################
 
 #system includes
 use File::Spec;
 
 #local includes
-#use Logger;
+# section empty #
 
 #This script could be called from cron, so we need to find it's 
 #path to make it portable
 my $APP_PATH = File::Spec->rel2abs($0);
 (undef, $APP_PATH, undef) = File::Spec->splitpath($APP_PATH);
-my $CONFIG_FILE = "$APP_PATH/../lib/MVCimple/mvcimple.conf";
 
 #Read the config file
-my %config = read_config($CONFIG_FILE);
+my %config = read_config();
 
 #testing function
 #print %config;
@@ -65,10 +68,19 @@ sub get_config_element
     return $config{$key};
 }#end return_config_element
 
+#
+# read config
+# returns a hash representing the key/value pairs in the 
+# application's configuration file
+#
+
 sub read_config {
-    my ($file) = @_;
-    my %config;
-    open(CONFIG, "<$file");
+    my %config; #hash to hold config parameters
+
+    #define the config file name
+    my $DISK_CONFIG_FILE = "$APP_PATH/../conf/$FILENAME";
+
+    open(CONFIG, "<$DISK_CONFIG_FILE");
     while (<CONFIG>) {
        # chomp;                  # no newline
         s/#.*//;                # no comments
@@ -78,6 +90,7 @@ sub read_config {
         my ($var, $value) = split(/\s*=\s*/, $_, 2);
         $config{$var} = $value;
     }
+    close CONFIG;
     return %config;
 }
 
