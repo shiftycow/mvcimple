@@ -60,7 +60,11 @@ sub validate
     my ($self) = @_;
   
     return 1 if($self->{'null'}==1 && !$self->{'value'}); 
-    return 0 if($self->{'null'}!=1 && !$self->{'value'});
+    
+    if($self->{'null'}!=1 && !$self->{'value'}){
+        die "Error: Null values not allowed ";
+    }
+   
     #check length
     return (length $self->{'value'} <= $self->{"length"});
 }#end validate

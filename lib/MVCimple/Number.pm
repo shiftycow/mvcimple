@@ -62,15 +62,22 @@ sub to_sql
 
 # 
 # validate
-# returns: 1 or 0 depending on whether the argument is a valid Number or not
+# returns: A hash containing a success or error message depending on whether the 
+# argument is a valid Number or not
 #
 sub validate
 {
     my ($self) = @_;
-    return 1 if(($self->{value} * 1) eq $self->{value} || ($self->{'null'}==1 && !$self->{value}));
-    return 0 if($self->{'null'}==0 && !$self->{value});
-    return 0;   
+    my $return = {};
     
+    if(($self->{value} * 1) eq $self->{value} || ($self->{'null'}==1 && !$self->{value})){
+        $return = {"success"=>"The number is valid"};
+        return $return; 
+    }    
+    else {
+        $return = {"error"=>"This is not a valid number"};
+        return $return;   
+    }
 }#end validate
 
 # 
