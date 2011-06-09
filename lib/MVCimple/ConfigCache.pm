@@ -1,4 +1,6 @@
 #! /usr/bin/perl
+package MVCimple::Config;
+use strict;
 #
 # Config.pm
 #
@@ -18,27 +20,29 @@
 ###############################################################################
 
 
+##################################
+###    USER DEFINES            ###
+##################################
+my $FILENAME = "app_config.conf"; #name of the config file, usually no need to change
+my $RAMDISK = "/dev/shm"; #location of ramdisk, should be at least a few KB in size
 
-
-package MVCimple::Config;
-use strict;
-
-
+##############################################
+### DO NOT CHANGE ANYTHING BELOW THIS LINE ###
+##############################################
 
 #system includes
 use File::Spec;
 
 #local includes
-#use Logger;
+# section empty #
 
 #This script could be called from cron, so we need to find it's 
 #path to make it portable
 my $APP_PATH = File::Spec->rel2abs($0);
 (undef, $APP_PATH, undef) = File::Spec->splitpath($APP_PATH);
-my $CONFIG_FILE = "$APP_PATH/../samples/mvcimple_config.sample.conf";
 
 #Read the config file
-my %config = read_config($CONFIG_FILE);
+my %config = read_config();
 
 #testing function
 #print %config;
@@ -65,15 +69,26 @@ sub get_config_element
     return $config{$key};
 }#end return_config_element
 
+#
+# read config
+# returns a hash representing the key/value pairs in the 
+# application's configuration file
+#
+
 sub read_config {
-    my ($file) = @_;
-    my %config;
+    my %config; #hash to hold config parameters
+
+    #define the config file name
+    my $DISK_CONFIG_FILE = "$APP_PATH/../conf/$FILENAME";
+    my $CACHE_CONFIG_FILE = "$RAMDISK/$FILENAME";
 
     #stat the config file and check it's modification time
+    my $disk_file_mtime = stat($file);
+    my $cache_file_mtime = stat("/dev/shm/app.conf.cache");
+    print "disk file mtime: $disk_file_mtime\n";
+    print "cache_file_mtime: $cache_file_mtime\n";
+
     open(CONFIG, "<$file");
-    my $disk_file_mtime = stat($CONFIG);
-    my $cache_file_mtime = stat($CONFIG);
-    
     while (<CONFIG>) {
        # chomp;                  # no newline
         s/#.*//;                # no comments

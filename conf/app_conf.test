@@ -1,0 +1,48 @@
+#
+# Config file for MVCimple Applications
+#
+# This file contains basic configuration options for MVCimple 
+# applications - database credentials, paths, etc.
+#
+# Options lines are of the format:
+#
+#   key = value
+# 
+# Lines beginning with '#' are ignored.
+#
+# Creators of MVCimple applications can add custom config options here,
+# too, which can be accessed using the function:
+#
+#   MVCimple::Config::get_config_element('name')
+#
+#####################################################################
+
+#######################
+###  User Options   ###
+#######################
+# MVCimple users - put your own custom options here!
+# Example:
+
+user_option = value
+
+########################
+### MVCimple Options ###
+########################
+
+# [ database ]
+# MVCimple users - change these options to suit your application
+
+dbhost = localhost
+dbusername = username
+dbpassword = password
+dbname = database
+dbname = 
+dbdriver = SQLite
+
+# [ logging ]
+logging_facility = MVCimple
+
+# [ caching ]
+
+# [ ports ]
+
