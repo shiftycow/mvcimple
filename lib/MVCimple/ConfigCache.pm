@@ -17,6 +17,9 @@ use strict;
 # This feature is most useful when including long lists of things to be used 
 # in drop-down menus and the like
 #
+# Development of a caching-aware config module is on-going, but not implemented
+# yet.
+#
 ###############################################################################
 
 
@@ -45,7 +48,7 @@ my $APP_PATH = File::Spec->rel2abs($0);
 my %config = read_config();
 
 #testing function
-#print %config;
+print %config;
 
 sub get_config_element
 {
@@ -80,15 +83,26 @@ sub read_config {
 
     #define the config file name
     my $DISK_CONFIG_FILE = "$APP_PATH/../conf/$FILENAME";
-    my $CACHE_CONFIG_FILE = "$RAMDISK/$FILENAME";
+    my $CACHE_CONFIG_FILE = "$RAMDISK/$FILENAME.cache";
 
-    #stat the config file and check it's modification time
-    my $disk_file_mtime = stat($file);
-    my $cache_file_mtime = stat("/dev/shm/app.conf.cache");
-    print "disk file mtime: $disk_file_mtime\n";
-    print "cache_file_mtime: $cache_file_mtime\n";
+    #stat the config file and check it's modification time against the cache
+    my $disk_file_stat = [];
+    my $cache_file_stat = [];
+    
+    #TODO: proper error handling with logging
+    @$disk_file_stat = stat($DISK_CONFIG_FILE) or die "MVCimple cannot stat config file";
+    @$cache_file_stat = stat($CACHE_CONFIG_FILE);
 
-    open(CONFIG, "<$file");
+    my $disk_file_mtime = 0;
+    my $cache_file_mtime = 0;
+
+    $disk_file_mtime = $disk_file_stat->[9];
+    $cache_file_mtime = $cache_file_stat->[9] if($cache_file_stat ne undef);
+
+    #print "disk file mtime: $disk_file_mtime\n"; #DEBUG
+    #print "cache_file_mtime: $cache_file_mtime\n"; #DEBUG
+
+    open(CONFIG, "<$DISK_CONFIG_FILE");
     while (<CONFIG>) {
        # chomp;                  # no newline
         s/#.*//;                # no comments
