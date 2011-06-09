@@ -64,7 +64,7 @@ sub get_config_element
         close(INCLUDE);
         $config{$key} = $included_config;
     }#end external reference
-    print $config{$key};#DEBUG
+    
     return $config{$key};
 }#end return_config_element
 
