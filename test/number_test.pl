@@ -10,7 +10,7 @@ use Data::Dumper;
 use lib "../lib";
 use MVCimple::Number;
 
-my $number = new MVCimple::Number("mynum",{'length'=>9,'precision'=>16,'scale'=>4});
+my $number = new MVCimple::Number("mynum",{'length'=>9,'precision'=>16,'scale'=>4,'null'=>0 });
 my $return = {};
 
 print $number->to_sql()."\n";
@@ -28,5 +28,5 @@ print "5.5 is a valid number\n" if($return->{'error'} eq undef);
 
 $number->set_value();
 print Dumper($return = $number->validate());
-print "Null is a valid number\n" if($number->validate() eq undef);
+print "Null is a valid number\n" if($return->{'error'} eq undef);
 

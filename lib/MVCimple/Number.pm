@@ -68,16 +68,11 @@ sub to_sql
 sub validate
 {
     my ($self) = @_;
-    my $return = {};
     
-    if(($self->{value} * 1) eq $self->{value} || ($self->{'null'}==1 && !$self->{value})){
-        $return = {"success"=>"The number is valid"};
-        return $return; 
+    if(($self->{value} * 1) ne $self->{value} or !$self->{'value'}){ 
+        return {"error"=>"This is not a valid number"};
     }    
-    else {
-        $return = {"error"=>"This is not a valid number"};
-        return $return;   
-    }
+        return {"success"=>"The number is valid"};
 }#end validate
 
 # 
