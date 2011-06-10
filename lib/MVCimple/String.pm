@@ -58,15 +58,23 @@ sub to_sql
 sub validate
 {
     my ($self) = @_;
-  
-    return 1 if($self->{'null'}==1 && !$self->{'value'}); 
+    my $return = {};
     
-    if($self->{'null'}!=1 && !$self->{'value'}){
-        die "Error: Null values not allowed ";
+    if(($self->{'null'}==1 && !$self->{'value'}) || (length $self->{'value'} <= $self->{"length"} && $self->{'value'})){
+        $return = {"success" => "This is a valid string"};
+        return $return;
+    }
+    elsif($self->{'null'} != 1 && !$self->{'value'}){
+        $return = {"error"=>"The number value cannot be NULL."};
+        return $return;
+    }
+    else{
+        $return = {"error"=>"This is not a valid string."};
+        return $return;
     }
    
     #check length
-    return (length $self->{'value'} <= $self->{"length"});
+    #return (length $self->{'value'} <= $self->{"length"});
 }#end validate
 
 # 
