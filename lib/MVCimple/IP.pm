@@ -1,10 +1,13 @@
 #!/usr/bin/perl
 use strict;
- #This is needed to check errors on the package
+package MVCimple::IP;
+
+use Data::Dumper; 
+
+#This is needed to check errors on the package
 use lib "../";
 use MVCimple::String;
 use MVCimple::Number;
-package MVCimple::IP;
 
 =pod
 IP address are unique in that they can be stored in a database in two different ways, First as a regular string '10.0.0.1' or as a 32bit unsinged integer 167772161 Therefor this class will either inherit from String or Number depending on datatype attribute, String is the default.
@@ -26,6 +29,7 @@ sub new
     $self->{'precision'} = ($model->{'precision'} eq undef) ? 32 : $model->{'precision'};
     $self->{'scale'}     = ($model->{'scale'} eq undef)     ? 0 : $model->{'scale'};
     $self->{'datatype'}  = ($model->{'datatype'} eq undef)  ? 'String' : $model->{'datatype'};
+    $self->{'null'} = $model->{'null'};
     
     #Change the parent depending on the datatype
     our @ISA = ("MVCimple::$self->{datatype}");
@@ -74,16 +78,25 @@ sub get_as_number
 sub validate
 {
   my ($self) = @_;
+  my $return = {};  
+  print "null = '" . $self->{'null'} . "'\n"; #DEBUG
   my $ip = $self->{'value'};
   if($self->{'datatype'} eq "String") {
-        return checkIP($self,$ip);
-        }
+    $return = MVCimple::String::validate($self);
+    # print Dumper($return); #DEBUG
+    return $return if($return->{'error'} ne undef);
+    print "Value = " . $self->{'value'}. "\n";
+    return {"success" => ""} if($self->{'null'} and !length($self->{'value'}));
+    return {"error" => "This is not valid IP address."} if(!checkIP($self,$ip));
+  }
   if($self->{'datatype'} eq "Number") {
-            if(($ip * 1) eq $ip) {
-                return checkIP($self,decimal2IP($self,$ip));
-        }
-    }
-return 0;
+    $return = MVCimple::Number::validate($self);
+    #print Dumper($return); #DEBUG
+    return $return if($return->{'error'} ne undef);
+    return {"error" => "This is not valid IP address."} if(!checkIP($self,decimal2IP($self,$ip)));
+
+  }
+return {"success" => "This is a valid IP address."};
 }#end validate
 
 

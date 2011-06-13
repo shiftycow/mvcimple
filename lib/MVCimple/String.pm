@@ -28,6 +28,8 @@ sub new
 sub set_value {
     my ($self,$value) = @_;
     $self->{'value'} = $value; 
+    # print "'$self->{'value'}'" . "\n";
+    # print "'$value' \n";
 }
 
 
@@ -53,7 +55,8 @@ sub to_sql
 
 # 
 # validate
-# returns: 1 or 0 depending on whether the argument is a valid String or not
+# returns: A hash containing a success or error message depending on whether the argument
+# is a valid String or not.
 #
 sub validate
 {
@@ -62,9 +65,11 @@ sub validate
     if(!$self->{'null'} and !length($self->{'value'})){
         return {"error"=> $self->{"name"} . " cannot be NULL."};
     }
+    elsif(length $self->{'value'} > $self->{"length"}){
+        return {"error"=> $self->{"name"} . " is longer than " . $self->{"length"} . " characters."};
+    }
     return {"success" => "This is a valid string"};
 
-    #check length
     #return (length $self->{'value'} <= $self->{"length"});
 }#end validate
 

@@ -69,9 +69,13 @@ sub validate
 {
     my ($self) = @_;
     
-    if(($self->{value} * 1) ne $self->{value} or !$self->{'value'}){ 
+    if(!$self->{'null'} and $self->{'value'} eq ""){
+        return {"error"=>$self->{"name"} . " cannot be NULL."};
+    } 
+    elsif(($self->{value} ne "") and ($self->{value} * 1) ne $self->{value}){ 
         return {"error"=>"This is not a valid number"};
-    }    
+    } 
+
         return {"success"=>"The number is valid"};
 }#end validate
 
