@@ -7,7 +7,7 @@ use Data::Dumper;
 use DBI;
 
 #local includes
-use lib "../lib";
+use lib "../";
 use MVCimple::Config;
 
 #This is the base model for any model Class
@@ -75,6 +75,25 @@ sub get_values {
     return $data;
 }
 
+
+#validate all the elements in the model and return all the errors concatenated
+sub validate {
+    my ($self) = @_;
+    my $return = {};
+    my $error_messages;;
+    my $error;
+
+    while( my($name,$column_data) = each(%{$self->{columns}})) {
+        if($column_data->validate()->{'error'} ne undef) {
+            $error =1;
+            $error_messages .= $column_data->validate()->{'error'} . " ";    
+        }
+    }
+    return {"error"=>"$error_messages"} if($error);
+    
+}
+
+
 #
 # The save subroutine is responsible for generating, preparing, and executing our sql INSERT # operation. All data is validated before it is inserted into the database.
 # 
@@ -82,73 +101,64 @@ sub get_values {
 sub save {
     my ($self,$dbh) = @_;
     my $return = {};
-    my $error = 0;
-    
-    # Validate all data
+
+
+
+    #Validate
+    my $validate = validate($self);
+    return $validate if($validate->{error});
+
+    #print Dumper($return); #DEBUG 
+    #print " \$error = " . $error; #DEBUG
+
+
+    #my $table_prefix = MVCimple::Config::get_config_element('table_prefix');
+
+    my $modelname = $self->{'name'};
+
+    my $sql = "";
+    #TODO Insert logic for UPDATE table
+    $sql .= "INSERT INTO $modelname (";
+    my $i = 0; #counter used for putting in commas
+    my $columns = scalar (keys %{$self->{columns}}); # Figure out how many columns there are
+
+    #Add column names to sql statement
     while( my($name,$column_data) = each(%{$self->{columns}})) {
-        $return->{$name} = $column_data->validate();
-        $error = 1 if($return->{$name}->{'error'} ne undef);
+        #$data->{$name} = $column_data->get_value();
+        $sql .= "`$name`";
+        $sql .= "," if ($i < $columns - 1);
+        $i++;
     }
-    
-    print Dumper($return); #DEBUG 
-    print " \$error = " . $error; #DEBUG
- 
 
-    if(!$error){ 
-        my $table_prefix = MVCimple::Config::get_config_element('table_prefix');
+    $sql .= ") VALUES (";
 
-        my $modelname = $self->{'name'};
-
-        my $sql = "";
-        #TODO Insert logic for UPDATE table
-        $sql .= "INSERT INTO $modelname (";
-        my $i = 0; #counter used for putting in commas
-        my $columns = scalar (keys %{$self->{columns}}); # Figure out how many columns there are
-
-        #Add column names to sql statement
-        while( my($name,$column_data) = each(%{$self->{columns}})) {
-            #$data->{$name} = $column_data->get_value();
-            $sql .= "`$name`";
-            $sql .= "," if ($i < $columns - 1);
-            $i++;
-        }
-
-        $sql .= ") VALUES (";
-
-        #Add ? to sql statement
-        $i = 0; 
-        while( my($name,$column_data) = each(%{$self->{columns}})) {
-            $sql .= "?";
-            #$sql .= $column_data->get_value();
-            $sql .= "," if ($i < $columns - 1);
-            $i++;
-        }
-        $sql .= ")";
+    #Add ? to sql statement
+    $i = 0; 
+    while( my($name,$column_data) = each(%{$self->{columns}})) {
+        $sql .= "?";
+        #$sql .= $column_data->get_value();
+        $sql .= "," if ($i < $columns - 1);
+        $i++;
+    }
+    $sql .= ")";
 #    print $sql; #DEBUG
 
-        my $sth = $dbh->prepare($sql)
-            or die "Can't prepare SQL statement: $DBI::errstr\n";
-        #TODO return proper error
+    my $sth = $dbh->prepare($sql)
+        or die "Can't prepare SQL statement: $DBI::errstr\n";
+    #TODO return proper error
 
-        my @data = ();    
-        while( my($name,$column_data) = each(%{$self->{columns}})) {
-            push @data, $column_data->get_value();
-        }
+    my @data = ();    
+    while( my($name,$column_data) = each(%{$self->{columns}})) {
+        push @data, $column_data->get_value();
+    }
 #    print "@data"; #DEBUG
 
-        $sth->execute(@data)
-            or die "Can't execute SQL statement: $DBI::errstr\n";
-        $dbh->commit();
-}
-##retrieve the returned rows of data
-#    my @row;
-#   while (@row = $sth->fetchrow_array()){
-#        print "Row: @row\n"
-#    }
-        
-        return $return;
+    $sth->execute(@data)
+        or die "Can't execute SQL statement: $DBI::errstr\n";
+    $dbh->commit();
 
-    } #end save
+
+} #end save
 
 
 1;

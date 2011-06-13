@@ -73,7 +73,7 @@ sub validate
         return {"error"=>$self->{"name"} . " cannot be NULL."};
     } 
     elsif(($self->{value} ne "") and ($self->{value} * 1) ne $self->{value}){ 
-        return {"error"=>"This is not a valid number"};
+        return {"error"=>"$self->{name} is not a valid number"};
     } 
 
         return {"success"=>"The number is valid"};
