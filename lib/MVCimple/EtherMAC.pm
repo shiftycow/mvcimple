@@ -34,10 +34,12 @@ sub set_value {
 
 sub validate {
     my($self) =  @_;
-
-    return 0 if(convertEther($self,$self->{'value'}) eq undef);
     
-    return 1;
+    if(convertEther($self,$self->{'value'}) eq undef){
+        return {"error"=> $self->{"name"} . " is not a valid MAC address."};
+    }
+
+     return {"success" => "This is a valid MAC address"};
 }
 
 #convertEther

@@ -85,7 +85,7 @@ sub validate
     $return = MVCimple::String::validate($self);
     # print Dumper($return); #DEBUG
     return $return if($return->{'error'} ne undef);
-    print "Value = " . $self->{'value'}. "\n";
+    #print "Value = " . $self->{'value'}. "\n"; #DEBUG
     return {"success" => ""} if($self->{'null'} and !length($self->{'value'}));
     return {"error" => "This is not valid IP address."} if(!checkIP($self,$ip));
   }
@@ -93,6 +93,7 @@ sub validate
     $return = MVCimple::Number::validate($self);
     #print Dumper($return); #DEBUG
     return $return if($return->{'error'} ne undef);
+    return {"success" => ""} if($self->{'null'} and $self->{'value'} eq "");
     return {"error" => "This is not valid IP address."} if(!checkIP($self,decimal2IP($self,$ip)));
 
   }
