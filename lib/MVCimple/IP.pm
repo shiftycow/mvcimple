@@ -78,25 +78,41 @@ sub get_as_number
 sub validate
 {
   my ($self) = @_;
-  my $return = {};  
-  print "null = '" . $self->{'null'} . "'\n"; #DEBUG
+  my $return = {}; 
+  # print "null = '" . $self->{'null'} . "'\n"; #DEBUG
+  
   my $ip = $self->{'value'};
+  
+  #Check what datatype the IP address is in and handle it accordingly.
   if($self->{'datatype'} eq "String") {
+    #Check if its a valid string.
     $return = MVCimple::String::validate($self);
-    # print Dumper($return); #DEBUG
     return $return if($return->{'error'} ne undef);
+    
+    # print Dumper($return); #DEBUG
     #print "Value = " . $self->{'value'}. "\n"; #DEBUG
+    
+    #If it's null and it's supposed to be null, succeed.
     return {"success" => ""} if($self->{'null'} and !length($self->{'value'}));
+    
+    #If it's not in the proper IP format/range, return an error.
     return {"error" => "This is not valid IP address."} if(!checkIP($self,$ip));
   }
   if($self->{'datatype'} eq "Number") {
+    #Check if it's a valid number.
     $return = MVCimple::Number::validate($self);
-    #print Dumper($return); #DEBUG
     return $return if($return->{'error'} ne undef);
+
+    #print Dumper($return); #DEBUG
+    
+    #If it's null and it's supposed to be null, succeed.
     return {"success" => ""} if($self->{'null'} and $self->{'value'} eq "");
+    
+    #If it's not in the proper IP format/range, return an error.
     return {"error" => "This is not valid IP address."} if(!checkIP($self,decimal2IP($self,$ip)));
 
   }
+#Otherwise, succeed.
 return {"success" => "This is a valid IP address."};
 }#end validate
 

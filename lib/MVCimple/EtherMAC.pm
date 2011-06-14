@@ -21,7 +21,7 @@ sub new
     my $self = {"name" => $name};
     $self->{'value'} = $model->{'value'}; 
     $self->{'length'} = 17; 
-
+    $self->{'null'} = $model->{'null'};
     return bless $self;
 }
 
@@ -29,17 +29,26 @@ sub new
 sub set_value {
     my ($self,$value) = @_;
         $self->{'value'} = convertEther($self,$value);
-}
+        print "\nValue ='" . $self->{'value'} . "'\n\n" ;
+    }
 
 
 sub validate {
     my($self) =  @_;
-    
-    if(convertEther($self,$self->{'value'}) eq undef){
-        return {"error"=> $self->{"name"} . " is not a valid MAC address."};
-    }
+    my $return = {};
 
-     return {"success" => "This is a valid MAC address"};
+    #Check if it's a valid string.
+    $return = MVCimple::String::validate($self);
+    return $return if($return->{'error'} ne undef);
+
+    #If it's null and it's supposed to be null, succeed.
+    return {"success" => ""} if($self->{'null'} and $self->{'value'} eq undef); 
+
+    #If it's not a properly formatted MAC address or is invalid, return an error.
+    return {"error"=> $self->{"name"} . " is not a valid MAC address."} if($self->{'value'} eq 0);
+   
+    #Otherwise, succeed.
+    return {"success" => "This is a valid MAC address"};
 }
 
 #convertEther
@@ -58,7 +67,7 @@ sub convertEther {
     $ether =~ s/ //g;
     $ether = lc($ether);
     if (!($ether =~ m/^[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]$/)){
-        return (undef);
+        return (0);
     }
     $ether =~ s/^([0-9a-fA-F][0-9a-fA-F])([0-9a-fA-F][0-9a-fA-F])([0-9a-fA-F][0-9a-fA-F])([0-9a-fA-F][0-9a-fA-F])([0-9a-fA-F][0-9a-fA-F])([0-9a-fA-F][0-9a-fA-F])/$1:$2:$3:$4:$5:$6/;
     return($ether);

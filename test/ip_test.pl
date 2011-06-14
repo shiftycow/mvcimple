@@ -34,6 +34,10 @@ $ipnum->set_value('192.168.1.1');
 print "\nTesting '" . $ipnum->get_value() . "'\n";
 print $ipnum->get_value() . " is a valid IP\n" if($ipnum->validate()->{'error'} eq undef);
 
+$ipnum->set_value();
+print "\nTesting '" . $ipnum->get_value() . "'\n";
+print $ipnum->get_value() . " is a valid IP\n" if($ipnum->validate()->{'error'} eq undef);
+
 print "\n#### end.";
 
 #
@@ -64,19 +68,10 @@ $ipstr->set_value(167772161);
 print "\nTesting '" . $ipstr->get_value() . "'\n";
 print $ipstr->get_value() . " is a valid IP\n" if($ipstr->validate()->{'error'} eq undef);
 
-
-print "\n#### end.";
-
-##
-# Test parent validate methods
-##
-print "\n\nTesting for null through parent class String. \n";
-
 $ipstr->set_value();
 print "\nTesting '" . $ipstr->get_value() . "'\n";
 print $ipstr->get_value() . " is a valid IP\n" if($ipstr->validate()->{'error'} eq undef);
 
-print "\nTesting for null through parent class Number. \n";
-$ipnum->set_value();
-print "\nTesting '" . $ipnum->get_value() . "'\n";
-print $ipnum->get_value() . " is a valid IP\n" if($ipnum->validate()->{'error'} eq undef);
+print "\n#### end.";
+
+
