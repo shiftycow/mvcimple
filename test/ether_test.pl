@@ -11,7 +11,7 @@ use Data::Dumper;
 use lib "../lib";
 use MVCimple::EtherMAC;
 
-my $mac = new MVCimple::EtherMAC("mac",{null=>0});
+my $mac = new MVCimple::EtherMAC("mac",{null=>1});
 my $return = {};
 
 

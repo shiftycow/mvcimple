@@ -45,7 +45,7 @@ sub new
 sub set_value {
     my ($self,$value) = @_;
         $self->{'value'} = convertEther($self,$value);
-        print "\nValue ='" . $self->{'value'} . "'\n\n" ;
+        #print "\nValue ='" . $self->{'value'} . "'\n\n" ; #DEBUG
     }
 
 
@@ -82,6 +82,11 @@ sub convertEther {
     $ether =~ s/\.//g;
     $ether =~ s/ //g;
     $ether = lc($ether);
+   
+    #NOTE: Since this package performs validation as soon as set_value() is called,
+    # I had to change what this method returned in order to differentiate between a null
+    # MAC address and an incorrectly formatted one. This method now returns 0 if it 
+    # is invalid or undef if it is undefined.
     if (!($ether =~ m/^[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]$/)){
         return (0);
     }
