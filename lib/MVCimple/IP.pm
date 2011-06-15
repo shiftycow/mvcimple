@@ -112,7 +112,7 @@ sub validate
     return {"success" => ""} if($self->{'null'} and !length($self->{'value'}));
     
     #If it's not in the proper IP format/range, return an error.
-    return {"error" => "This is not valid IP address."} if(!checkIP($self,$ip));
+    return {"error" => "This is not a valid IP address."} if(!checkIP($self,$ip));
   }
   if($self->{'datatype'} eq "Number") {
     #Check if it's a valid number.

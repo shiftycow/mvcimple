@@ -16,10 +16,10 @@
 #    along with MVCimple.  If not, see <http://www.gnu.org/licenses/>. 
 ###############################################################################
 
-#
-# testing script for the MVCimple::Number class
-#
-#
+###########################################
+#Testing script for the MVCimple::IP class#
+###########################################
+
 
 use Data::Dumper;
 
@@ -27,68 +27,64 @@ use strict;
 use lib "../lib";
 use MVCimple::IP;
 
-#
-# Validation tests for IP address represented as a Number
-#
-#
-
+###########################################################
+# Validation tests for IP address represented as a Number.#
+###########################################################
 my $ipnum = new MVCimple::IP("network",{datatype=>'Number', null=>1});
 
-print "\n\n#### testing ipnum->to_sql() and ipnum->to_input()";
-print "\n" . $ipnum->to_sql()."\n";
-print $ipnum->to_input()."\n";
 
-print "\n####Validation tests for IP adress as a Number. \n";
-$ipnum->set_value(167772161);
-print "\nTesting '" . $ipnum->get_value() . "'\n";
-print $ipnum->get_value() . " is a valid IP\n" if($ipnum->validate()->{'error'} eq undef);
+# Insert any values you want tested into the array below.
+my @tests = (167772161, 'asdf','192.168.1.1','');
 
-$ipnum->set_value('asdf');
-print "\nTesting '" . $ipnum->get_value() . "'\n";
-print $ipnum->get_value() . " is a valid IP\n" if($ipnum->validate()->{'error'} eq undef);
+# Loop through and test all values
+print "\n####\n#Validation tests for IP adress as a Number.\n####\n";
 
-$ipnum->set_value('192.168.1.1');
-print "\nTesting '" . $ipnum->get_value() . "'\n";
-print $ipnum->get_value() . " is a valid IP\n" if($ipnum->validate()->{'error'} eq undef);
+foreach (@tests){
+    $ipnum->set_value($_);
+    my $tmp = $ipnum->validate();
 
-$ipnum->set_value();
-print "\nTesting '" . $ipnum->get_value() . "'\n";
-print $ipnum->get_value() . " is a valid IP\n" if($ipnum->validate()->{'error'} eq undef);
+    print "\nTesting '" . $ipnum->get_value() . "'\n";
+    print "Result: " .$ipnum->get_value() . " is a valid IP\n" if($tmp->{'error'} eq undef);
+    print "Result: Invalid. Error given is " . Dumper($tmp->{'error'}) if($tmp->{'error'} ne undef);                                                                                                }      
 
-print "\n#### end.";
+###########################################################
+# Validation tests for IP address represented as a String.#
+###########################################################
+my $ipstr = new MVCimple::IP("network",{datatype=>'String', null=>0});
 
-#
-# Validation tests for IP address represented as a String
-#
-#
+# Insert any values you want tested into the array below.
+my @tests = ('128.123.3.5', 'asf', 167772161, '');
 
-my $ipstr = new MVCimple::IP("network",{datatype=>'String', null=>1});
+# Loop through and test all values
+print "\n####\n#Validation tests for IP adress as a String.\n####\n";
 
-print "\n\n#### testing ipstr->to_sql() and ipstr->to_input()";
-print "\n\n" . $ipstr->to_sql()."\n";
-print $ipstr->to_input()."\n";
+foreach (@tests){
+    $ipstr->set_value($_);
+    my $tmp = $ipstr->validate();
 
-print "\nTesting ip2Decimal: " . $ipstr->get_value() . " as an int  " . $ipnum->ip2Decimal('128.123.3.5') . "\n";
-print "Testing get_as_number: " . $ipstr->get_as_number() . "\n";
+    print "\nTesting '" . $ipstr->get_value() . "'\n";
+    print "Result: " .$ipstr->get_value() . " is a valid IP\n" if($tmp->{'error'} eq undef);
+    print "Result: Invalid. Error given is " . Dumper($tmp->{'error'}) if($tmp->{'error'} ne undef);
+}
 
+#############
+# Other tests
+#############
+$ipnum->set_value(2155545349);
+
+print "\n####\n#Testing ipnum->to_sql()\n####\n" . $ipnum->to_sql()."\n";
+
+print "\n####\n#Testing ipnum->to_input()\n####\n" . $ipnum->to_input()."\n";
+
+print "\n####\n#Testing decimal2IP()\n####\n" . $ipnum->get_value() . " as a string is  " . $ipnum->decimal2IP($ipnum->get_value()) . "\n";
+
+print "\n####\n#Testing ip2Decimal()\n####\n" . $ipstr->get_value() . " as a number is  " . $ipstr->ip2Decimal($ipstr->get_value()) . "\n";
+
+
+print "\n####\n#Testing get_as_string()\n####\n". $ipnum->get_value() . " as a string is  " . $ipnum->get_as_string() . "\n";
 
 $ipstr->set_value('128.123.3.5');
-print "\n####Validation tests for IP adress as a String. \n";
-print "\nTesting '" . $ipstr->get_value() . "'\n";
-print $ipstr->get_value() . " is a valid IP\n" if($ipstr->validate()->{'error'} eq undef);
+print "\n####\n#Testing get_as_number()\n####\n". $ipstr->get_value() . " as a string is  " . $ipstr->get_as_number() . "\n";
 
-$ipstr->set_value('asf');
-print "\nTesting '" . $ipstr->get_value() . "'\n";
-print $ipstr->get_value() . " is a valid IP\n" if($ipstr->validate()->{'error'} eq undef);
-
-$ipstr->set_value(167772161);
-print "\nTesting '" . $ipstr->get_value() . "'\n";
-print $ipstr->get_value() . " is a valid IP\n" if($ipstr->validate()->{'error'} eq undef);
-
-$ipstr->set_value();
-print "\nTesting '" . $ipstr->get_value() . "'\n";
-print $ipstr->get_value() . " is a valid IP\n" if($ipstr->validate()->{'error'} eq undef);
-
-print "\n#### end.";
 
 
