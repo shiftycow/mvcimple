@@ -29,21 +29,22 @@ use MVCimple::Config;
    
    
 sub connect{
-    my $config = new MVCimple::Config();
+    my ($config) = @_;
+    $config = new MVCimple::Config() if($config eq undef);
 
     my $dbhost = $config->element('dbhost');    
     my $dbpassword = $config->element('dbpassword');    
     my $dbuser = $config->element('dbuser');    
     my $dbname = $config->element('dbname');    
     my $dbport = $config->element('dbport');
-    my $table_prefix = $config->element('table_prefix');
-    my $driver = $config->element('driver');
+    my $dbtable_prefix = $config->element('dbtable_prefix');
+    my $dbdriver = $config->element('dbdriver');
 
     #print $dbhost; #DEBUG
     #print $dbpassword; #DEBUG
     #print $dbname; #DEBUG
 
-    my $dbh = DBI->connect("dbi:$driver:$dbname",$dbuser,$dbpassword)
+    my $dbh = DBI->connect("dbi:$dbdriver:$dbname",$dbuser,$dbpassword)
         or die "Can't connect to the database: $DBI::errstr\n";
     #TODO Handle error
 
