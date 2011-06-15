@@ -22,20 +22,22 @@ package MVCimple::DBConnect;
 use DBI;
 
 #local includes
-use lib "../lib";
+use lib "../";
 use MVCimple::Config;
 
    
    
    
 sub connect{
-    my $dbhost = MVCimple::Config::get_config_element('dbhost');    
-    my $dbpassword = MVCimple::Config::get_config_element('dbpassword');    
-    my $dbuser = MVCimple::Config::get_config_element('dbuser');    
-    my $dbname = MVCimple::Config::get_config_element('dbname');    
-    my $dbport = MVCimple::Config::get_config_element('dbport');
-    my $table_prefix = MVCimple::Config::get_config_element('table_prefix');
-    my $driver = MVCimple::Config::get_config_element('driver');
+    my $config = new MVCimple::Config();
+
+    my $dbhost = $config->element('dbhost');    
+    my $dbpassword = $config->element('dbpassword');    
+    my $dbuser = $config->element('dbuser');    
+    my $dbname = $config->element('dbname');    
+    my $dbport = $config->element('dbport');
+    my $table_prefix = $config->element('table_prefix');
+    my $driver = $config->element('driver');
 
     #print $dbhost; #DEBUG
     #print $dbpassword; #DEBUG

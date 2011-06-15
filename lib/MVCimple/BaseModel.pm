@@ -24,7 +24,6 @@ use DBI;
 
 #local includes
 use lib "../";
-use MVCimple::Config;
 
 #This is the base model for any model Class
 
