@@ -39,51 +39,65 @@ use strict;
 
 
 ##################################
-###    USER DEFINES            ###
+###    USER DEFAULTS          ###
 ##################################
 my $FILENAME = "app_config.conf"; #name of the config file, usually no need to change
-
+my $FOLDER = "../conf/"; #This is a realative path from the .cgi file ran
 ##############################################
 ### DO NOT CHANGE ANYTHING BELOW THIS LINE ###
 ##############################################
-
 #system includes
 use File::Spec;
 
-#local includes
-# section empty #
 
-#This script could be called from cron, so we need to find it's 
-#path to make it portable
-my $APP_PATH = File::Spec->rel2abs($0);
-(undef, $APP_PATH, undef) = File::Spec->splitpath($APP_PATH);
+    
+sub new {
+    
+    my ($class,$filename,$path) = @_;
+    my $self = {};
+    
+    #This script could be called from cron, so we need to find it's 
+    #path to make it portable
+    my $self->{app_path} = File::Spec->rel2abs($0);
+    (undef, $self->{app_path}, undef) = File::Spec->splitpath($self->{app_path});
 
-#Read the config file
-my %config = read_config();
+    #We will use the defaults in this file if nothing is specified
+    $self->{config_path} = "$self->{app_path}$FOLDER";
+    $self->{config_file} = $FILENAME;
 
-#testing function
-#print %config;
+    $self->{config_file} = $filename if($filename);
+    $self->{config_path} = $path if($path);
 
-sub get_config_element
+    #Read the config file
+    $self->{config} = read_config($self);
+    #testing function
+    #print %config;
+
+    bless $self;
+    return $self;
+
+}
+
+sub element
 {
     # this function returns an element of the configuration hash
-    my ($key) = @_;
+    my ($self,$key) = @_;
 
     #if the key references another file, fetch that file and parse it
     my $included_config;
-    if($config{$key} =~ /include (.+\.conf)/)
+    if($self->{config}->{$key} =~ /include (.+\.conf)/)
     {
-        open(INCLUDE,"<$APP_PATH/../lib/MVCimple/$1");
+        open(INCLUDE,"<$self->{config_path}/$1");
         while(<INCLUDE>)
         {
             chomp $_;
             $included_config .= $_.",";
         }
         close(INCLUDE);
-        $config{$key} = $included_config;
+        $self->{config}->{$key} = $included_config;
     }#end external reference
     
-    return $config{$key};
+    return $self->{config}->{$key};
 }#end return_config_element
 
 #
@@ -93,10 +107,12 @@ sub get_config_element
 #
 
 sub read_config {
-    my %config; #hash to hold config parameters
+    
+    my ($self) = @_;
+    my $config = {}; #hash to hold config parameters
 
     #define the config file name
-    my $DISK_CONFIG_FILE = "$APP_PATH/../conf/$FILENAME";
+    my $DISK_CONFIG_FILE = "$self->{config_path}/$self->{config_file}";
 
     open(CONFIG, "<$DISK_CONFIG_FILE");
     while (<CONFIG>) {
@@ -106,10 +122,10 @@ sub read_config {
         s/\s+$//;               # no trailing white
         next unless length;     # anything left?
         my ($var, $value) = split(/\s*=\s*/, $_, 2);
-        $config{$var} = $value;
+        $config->{$var} = $value;
     }
     close CONFIG;
-    return %config;
+    return $config;
 }
 
 1;

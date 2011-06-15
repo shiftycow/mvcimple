@@ -23,7 +23,7 @@
 
 #system includes
 use Time::HiRes;
-
+use Data::Dumper;
 #local includes
 use lib "../lib";
 
@@ -31,10 +31,15 @@ use lib "../lib";
 my $t0 = [Time::HiRes::gettimeofday];
 
 use MVCimple::Config; #stock Config file reader
+my $config = new MVCimple::Config();
 
 my $elapsed = Time::HiRes::tv_interval($t0,[Time::HiRes::gettimeofday]);
 print "Loaded Config.pm in $elapsed\n";
-print "dbuser = ".MVCimple::Config::get_config_element('dbuser')."\n";
+
+print Dumper($config);
+print "dbhost = ". $config->element('dbhost')."\n";
+print "mylist = ". $config->element('mylist')."\n";
+
 
 #load cachine config module
 $t0 = [Time::HiRes::gettimeofday];
