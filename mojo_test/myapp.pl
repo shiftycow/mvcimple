@@ -6,13 +6,20 @@ use lib '../lib/';
 use MVCimple::BaseModel;
 use MVCimple::Types;
 use MVCimple::RenderView;
-
+use MVCimple::DBConnect;
+use MVCimple::Config;
 #The model read from the config globally
+
+#Read our Model in from XML
 my $xml = new XML::Simple;
 my $xmldata = $xml->XMLin("people.xml");
 my $Person = new MVCimple::BaseModel('person',$xmldata->{models}->{person});
 
+#Read in the Application config file
+my $config = new MVCimple::Config('myapp.conf','.');
 
+#Connect to the Database
+my $dbh = MVCimple::DBConnect::connect($config);
 
 get '/' => sub {
     my $self = shift;
@@ -29,6 +36,7 @@ any '/submit' => sub {
     }
     else {
         my $data = $Person->get_values();
+        $Person->save($dbh);
         $self->render_text(MVCimple::RenderView::render('templates/submit.html',$data));
     }
 
