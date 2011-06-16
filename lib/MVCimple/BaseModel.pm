@@ -175,6 +175,29 @@ sub save {
 
 } #end save
 
+#Return All data from the database for the model
+sub load {
+    my ($self,$dbh) = @_;
+
+    my $modelname = $self->{'name'};
+
+    my $sql = "SELECT * FROM $modelname";
+    my $sth = $dbh->prepare($sql);
+    my $rows = [];
+    my $i = 0;
+    my $row;
+    while ($row = $sth->fetchrow_hashref())
+    {   
+        $rows->[$i] = $row;
+        $i++;
+    }
+    $sth->finish();
+    $dbh->disconnect();
+    return $rows;
+
+}
+
+
 
 1;
 
