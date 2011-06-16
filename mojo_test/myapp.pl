@@ -21,6 +21,18 @@ my $config = new MVCimple::Config('myapp.conf','.');
 #Connect to the Database
 my $dbh = MVCimple::DBConnect::connect($config);
 
+
+any '/xsl/:xsl.:ext' => sub {
+    my $self = shift;
+    my $xsl = $self->stash('xsl');
+    open(FILE,"xsl/$xsl.xsl");
+    my $data;
+    while(<FILE>) {$data .= <FILE>;}  
+    close(FILE);
+    $self->render(data =>$data, format=>'xml');
+
+};
+
 get '/' => sub {
     my $self = shift;
     my $viewdata = $Person->get_forms();
@@ -31,7 +43,8 @@ get '/view' => sub {
 
     my $self = shift;
     my $person_data = $Person->load($dbh);
-    my $person_xml = $xml->XMLout($person_data);
+    my $person_xml = '<?xml-stylesheet type="text/xsl" href="xsl/person.xsl"?>' . "\n";
+    $person_xml .= $xml->XMLout($person_data);
     $self->render(data =>$person_xml, format=>'xml');
 
 };
