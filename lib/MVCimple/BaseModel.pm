@@ -171,6 +171,7 @@ sub save {
     $sth->execute(@data)
         or die "Can't execute SQL statement: $DBI::errstr\n";
     $dbh->commit();
+    $sth->finish();
 
 
 } #end save
@@ -181,8 +182,9 @@ sub load {
 
     my $modelname = $self->{'name'};
 
-    my $sql = "SELECT * FROM $modelname";
+    my $sql = "SELECT * FROM $modelname;";
     my $sth = $dbh->prepare($sql);
+    $sth->execute();
     my $rows = [];
     my $i = 0;
     my $row;
@@ -192,7 +194,6 @@ sub load {
         $i++;
     }
     $sth->finish();
-    $dbh->disconnect();
     return $rows;
 
 }

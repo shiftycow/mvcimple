@@ -27,6 +27,15 @@ get '/' => sub {
     $self->render_text(MVCimple::RenderView::render('templates/default.html',$viewdata));
 };
 
+get '/view' => sub {
+
+    my $self = shift;
+    my $person_data = $Person->load($dbh);
+    my $person_xml = $xml->XMLout($person_data);
+    $self->render(data =>$person_xml, format=>'xml');
+
+};
+
 any '/submit' => sub {
     my $self = shift;
     $Person->store_input($self);
@@ -39,7 +48,6 @@ any '/submit' => sub {
         $Person->save($dbh);
         $self->render_text(MVCimple::RenderView::render('templates/submit.html',$data));
     }
-
 
 };
 
