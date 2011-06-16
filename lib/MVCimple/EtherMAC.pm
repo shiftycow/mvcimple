@@ -73,7 +73,7 @@ sub validate {
 sub convertEther {
     my ($self,$ether) = @_;
 
-    if (!defined($ether)) {
+    if (!defined($ether) or $ether eq "") {
         return(undef);
     }
     $ether =~ s/^0x//;

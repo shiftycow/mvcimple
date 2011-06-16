@@ -71,10 +71,11 @@ foreach (@tests){
 # Other tests
 #############
 $ipnum->set_value(2155545349);
+$ipstr->set_value('128.123.3.5');
 
-print "\n####\n#Testing ipnum->to_sql()\n####\n" . $ipnum->to_sql()."\n";
+print "\n####\n#Testing ipnum->to_sql()\n####\n\n" . $ipnum->to_sql()."\n";
 
-print "\n####\n#Testing ipnum->to_input()\n####\n" . $ipnum->to_input()."\n";
+print "\n####\n#Testing ipnum->to_input()\n####\n\n" . $ipnum->to_input()."\n";
 
 print "\n####\n#Testing decimal2IP()\n####\n" . $ipnum->get_value() . " as a string is  " . $ipnum->decimal2IP($ipnum->get_value()) . "\n";
 

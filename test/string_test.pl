@@ -16,10 +16,10 @@
 #    along with MVCimple.  If not, see <http://www.gnu.org/licenses/>. 
 ###############################################################################
 
-#
-# testing script for the MVCimple::String class
-#
-#
+###############################################
+#Testing script for the MVCimple::String class#
+###############################################
+
 use strict;
 
 use Data::Dumper;
@@ -27,31 +27,27 @@ use Data::Dumper;
 use lib "../lib";
 use MVCimple::String;
 
-my $string = new MVCimple::String("test_string",{'length'=>10, 'null'=>1});
-my $return = {};
+my $string = new MVCimple::String("test_string",{'length'=>10, 'null'=>0});
 
-print $string->to_sql()."\n";
-print $string->to_input()."\n";
+print "\n####\n#Testing string->to_sql()\n####\n\n" . $string->to_sql()."\n";
+print "\n####\n#Testing string->to_input()\n####\n\n" . $string->to_input()."\n";
 
-$string->set_value('trololol');
-print "\n";
-print Dumper($return = $string->validate());
-print $string->get_value() . " is a valid string.\n" if($return->{'error'} eq undef);
+################################
+# Validation tests for Strings.#
+################################
 
-$string->set_value();
-print "\n";
-print Dumper($return = $string->validate());
-print $string->get_value() . " is a valid string.\n" if($return->{'error'} eq undef);
+# Insert any values you want tested into the array below.
+my @tests = ('trolololol','Longer string than allowed','');
 
-$string->set_value('Longer String than allowed');
-print "\n";
-print Dumper($return = $string->validate());
-print $string->get_value() . " is a valid string.\n" if($return->{'error'} eq undef);
+# Loop through and test all values
+print "\n####\n#Validation tests for Strings.\n####\n";
 
-my $string2 = new MVCimple::String("new_string",{'length'=>30, 'null'=>0});
+foreach (@tests){
+    $string->set_value($_);
+    my $tmp = $string->validate();
 
-print "\n";
-print Dumper($return = $string2->validate());
-print $string2->get_value() . " is a valid string.\n" if($return->{'error'} eq undef);
-
+    print "\nTesting '" . $string->get_value() . "'\n";
+    print "Result: " .$string->get_value() . " is a valid String\n" if($tmp->{'error'} eq undef);
+    print "Result: Invalid. Error given is " . Dumper($tmp->{'error'}) if($tmp->{'error'} ne undef);                                                                                       
+}
 

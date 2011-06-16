@@ -16,10 +16,10 @@
 #    along with MVCimple.  If not, see <http://www.gnu.org/licenses/>. 
 ###############################################################################
 
-#
-# testing script for the MVCimple::Number class
-#
-#
+###############################################
+#Testing script for the MVCimple::Number class#
+###############################################
+
 use strict;
 
 use Data::Dumper;
@@ -27,26 +27,26 @@ use Data::Dumper;
 use lib "../lib";
 use MVCimple::Number;
 
-my $number = new MVCimple::Number("mynum",{'length'=>9,'precision'=>16,'scale'=>4,'null'=>1 });
-my $return = {};
+my $number = new MVCimple::Number("mynum",{'length'=>9,'precision'=>16,'scale'=>4,'null'=>0}); 
 
-print $number->to_sql()."\n";
-print $number->to_input()."\n";
+print "\n####\n#Testing number->to_sql()\n####\n\n" . $number->to_sql()."\n";
+print "\n####\n#Testing number->to_input()\n####\n\n" . $number->to_input()."\n";
 
-$number->set_value('asdf');
-print Dumper($return = $number->validate());
-print "asfd is a valid number\n" if($return->{'error'} eq undef);
+################################
+# Validation tests for Numbers.#
+################################
 
+# Insert any values you want tested into the array below.
+my @tests = ('asdf',5.5,'',0);
 
-$number->set_value(5.5);
-print Dumper($return = $number->validate());
-print "5.5 is a valid number\n" if($return->{'error'} eq undef);
+# Loop through and test all values
+print "\n####\n#Validation tests for Numbers.\n####\n";
 
+foreach (@tests){
+    $number->set_value($_);
+    my $tmp = $number->validate();
 
-$number->set_value();
-print Dumper($return = $number->validate());
-print "Null is a valid number\n" if($return->{'error'} eq undef);
-
-$number->set_value(0);
-print Dumper($return = $number->validate());
-print "0 is a valid number\n" if($return->{'error'} eq undef);
+    print "\nTesting '" . $number->get_value() . "'\n";
+    print "Result: " .$number->get_value() . " is a valid Number.\n" if($tmp->{'error'} eq undef);
+    print "Result: Invalid. Error given is " . Dumper($tmp->{'error'}) if($tmp->{'error'} ne undef);  
+}     
