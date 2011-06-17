@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 use strict;
-package MVCimple::UnitTest;
+package MVCimple::AutoTest;
 ###############################################################################
 #    This file is part of MVCimple.
 #
@@ -28,12 +28,23 @@ use Data::Dumper;
 use XML::Dumper;
 
 #local includes
+use MVCimple::Config; #stock Config file reader
 
 #runs a list of strings through the validator methods of the specified class
 sub validate
 {
-    my ($class, $conf);
+    my ($class, $config);
 
-    my $conf
-    #always 
-}
+    #load the test parameter config file
+    my $config = new MVCimple::Config("string_test.conf");
+
+    my $parameters = $config->elements();
+
+    while (my ($key, $value) = each %$parameters)
+    {
+        #do some testing
+
+    }
+    #test null and not-null conditions
+    
+}#end validate
