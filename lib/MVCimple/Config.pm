@@ -98,7 +98,19 @@ sub element
     }#end external reference
     
     return $self->{config}->{$key};
-}#end return_config_element
+}#end element
+
+#
+# elements
+# returns a hashref containing all of the elements in the config file
+# -used for itterating over config elements, in particular in AutoTest.pm
+#
+sub elements
+{
+    my ($self) = @_;
+
+    return $self->{'config'};
+}#end all_elements
 
 #
 # read config
