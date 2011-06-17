@@ -33,13 +33,18 @@ use MVCimple::Config; #stock Config file reader
 #runs a list of strings through the validator methods of the specified class
 sub validate
 {
-    my ($class, $config);
+    my ($config);
 
     #load the test parameter config file
-    my $config = new MVCimple::Config("string_test.conf");
+    my $config = new MVCimple::Config("string_test.conf") if($config eq undef);
+
+    #read the object parameters from the test file
+    my $length = $config->element("length");
+    my $type = $config->element("config");
 
     my $parameters = $config->elements();
 
+    my $test_object 
     while (my ($key, $value) = each %$parameters)
     {
         #do some testing
