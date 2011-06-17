@@ -27,9 +27,9 @@ any '/xsl/:xsl.:ext' => sub {
     my $xsl = $self->stash('xsl');
     open(FILE,"xsl/$xsl.xsl");
     my $data;
-    while(<FILE>) {$data .= <FILE>;}  
+    while(<FILE>) {$data .= $_;}  
     close(FILE);
-    $self->render(data =>$data, format=>'xml');
+    $self->render(data=>$data,format =>'xml');
 
 };
 
