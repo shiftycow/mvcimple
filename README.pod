@@ -23,15 +23,15 @@ mvcimple --generate-app <configuration_file.xml>
 
 =head3 Description
 
-MVCimple is used to automatically generate skeleton code for web 
-applications using the Model-View-Controller model. MVCimple is not a 
-"framework" in the same sense as Catalyst - it's main purpose is to take a 
-configuration file and turn it into I<simple> Perl code that handles the 
-Create, Read, Update, Delete (CRUD) functions that take time to write, but 
-yet are logically simple. Most importantly, since MVCimple is not a 
-framework itself, generated application code can be taken to any server 
-that has the dependencies listed below. 
+MVCimple is a lightweight web application framework for Perl.
+It's focus is to automate the data side of applications using objects,
+and handle the Create, Read, Update, Delete (CRUD) functions easily.
 
+MVCimple is being designed to play nicely with other frameworks like
+Mojolicious. It is also designed to be extensible by end users who may
+need to override some methods or add datatypes to provide more functionality.
+
+Please note that MVCimple is still under I<heavy> development.
 =head3 Dependencies
 
 MVCimple is designed to generate strict applications with a very short list
