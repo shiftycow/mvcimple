@@ -62,8 +62,11 @@ sub validate
     # create a new test object...
     my $test_object = {};
     bless $test_object, "MVCimple::$model"; #...bless it to the proper class...
-    $test_object = $test_object->new("test_object",$model_params); #...and construct it
+    
+    print Dumper($test_object); #DEBUG
 
+    $test_object = $test_object->new("test_object",$model_params); #...and construct it
+    
     # since we deleted the object parameters from the config, the rest of the elements should be 
     # strings to test
     my $parameters = $config->elements();
