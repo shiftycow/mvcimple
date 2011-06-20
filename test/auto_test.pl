@@ -30,25 +30,10 @@ use Term::ANSIColor;
 #local includes
 use MVCimple::AutoTest;
 
-fail();
-pass();
-warning();
+print MVCimple::AutoTest::fail();
+print "\n";
+print MVCimple::AutoTest::pass();
+print "\n";
+print MVCimple::AutoTest::warning();
+print "\n";
 
-# test some color output
-sub fail
-{
-    print Term::ANSIColor::colored(" [ FAIL ] ","red");
-    print "\n";
-}
-
-sub pass
-{
-    print Term::ANSIColor::colored(" [ PASS ] ","green");
-    print "\n";
-}
-
-sub warning
-{
-    print Term::ANSIColor::colored(" [ WARN ] ","yellow");
-    print "\n";
-}
