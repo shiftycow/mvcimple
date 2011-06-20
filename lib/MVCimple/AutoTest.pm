@@ -33,23 +33,41 @@ use MVCimple::Config; #stock Config file reader
 #runs a list of strings through the validator methods of the specified class
 sub validate
 {
-    my ($config);
+    my ($config) = @_;
 
     #load the test parameter config file
-    my $config = new MVCimple::Config("string_test.conf") if($config eq undef);
+    my $config = new MVCimple::Config("BaseModel.conf") if($config eq undef);
 
-    #read the object parameters from the test file
-    my $length = $config->element("length");
-    my $type = $config->element("config");
+    #read the model parameters from the test file
+    my $model_params = {};
 
+    my $model = $config->element("model");
+    delete $config->element("model");
+
+    $model_params->{'length'} = $config->element("length");
+    delete $config->element("length"); #and delete them as we go
+   
+    # create a new test object...
+    my $test_object = {};
+    bless $test_object, "MVCimple::$model"; #...bless it to the proper class...
+    $test_object = new $test_object($model_params); #...and construct it
+
+    # since we deleted the object parameters from the config, the rest of the elements should be 
+    # strings to test
     my $parameters = $config->elements();
-
-    my $test_object 
-    while (my ($key, $value) = each %$parameters)
+    
+    while (my ($string, $valid) = each %$parameters)
     {
-        #do some testing
+        $valid = lc $valid; #force "valid" or "invalid" flag to lowercase
 
-    }
+        $test_object->set_value($key);
+
+        my $result = $test_object->validate();
+        
+        if(($result->{'error'} eq undef) and ($valid eq "valid"))
+            print " [ pass ] ";
+    }#end testing loop
+    
     #test null and not-null conditions
     
 }#end validate
