@@ -42,12 +42,19 @@ sub validate
     #read the model parameters from the test file
     my $model_params = {};
 
-    my $model = $config->element("model");
-    delete $config->{"model"};
+    #TODO: delete elements with a mutator in Config instead of direct access
+    my $model = $config->element('model');
+    delete $config->{'model'};
 
     $model_params->{'length'} = $config->element("length");
-    delete $config->{"length"}; #and delete them as we go
+    delete $config->{'length'}; #and delete them as we go
    
+    my $verbose = $config->element("verbose");
+    delete $config->{'verbose'};
+
+    my $xml = $config->element("xml");
+    delete $config->{'xml'};
+
     # create a new test object...
     my $test_object = {};
     bless $test_object, "MVCimple::$model"; #...bless it to the proper class...
@@ -61,20 +68,35 @@ sub validate
     {
         $valid = lc $valid; #force "valid" or "invalid" flag to lowercase
 
+        print "'$string' should be $valid "
         $test_object->set_value($string);
-
+        
+        print "\n validating...\n" if($verbose);
         my $result = $test_object->validate();
         
-        if(($result->{'error'} eq undef) and ($valid eq "valid"))
+        if($verbose)
         {
-            print pass();
+            print "Validation Result: \n";
+            print Dumper($result) if(not $xml);
+            print XML::Dumper::pl2xml($result) if($xml);
         }
+        
+        # print pass/fail messages
+        print pass() if(($result->{'error'} eq undef) and ($valid eq $VALID));
+        print fail() if(($result->{'error'} eq undef) and ($valid eq $INVALID));
+        
+        print pass() if(($result->{'error'} ne undef) and ($valid eq $INVALID));
+        print fail() if(($result->{'error'} ne undef) and ($valid eq $VALID));
+
+        print "\n";
     }#end testing loop
     
     #test null and not-null conditions 
 }#end validate
 
-#helper functions to print out colorful pass/fail/warn messages
+#
+# helper functions to print out colorful pass/fail/warn messages
+#
 sub fail{
     return Term::ANSIColor::colored(" [ FAIL ] ","red");
 }#end fail
