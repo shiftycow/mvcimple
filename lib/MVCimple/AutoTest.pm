@@ -23,9 +23,10 @@ package MVCimple::AutoTest;
 #
 
 #system includes
-use Time::HiRes;
-use Data::Dumper;
-use XML::Dumper;
+use Time::HiRes; #for timing, potentially used in the future
+use Data::Dumper; #for dumping data structures
+use XML::Dumper; #for dumping data structures
+use Term::ANSIColor; #for fancy colors
 
 #local includes
 use MVCimple::Config; #stock Config file reader
@@ -42,10 +43,10 @@ sub validate
     my $model_params = {};
 
     my $model = $config->element("model");
-    delete $config->element("model");
+    delete $config->{"model"};
 
     $model_params->{'length'} = $config->element("length");
-    delete $config->element("length"); #and delete them as we go
+    delete $config->{"length"}; #and delete them as we go
    
     # create a new test object...
     my $test_object = {};
@@ -60,14 +61,18 @@ sub validate
     {
         $valid = lc $valid; #force "valid" or "invalid" flag to lowercase
 
-        $test_object->set_value($key);
+        $test_object->set_value($string);
 
         my $result = $test_object->validate();
         
         if(($result->{'error'} eq undef) and ($valid eq "valid"))
+        {
             print " [ pass ] ";
+        }
     }#end testing loop
     
     #test null and not-null conditions
     
 }#end validate
+
+1;
