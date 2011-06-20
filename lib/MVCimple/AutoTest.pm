@@ -31,13 +31,14 @@ use Term::ANSIColor; #for fancy colors
 #local includes
 use MVCimple::Config; #stock Config file reader
 
+#"constants"
+my $VALID = "valid";
+my $INVALID = "invalid";
+
 #runs a list of strings through the validator methods of the specified class
 sub validate
 {
     my ($config) = @_;
-
-    #load the test parameter config file
-    my $config = new MVCimple::Config("BaseModel.conf") if($config eq undef);
 
     #read the model parameters from the test file
     my $model_params = {};
@@ -49,6 +50,9 @@ sub validate
     $model_params->{'length'} = $config->element("length");
     delete $config->{'length'}; #and delete them as we go
    
+    $model_params->{'null'} = $config->element("null");
+    delete $config->{'null'}; #and delete them as we go
+    
     my $verbose = $config->element("verbose");
     delete $config->{'verbose'};
 
@@ -58,17 +62,17 @@ sub validate
     # create a new test object...
     my $test_object = {};
     bless $test_object, "MVCimple::$model"; #...bless it to the proper class...
-    $test_object = new $test_object($model_params); #...and construct it
+    $test_object = $test_object->new("test_object",$model_params); #...and construct it
 
     # since we deleted the object parameters from the config, the rest of the elements should be 
     # strings to test
     my $parameters = $config->elements();
     
-    while (my ($string, $valid) = each %$parameters)
+    while (my ($string, $validity) = each %$parameters)
     {
-        $valid = lc $valid; #force "valid" or "invalid" flag to lowercase
+        $validity = lc $validity; #force "valid" or "invalid" flag to lowercase
 
-        print "'$string' should be $valid "
+        print "'$string' should be $validity ";
         $test_object->set_value($string);
         
         print "\n validating...\n" if($verbose);
@@ -82,11 +86,11 @@ sub validate
         }
         
         # print pass/fail messages
-        print pass() if(($result->{'error'} eq undef) and ($valid eq $VALID));
-        print fail() if(($result->{'error'} eq undef) and ($valid eq $INVALID));
+        print pass() if(($result->{'error'} eq undef) and ($validity eq $VALID));
+        print fail() if(($result->{'error'} eq undef) and ($validity eq $INVALID));
         
-        print pass() if(($result->{'error'} ne undef) and ($valid eq $INVALID));
-        print fail() if(($result->{'error'} ne undef) and ($valid eq $VALID));
+        print pass() if(($result->{'error'} ne undef) and ($validity eq $INVALID));
+        print fail() if(($result->{'error'} ne undef) and ($validity eq $VALID));
 
         print "\n";
     }#end testing loop

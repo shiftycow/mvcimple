@@ -26,14 +26,43 @@ use lib "../lib";
 
 #system includes
 use Term::ANSIColor;
+use Getopt::Long;
+
+use Data::Dumper; #DEBUG
 
 #local includes
 use MVCimple::AutoTest;
 
-print MVCimple::AutoTest::fail();
-print "\n";
-print MVCimple::AutoTest::pass();
-print "\n";
-print MVCimple::AutoTest::warning();
-print "\n";
+#get CLI options
+my $verbose = 0;
+my $config_file = @ARGV[0];
+my $xml = 0;
 
+my $result = GetOptions("verbose" => \$verbose,
+        "xml" => \$xml);
+
+print "MVCimple auto_test.pl\n\n";
+print "[ Options ] \n";
+print "Verbose mode enabled\n" if($verbose);
+print "Using XML::Dumper\n" if($xml);
+print "Using Data::Dumper\n" if(!$xml);
+
+#read in the config file
+my $config = new MVCimple::Config($config_file,"./") if($config_file);
+
+print Dumper($config);
+
+if($config_file eq undef)
+{
+    print MVCimple::AutoTest::warning();
+    print " no test configuration specified, trying default test configuration './BaseModel.conf'\n";
+    $config = new MVCimple::Config("BaseModel.conf","./");
+}
+
+#add command line switches to config
+$config->{'xml'} = $xml;
+$config->{'verbose'} = $verbose;
+
+MVCimple::AutoTest::validate($config);
+
+print "testing complete!\n";
