@@ -25,8 +25,30 @@ use strict;
 use lib "../lib";
 
 #system includes
+use Term::ANSIColor;
 
 #local includes
 use MVCimple::AutoTest;
 
+fail();
+pass();
+warning();
 
+# test some color output
+sub fail
+{
+    print Term::ANSIColor::colored(" [ FAIL ] ","red");
+    print "\n";
+}
+
+sub pass
+{
+    print Term::ANSIColor::colored(" [ PASS ] ","green");
+    print "\n";
+}
+
+sub warning
+{
+    print Term::ANSIColor::colored(" [ WARN ] ","yellow");
+    print "\n";
+}

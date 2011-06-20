@@ -67,12 +67,24 @@ sub validate
         
         if(($result->{'error'} eq undef) and ($valid eq "valid"))
         {
-            print " [ pass ] ";
+            print pass();
         }
     }#end testing loop
     
-    #test null and not-null conditions
-    
+    #test null and not-null conditions 
 }#end validate
+
+#helper functions to print out colorful pass/fail/warn messages
+sub fail{
+    return Term::ANSIColor::colored(" [ FAIL ] ","red");
+}#end fail
+
+sub pass{
+    return Term::ANSIColor::colored(" [ PASS ] ","green");
+}#end pass
+
+sub warning{
+    return Term::ANSIColor::colored(" [ WARN ] ","yellow");
+}#end warning
 
 1;
