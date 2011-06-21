@@ -113,11 +113,16 @@ sub validate
     
     #If it's not in the proper IP format/range, return an error.
     return {"error" => "This is not a valid IP address."} if(!checkIP($self,$ip));
-  }
+  }#end string validation
+  
   if($self->{'datatype'} eq "Number") {
     #Check if it's a valid number.
     $return = MVCimple::Number::validate($self);
     return $return if($return->{'error'} ne undef);
+
+    #check range of IP address
+    return {"error" => "Number too big to be an IPv4 address (max 4,294,967,295)"} if($self->{'value'} > 4294967295);
+    return {"error" => "IPv4 address can't be negative"} if($self->{'value'} < 0);
 
     #print Dumper($return); #DEBUG
     

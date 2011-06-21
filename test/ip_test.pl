@@ -70,8 +70,8 @@ foreach (@tests){
 #############
 # Other tests
 #############
-$ipnum->set_value(2155545349);
-$ipstr->set_value('128.123.3.5');
+$ipnum->set_value(4294967295);
+$ipstr->set_value('255.255.255.254');
 
 print "\n####\n#Testing ipnum->to_sql()\n####\n\n" . $ipnum->to_sql()."\n";
 
@@ -86,6 +86,5 @@ print "\n####\n#Testing get_as_string()\n####\n". $ipnum->get_value() . " as a s
 
 $ipstr->set_value('128.123.3.5');
 print "\n####\n#Testing get_as_number()\n####\n". $ipstr->get_value() . " as a string is  " . $ipstr->get_as_number() . "\n";
-
 
 

@@ -63,6 +63,9 @@ sub validate
     $model_params->{'null'} = $config->element("null");
     $config->remove('null');
     
+    $model_params->{'datatype'} = $config->element("datatype");
+    $config->remove('datatype');
+    
     my $verbose = $config->element("verbose");
     $config->remove('verbose');
     #print "verbose: '$verbose'\n"; #DEBUG
