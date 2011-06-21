@@ -50,7 +50,7 @@ print "Using Data::Dumper\n" if(!$xml);
 #read in the config file
 my $config = new MVCimple::Config($config_file,"./") if($config_file);
 
-print Dumper($config);
+#print Dumper($config); #DEBUG
 
 if($config_file eq undef)
 {
@@ -60,9 +60,10 @@ if($config_file eq undef)
 }
 
 #add command line switches to config
-$config->{'xml'} = $xml;
-$config->{'verbose'} = $verbose;
+$config->set('xml',$xml);
+$config->set('verbose',$verbose);
 
+print "\n[ Testing ]\n";
 MVCimple::AutoTest::validate($config);
 
 print "testing complete!\n";

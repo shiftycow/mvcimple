@@ -75,8 +75,7 @@ sub new {
 
     bless $self;
     return $self;
-
-}
+}#end new (constructor)
 
 sub element
 {
@@ -110,7 +109,28 @@ sub elements
     my ($self) = @_;
 
     return $self->{'config'};
-}#end all_elements
+}#end elements
+
+#
+# remove
+# removes the specified key from the config hash
+# -used to remove key we don't want returned when calling elements() later
+#
+sub remove
+{
+    my ($self,$key) = @_;
+    delete $self->{'config'}->{$key}
+}#end remove
+
+#
+# set
+# sets an element in the config file
+#
+sub set
+{
+    my ($self,$key,$value) = @_;
+    $self->{'config'}->{$key} = $value;
+}#end set
 
 #
 # read config

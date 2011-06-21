@@ -29,7 +29,17 @@ use XML::Dumper; #for dumping data structures
 use Term::ANSIColor; #for fancy colors
 
 #local includes
-use MVCimple::Config; #stock Config file reader
+use MVCimple::Config;
+
+use MVCimple::String;
+use MVCimple::Number;
+use MVCimple::BaseModel;
+use MVCimple::EtherMAC;
+use MVCimple::IP;
+use MVCimple::Password;
+
+use MVCimple::DBConnect;
+use MVCimple::GenSQL;
 
 #"constants"
 my $VALID = "valid";
@@ -45,28 +55,40 @@ sub validate
 
     #TODO: delete elements with a mutator in Config instead of direct access
     my $model = $config->element('model');
-    delete $config->{'model'};
+    $config->remove('model');
 
     $model_params->{'length'} = $config->element("length");
-    delete $config->{'length'}; #and delete them as we go
+    $config->remove('length'); #and delete them as we go
    
     $model_params->{'null'} = $config->element("null");
-    delete $config->{'null'}; #and delete them as we go
+    $config->remove('null');
     
     my $verbose = $config->element("verbose");
-    delete $config->{'verbose'};
+    $config->remove('verbose');
+    #print "verbose: '$verbose'\n"; #DEBUG
 
     my $xml = $config->element("xml");
-    delete $config->{'xml'};
+    $config->remove('xml');
 
     # create a new test object...
     my $test_object = {};
     bless $test_object, "MVCimple::$model"; #...bless it to the proper class...
     
-    print Dumper($test_object); #DEBUG
-
     $test_object = $test_object->new("test_object",$model_params); #...and construct it
     
+    if($verbose)
+    {
+        print "Constructed object: \n";
+        if($xml){
+            print XML::Dumper::pl2xml($test_object);
+        }
+        
+        else{
+            print Dumper($test_object);
+        }
+        print "\n";
+    }#end test object dumping
+
     # since we deleted the object parameters from the config, the rest of the elements should be 
     # strings to test
     my $parameters = $config->elements();
