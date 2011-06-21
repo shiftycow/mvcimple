@@ -42,14 +42,12 @@ sub new {
     }
     bless $self;
     return $self;
-}
-
-
+}#end new (constructor)
 
 sub get_column {
     my($self,$column_name) = @_;
     return $self->{columns}->{$column_name};
-}
+}#end get_column
 
 #This will return all the forms from a model that can easily be used with our template engine
 sub get_forms {
@@ -65,7 +63,7 @@ sub get_forms {
 
     }
     return $forms;
-}
+}#end get_forms
 
 #Store the values submitted for each column from CGI
 sub store_input{
@@ -75,7 +73,7 @@ sub store_input{
     while( my($name,$column_data) = each(%{$self->{columns}})) {
             $column_data->set_value($co->param($name)); 
     }
-}
+}#end store_input
 
 #
 #Return a hash with all the columns and values;
@@ -88,7 +86,7 @@ sub get_values {
         $data->{$name} = $column_data->get_value();
     }
     return $data;
-}
+}#end get_values
 
 
 #validate all the elements in the model and return all the errors concatenated
@@ -104,9 +102,8 @@ sub validate {
             $error_messages .= $column_data->validate()->{'error'} . " ";    
         }
     }
-    return {"error"=>"$error_messages"} if($error);
-    
-}
+    return {"error"=>"$error_messages"} if($error);    
+}#end validate
 
 
 #
@@ -116,8 +113,6 @@ sub validate {
 sub save {
     my ($self,$dbh) = @_;
     my $return = {};
-
-
 
     #Validate
     my $validate = validate($self);
@@ -170,10 +165,11 @@ sub save {
 
     $sth->execute(@data)
         or die "Can't execute SQL statement: $DBI::errstr\n";
+    
+    #get the row ID of auto-increment column if it exists
+
     $dbh->commit();
     $sth->finish();
-
-
 } #end save
 
 #Return All data from the database for the model
@@ -195,10 +191,7 @@ sub load {
     }
     $sth->finish();
     return $rows;
-
-}
-
-
+}#end load
 
 1;
 
