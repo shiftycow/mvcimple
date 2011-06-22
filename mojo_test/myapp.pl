@@ -58,10 +58,10 @@ any '/submit' => sub {
     }
     else {
         my $data = $Person->get_values();
-        $Person->save($dbh);
+        my $result = $Person->save($dbh);
+        $data->{'id'} = $result->{'row_id'};
         $self->render_text(MVCimple::RenderView::render('templates/submit.html',$data));
     }
-
 };
 
 app->start;

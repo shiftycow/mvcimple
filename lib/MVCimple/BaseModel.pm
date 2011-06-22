@@ -132,11 +132,13 @@ sub save {
     my $i = 0; #counter used for putting in commas
     my $columns = scalar (keys %{$self->{columns}}); # Figure out how many columns there are
 
+    my $row_key;
     #Add column names to sql statement
     while( my($name,$column_data) = each(%{$self->{columns}})) {
         #$data->{$name} = $column_data->get_value();
         $sql .= "`$name`";
         $sql .= "," if ($i < $columns - 1);
+        $row_key = $name if($column_data->{'primary_key'});
         $i++;
     }
 
@@ -154,7 +156,7 @@ sub save {
 #    print $sql; #DEBUG
 
     my $sth = $dbh->prepare($sql)
-        or die "Can't prepare SQL statement: $DBI::errstr\n";
+        or return {"error" => "Can't prepare SQL statement: $DBI::errstr\n"};
     #TODO return proper error
 
     my @data = ();    
@@ -164,12 +166,17 @@ sub save {
 #    print "@data"; #DEBUG
 
     $sth->execute(@data)
-        or die "Can't execute SQL statement: $DBI::errstr\n";
+        or return {"error" => "Can't execute SQL statement: $DBI::errstr\n"};
     
-    #get the row ID of auto-increment column if it exists
+    #get the ID of the row we just inserted. This is really only useful on
+    #auto-increment columns
+    #TODO: support Oracle here (with SCHEMA)
+    my $row_id = $dbh->last_insert_id(undef, undef, $modelname, $row_key);
 
     $dbh->commit();
     $sth->finish();
+    
+    return {'row_id' => $row_id};
 } #end save
 
 #Return All data from the database for the model
