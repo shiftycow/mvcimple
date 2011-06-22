@@ -38,6 +38,7 @@ sub new
     
     $self->{'precision'} = $model->{'precision'} if($model->{'precision'} ne undef);
     $self->{'scale'} = $model->{'scale'} if($model->{'scale'} ne undef);
+    $self->{'auto_increment'} = $model->{'auto_increment'} if($model->{'auto_increment'} ne undef);
     $self->{'value'} = $model->{'value'} if($model->{'value'} ne undef);
     $self->{'null'}= $model->{null};    
 
@@ -84,7 +85,11 @@ sub to_sql
 sub validate
 {
     my ($self) = @_;
-    
+   
+    if($self->{'auto_increment'} and $self->{'value'} eq "") {
+        return {"success"=>"auto incremented by db"};
+    }
+
     if(!$self->{'null'} and $self->{'value'} eq ""){
         return {"error"=>$self->{"name"} . " cannot be NULL."};
     } 

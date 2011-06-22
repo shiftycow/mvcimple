@@ -2,6 +2,11 @@
 <app title="Party Reservation">
     <models>
         <person>
+            <id>
+                <type>Integer</type>
+                <primary_key>true</primary_key>
+                <auto_increment>true</auto_increment>
+            </id>
             <fname>
                 <type>String</type>
                 <length>10</length>

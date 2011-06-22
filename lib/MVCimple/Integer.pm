@@ -1,6 +1,10 @@
 #!/usr/bin/perl
 use strict;
-package MVCimple::Types;
+use lib "../";
+use MVCimple::Number;
+package MVCimple::Integer;
+our @ISA = qw/MVCimple::Number/;
+
 ###############################################################################
 #    This file is part of MVCimple.
 #
@@ -18,33 +22,29 @@ package MVCimple::Types;
 #    along with MVCimple.  If not, see <http://www.gnu.org/licenses/>. 
 ###############################################################################
 
-#
 
 =pod
 
-=h1 Name 
-
-Types.pm
-
-=h2 Synopsis
-
-This library provides a convenient interface to `use` the type libraries
-included in MVCimple. These type libraries provide an object-oriented 
-way to handle different data types passed around MVCimple-based applications
-
 =cut
 
-#define type libraries here
-#use EthernetMAC;
-#use IP;
-#use Password;
-use lib "../";
-use MVCimple::String;
-use MVCimple::Number;
-use MVCimple::Integer;
-use MVCimple::IP;
-use MVCimple::EMail;
-use MVCimple::EtherMAC;
-use MVCimple::Password;
+#
+# constructor
+# returns: blessed reference to a new Integer object
+sub new
+{
+    my $self = MVCimple::Number::new(@_);
+    bless $self;
+    return $self;
+}#end constructor
+
+# to_sql()
+# # returns: string of SQL required to create such a Number object in a database
+# #
+sub to_sql
+{
+    my ($self) = @_;
+    return $self->{"name"}." INTEGER";
+}#end to_sql
+
 
 1;

@@ -58,9 +58,9 @@ DEBUG: foreach my $column (keys %$model)
             my $modelcolumn = $model->{$column};
             
             #check for database constraints
-            my $PRIMARY_KEY = lc $model->{$column}->{"PRIMARY_KEY"};
-            my $FOREIGN_KEY = lc $model->{$column}->{"FOREIGN_KEY"};
-            my $UNIQUE = lc $model->{$column}->{"UNIQUE"};
+            my $PRIMARY_KEY = lc $model->{$column}->{"primary_key"};
+            my $FOREIGN_KEY = lc $model->{$column}->{"foreign_key"};
+            my $UNIQUE = lc $model->{$column}->{"unique"};
             
             #retrieve type info from foreign key
             my $fk_model;
@@ -94,8 +94,11 @@ DEBUG: foreach my $column (keys %$model)
 
             $i = $i + 1;
         }#end foreach column
-
-        print "\n)ENGINE = InnoDB;\n\n";
+        
+        #I am pulling this out for now so I can pipe the output into SQLlite for testing
+        #in the future we should be able to know what type of DB we are using.
+        #print "\n)ENGINE = InnoDB;\n\n";
+        print "\n);\n\n";
     }#end model loop
 }#end generate sql
 
