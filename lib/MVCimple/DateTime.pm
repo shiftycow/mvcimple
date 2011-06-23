@@ -40,10 +40,10 @@ sub new
     
 
     $self->{'format'} = '%Y-%m-%d %H-%M-%S';
-    $self->{'format'} = $model->{'format'} if($model->{'format'} ne undef;#format specifier recognized by strftime()
-    
-    $self->{'value'} = $self->now();
-    $self->{'value'} = $model->{'value'} if ($model->{'value'};
+    $self->{'format'} = $model->{'format'} if($model->{'format'} ne undef);#format specifier recognized by strftime()
+    $self->{'now'}    =  $model->{'format'} if($model->{'format'} ne undef);
+    $self->{'value'} = $self->now() if ($model->{now});
+    $self->{'value'} = $model->{'value'} if($model->{'value'});
 
     bless $self;
     return $self;
@@ -103,6 +103,7 @@ sub normalize
 #
 sub now
 {
-  return POSIX::strftime($self->{'format'}, localtime);
+    my ($self) = @_;
+    return POSIX::strftime($self->{'format'}, localtime);
 }#end now
 1;
