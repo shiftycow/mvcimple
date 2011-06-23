@@ -17,11 +17,11 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with MVCimple.  If not, see <http://www.gnu.org/licenses/>. 
 
-=head3 Synopsis
+=head2 Synopsis
 
-=head3 Features
+=head2 Features
 
-=head3 Description
+=head2 Description
 
 MVCimple is a lightweight web application framework for Perl. It is currently
 focused on automating the data manipulations of applications, providing
@@ -37,7 +37,7 @@ routing, or anything in between. It's Perl - there's more than one way to do it!
 MVCimple is still under I<heavy> development, so please leave comments and issues
 if you find them.
 
-=head3 Dependencies
+=head2 Dependencies
 
 MVCimple is designed to make I<strict> applications with a very short list
 of dependencies. The following core dependencies should be included 
@@ -70,11 +70,31 @@ To use some fancier features (like automated unit tests), you'll also need:
 In addition to Perl dependencies, generated forms rely heavily on
 L<Jquery> and L<JqueryUI> for a dynamic user experience.
 
-=head3 App Configuration
+=head2 Installation
 
-=head4 App
+=head2 Building an Application
 
-=head4 Model
+=head3 Structure
+
+MVCimple applications should have something like the following directory structure
+
++MyApp
+|
+|--lib
+|  +
+|  |-- MVCimple
+|
+|--web
+|
+|--conf
+|  +
+|  |-- app_config.conf
+
+When using Apache or the DocumentRoot
+
+=head3 App
+
+=head3 Model
 
 At the core of any application are the data I<models> that define what data
 are stored and how they are related to one-another. MVCimple uses XML files
