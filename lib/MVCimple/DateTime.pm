@@ -94,6 +94,7 @@ sub normalize
     #see if we have mm/dd/yyyy hh/mm
 
     #see if we have mm/dd/yyyy 
+    #etc...
 }#end normalize
 
 #
