@@ -19,24 +19,29 @@ along with MVCimple.  If not, see <http://www.gnu.org/licenses/>.
 
 =head3 Synopsis
 
-mvcimple --generate-app <configuration_file.xml>
+=head3 Features
 
 =head3 Description
 
-MVCimple is a lightweight web application framework for Perl.
-It's focus is to automate the data side of applications using objects,
-and handle the Create, Read, Update, Delete (CRUD) functions easily.
+MVCimple is a lightweight web application framework for Perl. It is currently
+focused on automating the data manipulations of applications, providing
+easy interfaces to create data objects, turn them into forms, validate 
+user input, and return error messages to the user. 
 
-MVCimple is being designed to play nicely with other frameworks like
-Mojolicious. It is also designed to be extensible by end users who may
-need to override some methods or add datatypes to provide more functionality.
+MVCimple is designed as a complement to other frameworks like Mojolicious,
+which can provide additional features not present in MVCimple. You can write a
+complete application using MVCimple's built-in template engine, use 
+MVCimple objects in a L<Mojolicious::Lite> application to take advantage of fancy
+routing, or anything in between. It's Perl - there's more than one way to do it!
 
-Please note that MVCimple is still under I<heavy> development.
+MVCimple is still under I<heavy> development, so please leave comments and issues
+if you find them.
+
 =head3 Dependencies
 
-MVCimple is designed to generate strict applications with a very short list
-of dependencies. The following dependencies should be either included in the
-standard Perl distribution or be a quick CPAN/apt/yum installation away.
+MVCimple is designed to make I<strict> applications with a very short list
+of dependencies. The following core dependencies should be included 
+in the standard Perl distribution:
 
 =over 4
 
@@ -44,15 +49,37 @@ standard Perl distribution or be a quick CPAN/apt/yum installation away.
 
 =item * L<CGI>
 
+=item * L<DBI>
+
 =back
 
-In addition to Perl dependencies, MVCimple applications rely heavily on
-L<Jquery> and L<JqueryUI> for AJAX communication between the browser and
-the server. 
+To use some fancier features (like automated unit tests), you'll also need:
+
+=over 4
+
+=item * L<Time::HiRes>
+
+=item * L<Data::Dumper>
+
+=item * L<XML::Dumper>
+
+=item * L<Term::ANSIColor>
+
+=back
+
+In addition to Perl dependencies, generated forms rely heavily on
+L<Jquery> and L<JqueryUI> for a dynamic user experience.
+mvcimple --generate-app <configuration_file.xml>
 
 =head3 App Configuration
 
 =head4 App
+
+=over 5
+
+foo
+
+=back
 
 =head4 Model
 
