@@ -46,5 +46,6 @@ use MVCimple::IP;
 use MVCimple::EMail;
 use MVCimple::EtherMAC;
 use MVCimple::Password;
+use MVCimple::DateTime;
 
 1;

@@ -113,6 +113,9 @@ sub validate
             print "Validation Result: \n";
             print Dumper($result) if(not $xml);
             print XML::Dumper::pl2xml($result) if($xml);
+            print "Stored Value: \n";
+            print Dumper($test_object->get_value());
+            print XML::Dumper::pl2xml($test_object->get_value()) if($xml);
         }
         
         # print pass/fail messages

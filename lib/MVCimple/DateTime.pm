@@ -37,7 +37,7 @@ sub new
     my ($class,$name,$model) = @_;
     
     my $self = {'name' => $name};
-    
+    bless $self;
 
     $self->{'format'} = '%Y-%m-%d %H-%M-%S';
     $self->{'format'} = $model->{'format'} if($model->{'format'} ne undef);#format specifier recognized by strftime()
@@ -45,7 +45,6 @@ sub new
     $self->{'value'} = $self->now() if ($model->{now});
     $self->{'value'} = $model->{'value'} if($model->{'value'});
 
-    bless $self;
     return $self;
 }#end constructor
 
@@ -62,9 +61,10 @@ sub to_sql
 sub validate
 {
     my ($self) = @_;
-
-    return {"success" => "value will be set to now() by database"} if($self->{"now"});
-    
+    if($self->{"now"}) {
+        $self->{'value'} = $self->now();
+        return({"success" => "value will be set to now()"});
+    }
     # check whether the string looks like a date in the format we're using
 
     #return a warning if we normalized the date
