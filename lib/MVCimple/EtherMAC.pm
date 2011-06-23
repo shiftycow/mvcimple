@@ -44,6 +44,9 @@ sub new
 #We overwrite set_value so that the address can be normalized
 sub set_value {
     my ($self,$value) = @_;
+
+        #TODO: return a warning if we've normalized the address
+
         $self->{'value'} = convertEther($self,$value);
         #print "\nValue ='" . $self->{'value'} . "'\n\n" ; #DEBUG
     }
