@@ -31,12 +31,7 @@ use Term::ANSIColor; #for fancy colors
 #local includes
 use MVCimple::Config;
 
-use MVCimple::String;
-use MVCimple::Number;
-use MVCimple::BaseModel;
-use MVCimple::EtherMAC;
-use MVCimple::IP;
-use MVCimple::Password;
+use MVCimple::Types;
 
 use MVCimple::DBConnect;
 use MVCimple::GenSQL;
@@ -65,6 +60,13 @@ sub validate
     
     $model_params->{'datatype'} = $config->element("datatype");
     $config->remove('datatype');
+    
+    $model_params->{'now'} = $config->element("now");
+    $config->remove('now');
+
+
+    $model_params->{'primary_key'} = $config->element("primary_key");
+    $config->remove('primary_key');
     
     my $verbose = $config->element("verbose");
     $config->remove('verbose');

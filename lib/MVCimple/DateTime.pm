@@ -41,7 +41,7 @@ sub new
 
     $self->{'format'} = '%Y-%m-%d %H-%M-%S';
     $self->{'format'} = $model->{'format'} if($model->{'format'} ne undef);#format specifier recognized by strftime()
-    $self->{'now'}    =  $model->{'format'} if($model->{'format'} ne undef);
+    $self->{'now'}    =  $model->{'now'} if($model->{'now'} ne undef);
     $self->{'value'} = $self->now() if ($model->{now});
     $self->{'value'} = $model->{'value'} if($model->{'value'});
 
