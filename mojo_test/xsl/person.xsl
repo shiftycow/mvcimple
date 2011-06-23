@@ -13,6 +13,7 @@
                         <th>fname</th>
                         <th>lname</th>
                         <th>age</th>
+                        <th>entry_date</th>
                     </tr>
                     <xsl:for-each select="opt/anon">
                         <tr>
@@ -20,6 +21,7 @@
                             <td class = "fname"><xsl:value-of select="@fname"/></td>
                             <td class = "lname"><xsl:value-of select="@lname"/></td>
                             <td class = "age"><xsl:value-of select="@age"/></td>
+                            <td class = "entry_date"><xsl:value-of select="@entry_date"/></td>
                         </tr>
                     </xsl:for-each>
                 </table>

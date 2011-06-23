@@ -20,6 +20,10 @@
             <age>
                 <type>Number</type>
             </age>
+            <entry_date>
+                <type>DateTime</type>
+                <now></now>
+            </entry_date>
         </person>
     </models>
 
