@@ -69,17 +69,10 @@ To use some fancier features (like automated unit tests), you'll also need:
 
 In addition to Perl dependencies, generated forms rely heavily on
 L<Jquery> and L<JqueryUI> for a dynamic user experience.
-mvcimple --generate-app <configuration_file.xml>
 
 =head3 App Configuration
 
 =head4 App
-
-=over 5
-
-foo
-
-=back
 
 =head4 Model
 
