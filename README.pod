@@ -68,7 +68,7 @@ To use some fancier features (like automated unit tests), you'll also need:
 =back
 
 In addition to Perl dependencies, generated forms rely heavily on
-L<Jquery> and L<JqueryUI> for a dynamic user experience.
+Jquery> and JqueryUI for a dynamic user experience.
 
 =head2 Installation
 
@@ -78,19 +78,20 @@ L<Jquery> and L<JqueryUI> for a dynamic user experience.
 
 MVCimple applications should have something like the following directory structure
 
-+MyApp
-|
-|--lib
-|  +
-|  |-- MVCimple
-|
-|--web
-|
-|--conf
-|  +
-|  |-- app_config.conf
+ +MyApp
+ |
+ |--lib
+ |  +
+ |  |-- MVCimple
+ |
+ |--web
+ |
+ |--conf
+ |  +
+ |  |-- app_config.conf
 
-When using Apache or the DocumentRoot
+When using a webserver like Apache, the <DocumentRoot> of the application should be C</path/to/MyApp/web>.
+The C<lib/MVCimple/> directory can be a symbolic link to a common installation of MVCimple, if that is desireable.
 
 =head3 App
 
@@ -99,4 +100,6 @@ When using Apache or the DocumentRoot
 At the core of any application are the data I<models> that define what data
 are stored and how they are related to one-another. MVCimple uses XML files
 to define data models and then automatically generates I<views> and 
-C<Controllers> for them.
+I<controllers> for them.
+
+
