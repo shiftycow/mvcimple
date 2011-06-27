@@ -25,6 +25,8 @@ use DBI;
 #local includes
 use lib "../";
 
+use MVCimple::Types; #use all the datatypes
+
 #This is the base model for any model Class
 
 
