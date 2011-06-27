@@ -7,6 +7,9 @@
 #
 
 use strict;
+
+use Data::Dumper; #DEBUG
+
 use lib "../lib";
 
 use Mojolicious::Lite;
@@ -54,8 +57,10 @@ get '/' => sub {
     my $self = shift;
     
     my $viewdata = $Greeting->get_forms();
-    $self->render_text("foo");
-    $self->render_text("bar");
+    $viewdata = {%$viewdata, $Greeting->load()};
+    $self->render_text(Dumper($viewdata));
+    #second render_text doesn't get displayed
+    #$self->render_text("bar");
 };
 
 #start Mojolicious app!
