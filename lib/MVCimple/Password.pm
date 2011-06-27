@@ -55,7 +55,9 @@ sub new
 #
 sub to_input
 {
-    my ($self) = @_;
+    my ($self,$name_prefix) = @_;
+
+    $name_prefix .= '_' if($name_prefix);
 
     my $html = "";
     my $name = $self->{"name"};

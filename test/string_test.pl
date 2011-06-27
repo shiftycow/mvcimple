@@ -30,7 +30,7 @@ use MVCimple::String;
 my $string = new MVCimple::String("test_string",{'length'=>10, 'null'=>0});
 
 print "\n####\n#Testing string->to_sql()\n####\n\n" . $string->to_sql()."\n";
-print "\n####\n#Testing string->to_input()\n####\n\n" . $string->to_input()."\n";
+print "\n####\n#Testing string->to_input()\n####\n\n" . $string->to_input("blah")."\n";
 
 ################################
 # Validation tests for Strings.#

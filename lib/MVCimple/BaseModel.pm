@@ -61,7 +61,7 @@ sub get_forms {
     while( my($name,$column_data) = each(%{$self->{columns}})) {
 
         #We should probably check that we have the method for the type
-        $forms->{"$modelname\_$name\_form"} = $column_data->to_input(); 
+        $forms->{"$modelname\_$name\_form"} = $column_data->to_input($modelname); 
 
     }
     return $forms;
@@ -73,7 +73,7 @@ sub store_input{
     my $modelname = $self->{'name'};
 	
     while( my($name,$column_data) = each(%{$self->{columns}})) {
-            $column_data->set_value($co->param($name)); 
+            $column_data->set_value($co->param($modelname .'_'. $name)); 
     }
 }#end store_input
 
