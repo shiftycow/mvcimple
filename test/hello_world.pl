@@ -10,7 +10,7 @@ use strict;
 use lib "../lib";
 
 use Mojolicious::Lite;
-use MVCimple::All;
+use MVCimple::App;
 
 #set up the data models
 my $models = {'greeting' => 
@@ -34,13 +34,13 @@ my $models = {'greeting' =>
                          'value' => 'World'
                         }
                     }#end predicate
-                }#end greeting
+                };#end greeting
 
-my $Greeting = new MVCimple::BaseModel('greeting',$models->{'greeting'};
+my $Greeting = new MVCimple::BaseModel('greeting',$models->{'greeting'});
 
 my $config = new MVCimple::Config();
 
-$config->set("dbdrvier","SQLite");
+$config->set("dbdriver","SQLite");
 $config->set("dbname","hello_world.db");
 `touch hello_world.db`; #in case it doesn't exist
 
