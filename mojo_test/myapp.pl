@@ -3,10 +3,7 @@
 use Mojolicious::Lite;
 use XML::Simple;
 use lib '../lib/';
-use MVCimple::BaseModel;
-use MVCimple::RenderView;
-use MVCimple::DBConnect;
-use MVCimple::Config;
+use MVCimple::App;
 
 #The model read from the config globally
 
