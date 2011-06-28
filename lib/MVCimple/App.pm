@@ -19,11 +19,16 @@ package MVCimple::App;
 #
 #
 
-# wrapper for including necessary MVCimple modules for a web application
+# wrapper for including necessary modules for a MVCimple web application
 
+#system includes
+use XML::Simple;
+
+#local includes
 use MVCimple::BaseModel;
 use MVCimple::DBConnect;
 use MVCimple::Config;
 use MVCimple::RenderView;
+use MVCimple::GenSQL;
 
 1;

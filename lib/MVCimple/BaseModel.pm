@@ -188,8 +188,12 @@ sub load {
     my $modelname = $self->{'name'};
 
     my $sql = "SELECT * FROM $modelname;";
-    my $sth = $dbh->prepare($sql);
-    $sth->execute();
+    my $sth = $dbh->prepare($sql)
+        or return {"error" => "load() can't prepare query: $DBI::errstr\n"};
+
+    $sth->execute()
+        or return {"error" => "Can't execute SQL statement: $DBI::errstr\n"};
+    
     my $rows = [];
     my $i = 0;
     my $row;

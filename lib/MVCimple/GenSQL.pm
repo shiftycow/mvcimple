@@ -40,15 +40,16 @@ use MVCimple::Types;
 =cut
 sub generate_sql
 {
-    my ($models,$method,$db) = @_;
-    
-    print "-- MVCimple SQL Generator --\n"; 
+    my ($models,$config) = @_;
+    my $sql;
+
+    $sql.= "-- MVCimple SQL Generator --\n"; 
     foreach my $model_name (keys %$models)
     {
-        print "-- Generating SQL for `$model_name` table --\n";
+        $sql .= "-- Generating SQL for `$model_name` table --\n";
 
-        print "DROP TABLE IF EXISTS `$model_name`;\n";
-        print "CREATE TABLE `$model_name`(\n";
+        $sql .= "DROP TABLE IF EXISTS `$model_name`;\n";
+        $sql .= "CREATE TABLE `$model_name`(\n";
         
         my $model = $models->{$model_name};
         my $i = 0; #counter for figuring out where to put line separators (,\n)
@@ -79,18 +80,14 @@ DEBUG: foreach my $column (keys %$model)
 
             my $object = $data_model->new($column,$modelcolumn);
 
-            print $object->to_sql();
-
-            #define data type
-            #print MVCimple::String::to_sql($length) if $type eq "string";
-            #print MVCimple::Number::to_sql($length) if $type eq "number";            
+            $sql .= $object->to_sql();
         
             #output database constraints if specified
-            print " PRIMARY KEY" if($PRIMARY_KEY);
-            print ",\n    FOREIGN_KEY (`$column`) REFERENCES $fk_model(`$fk_column`)" if($FOREIGN_KEY);
+            $sql .= " PRIMARY KEY" if($PRIMARY_KEY);
+            $sql .= ",\n    FOREIGN_KEY (`$column`) REFERENCES $fk_model(`$fk_column`)" if($FOREIGN_KEY);
             
             #separate the columns, unless we're at the last one
-            print ",\n" if($i lt (keys %$model) - 1);
+            $sql .= ",\n" if($i lt (keys %$model) - 1);
 
             $i = $i + 1;
         }#end foreach column
@@ -98,9 +95,10 @@ DEBUG: foreach my $column (keys %$model)
         #I am pulling this out for now so I can pipe the output into SQLlite for testing
         #in the future we should be able to know what type of DB we are using.
         #print "\n)ENGINE = InnoDB;\n\n";
-        print "\n);\n\n";
+        $sql .= "\n);\n\n";
     }#end model loop
-}#end generate sql
 
+    return $sql;
+}#end generate sql
 
 1;
