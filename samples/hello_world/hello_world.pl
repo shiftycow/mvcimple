@@ -10,7 +10,8 @@ use strict;
 
 use Data::Dumper; #DEBUG
 
-use lib "../lib";
+# path to local MVCimple install
+use lib "../../lib";
 
 use Mojolicious::Lite;
 use MVCimple::App;
@@ -65,10 +66,10 @@ my $dbh = MVCimple::DBConnect::connect($config);
 #
 
 # view to output static XSL files
-any '/static/:xsl.:ext' => sub {
+any '/static/templates/:xsl.:ext' => sub {
     my $self = shift;
     my $xsl = $self->stash('xsl');
-    open(FILE,"static/$xsl.xsl");
+    open(FILE,"static/templates/$xsl.xsl");
     my $data;
     while(<FILE>) {$data .= $_;}
     close(FILE);
@@ -91,7 +92,7 @@ get '/' => sub {
     }
 
     #render the page to the browser
-    my $xml = '<?xml-stylesheet type="text/xsl" href="static/hello_world.xsl"?>'."\n";    
+    my $xml = '<?xml-stylesheet type="text/xsl" href="static/templates/hello_world.xsl"?>'."\n";    
     #$xml .= XML::Simple::XMLout($viewdata);
 
     $self->render(data => $xml, format => 'xml');
