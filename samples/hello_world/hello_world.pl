@@ -93,7 +93,7 @@ get '/' => sub {
 
     #render the page to the browser
     my $xml = '<?xml-stylesheet type="text/xsl" href="static/templates/hello_world.xsl"?>'."\n";    
-    #$xml .= XML::Simple::XMLout($viewdata);
+    $xml .= XML::Simple::XMLout($viewdata);
 
     $self->render(data => $xml, format => 'xml');
 };#end "/" route
