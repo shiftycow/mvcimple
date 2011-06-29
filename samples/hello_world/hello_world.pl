@@ -65,18 +65,6 @@ my $dbh = MVCimple::DBConnect::connect($config);
 # behavior definitions for Mojolicious Routes
 #
 
-# view to output static XSL files
-#any '/static/templates/:xsl.:ext' => sub {
-#    my $self = shift;
-#    my $xsl = $self->stash('xsl');
-#    open(FILE,"static/templates/$xsl.xsl");
-#    my $data;
-#    while(<FILE>) {$data .= $_;}
-#    close(FILE);
-
-#    $self->render(data => $data, format => 'xml');
-#};#end XSL route
-
 # default view
 get '/' => sub {
     my $self = shift;

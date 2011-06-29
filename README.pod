@@ -1,6 +1,6 @@
 =head1 Name
 
-MVCimple - A simple Model-View-Controller web framework for Perl
+MVCimple - A data-focused Model-View-Controller framework for Perl
 
 =head2 Copying
 
@@ -21,6 +21,31 @@ along with MVCimple.  If not, see <http://www.gnu.org/licenses/>.
 
 =head2 Features
 
+=over 4
+
+=item * Database Driven
+
+MVCimple models are designed to be stored in a relational database. 
+Work on the framework was started to automate manipulation of 
+
+=item * Validation of User Input
+
+MVCimple model objects know their own constraints and can be easily validated
+with built-in methods
+
+=item * SQL Generation
+
+MVCimple dynamically generates SQL code from model definitions, so you don't have to!
+
+=item * Templating
+
+MVCimple contains a simple template engine that is based on standard HTML. 
+MVCimple model objects can also be used with other template engines to 
+get even more functionality. They also dump cleanly to XML to harness the
+power of XSLT.
+
+=back
+
 =head2 Description
 
 MVCimple is a lightweight web application framework for Perl. It is currently
@@ -28,14 +53,20 @@ focused on automating the data manipulations of applications, providing
 easy interfaces to create data objects, turn them into forms, validate 
 user input, and return error messages to the user. 
 
-MVCimple is designed as a complement to other frameworks like Mojolicious,
-which can provide additional features not present in MVCimple. You can write a
+Although it contains features like templating, MVCimple is really
+intended as a complement to other frameworks like Mojolicious. You can write a
 complete application using MVCimple's built-in template engine, use 
 MVCimple objects in a L<Mojolicious::Lite> application to take advantage of fancy
 routing, or anything in between. It's Perl - there's more than one way to do it!
 
 MVCimple is still under I<heavy> development, so please leave comments and issues
 if you find them.
+
+=head3 Examples
+
+The included "Hello World" sample is a L<Mojolicious::Lite> application that uses MVCimple
+to handle interaction with a SQLite database. It demonstrates the important features of
+MVCimple and uses XSLT for templating. 
 
 =head2 Dependencies
 
