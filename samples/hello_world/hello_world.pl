@@ -66,16 +66,16 @@ my $dbh = MVCimple::DBConnect::connect($config);
 #
 
 # view to output static XSL files
-any '/static/templates/:xsl.:ext' => sub {
-    my $self = shift;
-    my $xsl = $self->stash('xsl');
-    open(FILE,"static/templates/$xsl.xsl");
-    my $data;
-    while(<FILE>) {$data .= $_;}
-    close(FILE);
+#any '/static/templates/:xsl.:ext' => sub {
+#    my $self = shift;
+#    my $xsl = $self->stash('xsl');
+#    open(FILE,"static/templates/$xsl.xsl");
+#    my $data;
+#    while(<FILE>) {$data .= $_;}
+#    close(FILE);
 
-    $self->render(data => $data, format => 'xml');
-};#end XSL route
+#    $self->render(data => $data, format => 'xml');
+#};#end XSL route
 
 # default view
 get '/' => sub {
@@ -92,7 +92,7 @@ get '/' => sub {
     }
 
     #render the page to the browser
-    my $xml = '<?xml-stylesheet type="text/xsl" href="static/templates/hello_world.xsl"?>'."\n";    
+    my $xml = '<?xml-stylesheet type="text/xsl" href="/templates/hello_world.xsl"?>'."\n";    
     $xml .= XML::Simple::XMLout($viewdata);
 
     $self->render(data => $xml, format => 'xml');
