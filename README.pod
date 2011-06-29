@@ -1,6 +1,6 @@
 =head1 Name
 
-MVCimple - A simple model-view-controller framework generator for Perl
+MVCimple - A simple Model-View-Controller web framework for Perl
 
 =head2 Copying
 
