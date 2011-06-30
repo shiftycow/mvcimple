@@ -2,7 +2,7 @@
 #This is an example of Using Mojolicious with MVCimple. I decided to use our MVCimple engine 
 use Mojolicious::Lite;
 use XML::Simple;
-use lib '../lib/';
+use lib '../../lib/';
 use MVCimple::App;
 
 #The model read from the config globally
@@ -19,17 +19,6 @@ my $config = new MVCimple::Config('myapp.conf','.');
 my $dbh = MVCimple::DBConnect::connect($config);
 
 
-any '/xsl/:xsl.:ext' => sub {
-    my $self = shift;
-    my $xsl = $self->stash('xsl');
-    open(FILE,"xsl/$xsl.xsl");
-    my $data;
-    while(<FILE>) {$data .= $_;}  
-    close(FILE);
-    $self->render(data=>$data,format =>'xml');
-
-};
-
 get '/' => sub {
     my $self = shift;
     my $viewdata = $Person->get_forms();
@@ -41,7 +30,7 @@ get '/view' => sub {
     my $self = shift;
     my $person_data = $Person->load($dbh);
     my $person_xml = '<?xml-stylesheet type="text/xsl" href="xsl/person.xsl"?>' . "\n";
-    $person_xml .= $xml->XMLout($person_data);
+    $person_xml .= $xml->XMLout($person_data->{data});
     $self->render(data =>$person_xml, format=>'xml');
 
 };

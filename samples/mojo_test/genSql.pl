@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use XML::Simple;
-use lib "../lib/";
+use lib "../../lib/";
 use MVCimple::GenSQL;
 
 my $xml = new XML::Simple;
