@@ -58,7 +58,7 @@ sub new {
     
     #This script could be called from cron, so we need to find it's 
     #path to make it portable
-    my $self->{app_path} = File::Spec->rel2abs($0);
+    $self->{app_path} = File::Spec->rel2abs($0);
     (undef, $self->{app_path}, undef) = File::Spec->splitpath($self->{app_path});
 
     #We will use the defaults in this file if nothing is specified
