@@ -2,11 +2,17 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:template match="/">
             <html>
-                <head>
-                </head>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+                <title>Hello, World!</title>
 
-                <body>
-                
+                <!-- links to jQuery scripts and stylesheets -->
+                <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.14.custom.css" rel="stylesheet" />
+                <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+                <script type="text/javascript" src="js/jquery-ui-1.8.14.custom.min.js"></script>
+            </head>
+
+            <body>    
                 <!--output "global" messages and errors, if any-->
                 <xsl:if test="count(/opt/@message) &gt; 0">
                     <div class="message"><xsl:value-of select="opt/@message" /></div>
