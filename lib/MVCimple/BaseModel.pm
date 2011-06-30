@@ -203,7 +203,7 @@ sub load {
         $i++;
     }
     $sth->finish();
-    return $rows;
+    return {"data" => $rows};
 }#end load
 
 1;

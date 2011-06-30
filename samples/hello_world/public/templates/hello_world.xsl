@@ -79,9 +79,15 @@
                 </xsl:when>
 
                 <xsl:otherwise>
-                <ol>
-                    <li></li>
-                </ol>
+                <ul>
+                    <xsl:for-each select="/opt/greetings/data">
+                    <li>
+                        Greeting <xsl:value-of select="id" />: 
+                        <xsl:value-of select="predicate"/>, 
+                        <xsl:value-of select="subject" />!
+                    </li>
+                    </xsl:for-each>
+                </ul>
                 </xsl:otherwise>
                 </xsl:choose><!--end add new greeting section-->
                 

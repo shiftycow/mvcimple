@@ -70,12 +70,13 @@ get '/' => sub {
     my $viewdata = {};
     $viewdata->{"forms"} = $Greeting->get_forms();
     $viewdata->{"greetings"} = $Greeting->load($dbh);
-    if($viewdata->{"greetings"}->{"error"} =~ /no such table/)
-    {
-        $viewdata->{"message"} = "Warning: The database probably hasn't been generated.";
-        $viewdata->{"message"} .= "Use the following SQL code to create it:";
-        $viewdata->{"sql"} = MVCimple::GenSQL::generate_sql($models,$config);
-    }
+   
+    #if($viewdata->{"greetings"}->{"error"} =~ /no such table/)
+    #{
+    #    $viewdata->{"message"} = "Warning: The database probably hasn't been generated.";
+    #    $viewdata->{"message"} .= "Use the following SQL code to create it:";
+    #    $viewdata->{"sql"} = MVCimple::GenSQL::generate_sql($models,$config);
+    #}
 
     #render the page to the browser
     my $xml = '<?xml-stylesheet type="text/xsl" href="/templates/hello_world.xsl"?>'."\n";    
