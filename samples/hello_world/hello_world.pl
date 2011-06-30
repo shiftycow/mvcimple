@@ -27,28 +27,26 @@ use MVCimple::App;
 # my $models = 
 # my $models = 
 
-my $models = {'greeting' => 
-                    {'id' =>
+my $models = {'greeting' => {
+                    'id' =>
                         {'type' => 'Integer',
                          'primary_key' => 'true',
                          'auto_increment' => 'true'
-                        }
-                    },#end id
+                        },#end id
 
-                    {'subject' => 
+                    'subject' => 
                         {'type' => 'String',
                          'length' => '64',
                          'value' => 'World'
-                        }
-                    },#end subject
+                        },#end subject
 
-                    {'predicate' =>
+                    'predicate' =>
                         {'type' => 'String',
                          'length' => '64',
                          'value' => 'Hello'
                         }
-                    }#end predicate
-                };#end greeting
+                    }#end greeting
+                };#end models
 
 my $Greeting = new MVCimple::BaseModel('greeting',$models->{'greeting'});
 
@@ -74,14 +72,14 @@ get '/' => sub {
     $viewdata->{"greetings"} = $Greeting->load($dbh);
     if($viewdata->{"greetings"}->{"error"} =~ /no such table/)
     {
-        $viewdata->{"message"} = "Warning: The database probably hasn't been generated\n";
-        $viewdata->{"message"} .= "Use the following SQL code to create it:\n";
+        $viewdata->{"message"} = "Warning: The database probably hasn't been generated.";
+        $viewdata->{"message"} .= "Use the following SQL code to create it:";
         $viewdata->{"sql"} = MVCimple::GenSQL::generate_sql($models,$config);
     }
 
     #render the page to the browser
     my $xml = '<?xml-stylesheet type="text/xsl" href="/templates/hello_world.xsl"?>'."\n";    
-    $xml .= XML::Simple::XMLout($viewdata);
+    $xml .= XML::Simple::XMLout($viewdata, NoAttr=>1 );
 
     $self->render(data => $xml, format => 'xml');
 };#end "/" route

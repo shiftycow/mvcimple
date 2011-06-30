@@ -6,14 +6,14 @@
                 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
                 <title>Hello, World!</title>
     
-                <!-- links to MVCimple scripts and stylesheets -->
-                <link type="text/css" href="css/mvcimple.css" rel="stylesheet" />
-                <script type="text/javascript" src="js/mvcimple.js"></script>
-
                 <!-- links to jQuery scripts and stylesheets -->
                 <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.14.custom.css" rel="stylesheet" />
                 <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
                 <script type="text/javascript" src="js/jquery-ui-1.8.14.custom.min.js"></script>
+                
+                <!-- links to MVCimple scripts and stylesheets -->
+                <link type="text/css" href="css/mvcimple.css" rel="stylesheet" />
+                <script type="text/javascript" src="js/mvcimple.js"></script>
                 
                 <!-- links to application-specific scripts and stylesheets -->
                 <link type="text/css" href="css/hello_world.css" rel="stylesheet" />
@@ -21,21 +21,21 @@
             </head>
 
             <body>
-                <div id="container"><!--container div to keep things centered-->
+                <div id="mvcimple-container"><!--container div to keep things centered-->
 
                 <!--output "global" messages and errors, if any-->
-                <xsl:if test="count(/opt/@message) &gt; 0">
-                    <div class="message ui-state-highlight ui-corner-all"><xsl:value-of select="opt/@message" />
+                <xsl:if test="count(/opt/message) &gt; 0">
+                    <div class="mvcimple-message ui-state-highlight ui-corner-all"><xsl:value-of select="opt/message" />
                     
                     <!--/opt might contain some SQL if we need to generate the database-->
-                    <xsl:if test="count(/opt/@sql) &gt; 0">
-                        <div class="code ui-corner-all"><xsl:value-of select="opt/@sql" /></div>
+                    <xsl:if test="count(/opt/sql) &gt; 0">
+                        <div class="mvcimple-code ui-corner-all"><xsl:value-of select="opt/sql" /></div>
                     </xsl:if>
                     </div><!--end message-->
                 </xsl:if>
 
-                <xsl:if test="count(/opt/@error) &gt; 0">
-                    <div class="error ui-state-error ui-corner-all"><xsl:value-of select="/opt/@error" /></div>
+                <xsl:if test="count(/opt/error) &gt; 0">
+                    <div class="mvcimple-error ui-state-error ui-corner-all"><xsl:value-of select="/opt/error" /></div>
                 </xsl:if>
 
                 <!--output the header greeting-->
@@ -45,13 +45,13 @@
                             
                 <h2>Add a New Greeting</h2>
                 <!--output messages and errors, if any-->
-                <xsl:if test="count(/opt/forms/@message) &gt; 0">
-                    <div class="message ui-state-highlight ui-corner-all"><xsl:value-of select="/opt/forms/@message" /></div>
+                <xsl:if test="count(/opt/forms/message) &gt; 0">
+                    <div class="mvcimple-message ui-state-highlight ui-corner-all"><xsl:value-of select="/opt/forms/message" /></div>
                 </xsl:if>
                 <!-- if we have an error, we shouldn't output the "normal" stuff-->
                 <xsl:choose>
-                <xsl:when test="count(/opt/greetings/@error) &gt; 0">
-                    <div class="error ui-state-error ui-corner-all"><xsl:value-of select="/opt/forms/@error" /></div>
+                <xsl:when test="count(/opt/forms/error) &gt; 0">
+                    <div class="mvcimple-error ui-state-error ui-corner-all"><xsl:value-of select="/opt/forms/error" /></div>
                 </xsl:when>
                 
                 <xsl:otherwise>
@@ -63,14 +63,19 @@
                 <hr />
                 <h2>Available Greetings</h2>
                 <!--output messages and errors, if any-->
-                <xsl:if test="count(/opt/greetings/@message) &gt; 0">
-                    <div class="message ui-state-highlight ui-corner-all"><xsl:value-of select="/opt/greetings/@message" /></div>
+                <xsl:if test="count(/opt/greetings/message) &gt; 0">
+                    <div class="mvcimple-message ui-state-highlight ui-corner-all"><xsl:value-of select="/opt/greetings/message" /></div>
                 </xsl:if>
                
                 <!-- if we have an error, we shouldn't output the "normal" stuff-->
                 <xsl:choose>
-                <xsl:when test="count(/opt/greetings/@error) &gt; 0">
-                    <div class="error ui-state-error ui-corner-all"><xsl:value-of select="/opt/greetings/@error" /></div>
+                <xsl:when test="count(/opt/greetings/error) &gt; 0">
+                    <div class="mvcimple-error ui-state-error ui-corner-all">
+                        <h4>Error:</h4>
+                        <div class="mvcimple-error-text ui-corner-all">
+                        <xsl:value-of select="/opt/greetings/error" />
+                        </div>
+                    </div>
                 </xsl:when>
 
                 <xsl:otherwise>
