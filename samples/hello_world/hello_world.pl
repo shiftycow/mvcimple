@@ -76,6 +76,7 @@ get '/' => sub {
         $viewdata->{"message"} = "Warning: The database probably hasn't been generated.";
         $viewdata->{"message"} .= "Use the following SQL code to create it:";
         $viewdata->{"sql"} = MVCimple::GenSQL::generate_sql($models,$config);
+        $viewdata->{"message"} .= "<input type=\"text\" name=\"foor\" value=\"bar\" />";
     }
 
     #render the page to the browser

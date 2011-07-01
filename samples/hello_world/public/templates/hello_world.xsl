@@ -25,7 +25,8 @@
 
                 <!--output "global" messages and errors, if any-->
                 <xsl:if test="count(/opt/message) &gt; 0">
-                    <div class="mvcimple-message ui-state-highlight ui-corner-all"><xsl:value-of select="opt/message" />
+                    <div class="mvcimple-message ui-state-highlight ui-corner-all">
+                        <xsl:value-of select="opt/message" disable-output-escaping="yes" />
                     
                     <!--/opt might contain some SQL if we need to generate the database-->
                     <xsl:if test="count(/opt/sql) &gt; 0">
