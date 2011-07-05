@@ -44,5 +44,5 @@ function add_greeting()
                                  
                                 //add another <li> into which we can put the new greeting
                                 mvcimple_show_data(data,"add_greeting.xsl");
-                            }
+                            });
 }//end add_greeting
