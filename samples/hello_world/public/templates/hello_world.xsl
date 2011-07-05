@@ -97,6 +97,11 @@
                 </xsl:choose><!--end add new greeting section-->
                 
                 </div><!--end container-->
+                
+                <script type="text/javascript">
+                    init(); //initialize the mvcimple javascript
+                </script>
+                
                 </body>
             </html>
     </xsl:template>

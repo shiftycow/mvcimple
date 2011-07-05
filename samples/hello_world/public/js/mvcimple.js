@@ -39,7 +39,7 @@ function mvcimple_download_xslt(xsl_sheets)
 {
     for(i = 0; i < xsl_sheets.length; i++)
     {
-        $.get(key,null, function(data)
+        $.get(xsl_sheets[i],null, function(data)
                         {
                             mvcimple_xslt[xsl_sheets[i]] = data;
                         });
