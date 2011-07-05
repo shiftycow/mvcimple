@@ -9,6 +9,11 @@
 *
 ******************************************************************************/
 
+/*****************************************/
+/**       MVCimple Global Variables     **/
+/*****************************************/
+var mvcimple_xslt;
+
 /* default "waiting spinner" placeholder */
 var spinner_html = '<div class="spinner"><img src="images/spinner.gif" alt="Loading..." /></div>';
 
@@ -27,11 +32,18 @@ $.fn.exists = function(){return $(this).length > 0;}
 
 /*
 * mvcimple_download_xslt()
-*  Pre-load XSLT stylesheets and cache them in variables
+*  Pre-load XSLT stylesheets and cache them in variables so they 
+*  don't get requested all the time
 */
 function mvcimple_download_xslt()
 {
-    $.get("
+    for(key in mvcimple_xslt)
+    {
+        $.get(key,null, function(data)
+                        {
+                            mvcimple_xslt[key] = data;
+                        };
+    }
 }//end mvcimple_download_xslt()
 
 /*
@@ -41,5 +53,8 @@ function mvcimple_download_xslt()
 */
 function mvcimple_show_data(data,xsl,div)
 {
+    $(div).xslt({xml: data, xsl: mvcimple_xslt[xsl]});
 }//end mvcimple_show_data
+
+
 

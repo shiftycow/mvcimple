@@ -56,7 +56,7 @@
                 </xsl:when>
                 
                 <xsl:otherwise>
-                <form action="add" method="get">
+                <form action="javascript:add_greeting()" method="get">
                     <xsl:value-of select="/opt/forms/greeting_predicate_form" disable-output-escaping="yes" />,
                     <xsl:value-of select="/opt/forms/greeting_subject_form" disable-output-escaping="yes" />!
                     <input type="submit" name="submit" value="Submit" />
