@@ -71,13 +71,18 @@ get '/' => sub {
     $viewdata->{"forms"} = $Greeting->get_forms();
     $viewdata->{"greetings"} = $Greeting->load($dbh);
    
+    #
+    # if we get an error that looks like the DB is incomplete, 
+    # output something helpful
+    #
     if($viewdata->{"greetings"}->{"error"} =~ /no such table/)
     {
         $viewdata->{"message"} = "Warning: The database probably hasn't been generated.";
         $viewdata->{"message"} .= "Use the following SQL code to create it:";
         $viewdata->{"sql"} = MVCimple::GenSQL::generate_sql($models,$config);
-        $viewdata->{"message"} .= "<input type=\"text\" name=\"foor\" value=\"bar\" />";
     }
+    
+    $viewdata->{"promo_greeting"} = "Hello, world!";
 
     #render the page to the browser
     my $xml = '<?xml-stylesheet type="text/xsl" href="/templates/hello_world.xsl"?>'."\n";    
@@ -85,6 +90,34 @@ get '/' => sub {
 
     $self->render(data => $xml, format => 'xml');
 };#end "/" route
+
+#adding a new greeting
+get 'add' => sub{
+    my $self = shift;
+
+    #hash to hold the results of the add
+    my $result = {}; 
+    my $xml;
+
+    $Greeting->store_input($self);
+    $result = $Greeting->validate();
+    
+    if($result->{'error'} ne undef)
+    {
+        $xml = XML::Simple::XMLout($result, NoAttr => 1)    
+    }
+
+    else
+    {
+        my $data = $Greeting->get_values();
+        $result = $Greeting->save($dbh);
+        $data->{'id'} = $result->{'row_id'};
+        $xml = XML::Simple::XMLout($data, NoAttr => 1);
+    }
+    
+    $self->render(data => $xml, format => 'xml');
+}; #end "add" route
+
 
 #start Mojolicious app!
 app->start;

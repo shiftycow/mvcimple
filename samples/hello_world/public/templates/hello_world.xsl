@@ -40,7 +40,7 @@
                 </xsl:if>
 
                 <!--output the header greeting-->
-                <h2><xsl:value-of select="head_greeting" /></h2>
+                <h2><xsl:value-of select="/opt/promo_greeting" /></h2>
                 <!--end header-->
                 <hr />
                             
@@ -56,8 +56,12 @@
                 </xsl:when>
                 
                 <xsl:otherwise>
-                <form>
+                <form action="add" method="get">
+                    <xsl:value-of select="/opt/forms/greeting_predicate_form" disable-output-escaping="yes" />,
+                    <xsl:value-of select="/opt/forms/greeting_subject_form" disable-output-escaping="yes" />!
+                    <input type="submit" name="submit" value="Submit" />
                 </form>
+
                 </xsl:otherwise>
                 </xsl:choose><!--end add new greeting section-->
 
