@@ -46,10 +46,10 @@ sub generate_sql
     $sql.= "-- MVCimple SQL Generator --\n"; 
     foreach my $model_name (keys %$models)
     {
-        $sql .= "-- Generating SQL for `$model_name` table --\n";
+        $sql .= "-- Generating SQL for \"$model_name\" table --\n";
 
-        $sql .= "DROP TABLE IF EXISTS `$model_name`;\n";
-        $sql .= "CREATE TABLE `$model_name`(\n";
+        $sql .= "DROP TABLE IF EXISTS \"$model_name\";\n";
+        $sql .= "CREATE TABLE \"$model_name\"(\n";
         
         my $model = $models->{$model_name};
         my $i = 0; #counter for figuring out where to put line separators (,\n)
@@ -84,7 +84,7 @@ DEBUG: foreach my $column (keys %$model)
         
             #output database constraints if specified
             $sql .= " PRIMARY KEY" if($PRIMARY_KEY);
-            $sql .= ",\n    FOREIGN_KEY (`$column`) REFERENCES $fk_model(`$fk_column`)" if($FOREIGN_KEY);
+            $sql .= ",\n    FOREIGN_KEY (\"$column\") REFERENCES $fk_model(\"$fk_column\")" if($FOREIGN_KEY);
             
             #separate the columns, unless we're at the last one
             $sql .= ",\n" if($i lt (keys %$model) - 1);
