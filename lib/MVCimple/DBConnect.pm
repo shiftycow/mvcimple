@@ -44,7 +44,7 @@ sub connect{
     #print $dbpassword; #DEBUG
     #print $dbname; #DEBUG
 
-    my $dbh = DBI->connect("dbi:$dbdriver:$dbname",$dbuser,$dbpassword)
+    my $dbh = DBI->connect("dbi:$dbdriver:dbname=$dbname",$dbuser,$dbpassword)
         or die "Can't connect to the database: $DBI::errstr\n";
     #TODO Handle error
 

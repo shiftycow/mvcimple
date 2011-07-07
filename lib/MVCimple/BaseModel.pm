@@ -120,6 +120,14 @@ sub save {
     my $validate = validate($self);
     return $validate if($validate->{error});
 
+
+    # Strip out extraneous auto_increment field from our sql statement.
+    while( my($name,$column_data) = each(%{$self->{columns}})) {
+      delete $self->{columns}->{$name}if($column_data->{'auto_increment'});
+    }
+
+
+
     #print Dumper($return); #DEBUG 
     #print " \$error = " . $error; #DEBUG
 
@@ -138,11 +146,14 @@ sub save {
     #Add column names to sql statement
     while( my($name,$column_data) = each(%{$self->{columns}})) {
         #$data->{$name} = $column_data->get_value();
-        $sql .= "`$name`";
-        $sql .= "," if ($i < $columns - 1);
+      if(!$column_data->{'auto_increment'}){
+        $sql .= "$name";
+        $sql .= "," if ($i < $columns - 1 );
         $row_key = $name if($column_data->{'primary_key'});
         $i++;
-    }
+    }   
+    }  
+
 
     $sql .= ") VALUES (";
 
@@ -155,7 +166,7 @@ sub save {
         $i++;
     }
     $sql .= ")";
-#    print $sql; #DEBUG
+    print $sql; #DEBUG
 
     my $sth = $dbh->prepare($sql)
         or return {"error" => "Can't prepare SQL statement: $DBI::errstr\n"};
