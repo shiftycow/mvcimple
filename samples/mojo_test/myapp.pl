@@ -18,6 +18,33 @@ my $config = new MVCimple::Config('myapp.conf','.');
 #Connect to the Database
 my $dbh = MVCimple::DBConnect::connect($config);
 
+has 'types' => sub {
+  return {
+    atom => 'application/atom+xml',
+    bin  => 'application/octet-stream',
+    css  => 'text/css',
+    gif  => 'image/gif',
+    gz   => 'application/gzip',
+    htm  => 'text/html',
+    html => 'text/html;charset=UTF-8',
+    ico  => 'image/x-icon',
+    jpeg => 'image/jpeg',
+    jpg  => 'image/jpeg',
+    js   => 'application/x-javascript',
+    json => 'application/json',
+    mp3  => 'audio/mpeg',
+    png  => 'image/png',
+    rss  => 'application/rss+xml',
+    svg  => 'image/svg+xml',
+    tar  => 'application/x-tar',
+    txt  => 'text/plain',
+    woff => 'application/x-font-woff',
+    xml  => 'text/xml',
+    zip  => 'application/zip'
+  };
+};
+
+
 
 get '/' => sub {
     my $self = shift;
