@@ -1,9 +1,11 @@
 #!/usr/bin/perl
 use strict;
 package MVCimple::GenSQL;
+use Data::Dumper;
 #include the built-in type libraries
 use lib "../";
 use MVCimple::Types;
+use MVCimple::Config;
 
 ###############################################################################
 #    This file is part of MVCimple.
@@ -31,9 +33,6 @@ GenSQL.pm
 
 =cut
 
-#include the built-in type libraries
-use MVCimple::Types;
-
 =item generate_sql()
  This function takes a hash of models and generates the necessary 
  SQL code to build a new database based on it.
@@ -42,6 +41,9 @@ sub generate_sql
 {
     my ($models,$config) = @_;
     my $sql;
+
+    $config = new MVCimple::Config() if($config eq undef);
+    my $dbdriver = $config->element('dbdriver');
 
     $sql.= "-- MVCimple SQL Generator --\n"; 
     foreach my $model_name (keys %$models)
@@ -58,6 +60,8 @@ DEBUG: foreach my $column (keys %$model)
             #next DEBUG;
             my $modelcolumn = $model->{$column};
             
+            my $AUTO_INCREMENT = lc $model->{$column}->{"auto_increment"};
+
             #check for database constraints
             my $PRIMARY_KEY = lc $model->{$column}->{"primary_key"};
             my $FOREIGN_KEY = lc $model->{$column}->{"foreign_key"};
@@ -77,11 +81,16 @@ DEBUG: foreach my $column (keys %$model)
             
             #TODO check available types
             bless $data_model,"MVCimple::$modelcolumn->{type}";
-
+            #print Dumper($data_model); DEBUG
             my $object = $data_model->new($column,$modelcolumn);
-
-            $sql .= $object->to_sql();
-        
+            
+            #Check if we need to generate auto incrementing for psql
+            if($AUTO_INCREMENT and $dbdriver eq "Pg"){
+                $sql .= $object->{"name"} . " SERIAL";
+            }
+            else{
+                $sql .= $object->to_sql();
+            }
             #output database constraints if specified
             $sql .= " PRIMARY KEY" if($PRIMARY_KEY);
             $sql .= ",\n    FOREIGN_KEY (\"$column\") REFERENCES $fk_model(\"$fk_column\")" if($FOREIGN_KEY);

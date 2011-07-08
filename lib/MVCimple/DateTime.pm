@@ -55,7 +55,7 @@ sub new
 sub to_sql
 {
     my ($self) = @_;
-    return $self->{"name"}." DATETIME";
+    return $self->{"name"}." DATE";
 }#end to_sql
 
 sub validate
