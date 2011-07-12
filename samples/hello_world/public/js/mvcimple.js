@@ -30,6 +30,11 @@ $.fn.exists = function(){return $(this).length > 0;}
 /**         MVCimple functions          **/
 /*****************************************/
 
+/* 
+* todo: add an mvcimple_init() function that includes a callback to 
+* user init?
+*/
+
 /*
 * mvcimple_download_xslt()
 *  Pre-load XSLT stylesheets and cache them in variables so they 

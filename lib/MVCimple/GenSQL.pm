@@ -73,7 +73,7 @@ DEBUG: foreach my $column (keys %$model)
             if($FOREIGN_KEY)
             {
                 ($fk_model,$fk_column) = split(/\./,$FOREIGN_KEY);
-                $modelcolumn = $models->{$fk_model}->{$fk_column}
+                $modelcolumn = $models->{$fk_model}->{$fk_column};
             }
             
             #create an object representing the data model to use
@@ -93,7 +93,7 @@ DEBUG: foreach my $column (keys %$model)
             }
             #output database constraints if specified
             $sql .= " PRIMARY KEY" if($PRIMARY_KEY);
-            $sql .= ",\n    FOREIGN_KEY (\"$column\") REFERENCES $fk_model(\"$fk_column\")" if($FOREIGN_KEY);
+            $sql .= ",\n    FOREIGN KEY (\"$column\") REFERENCES $fk_model(\"$fk_column\")" if($FOREIGN_KEY);
             
             #separate the columns, unless we're at the last one
             $sql .= ",\n" if($i lt (keys %$model) - 1);
