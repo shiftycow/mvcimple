@@ -166,7 +166,7 @@ sub save {
         $i++;
     }
     $sql .= ")";
-    print $sql; #DEBUG
+    #print $sql; #DEBUG
 
     my $sth = $dbh->prepare($sql)
         or return {"error" => "Can't prepare SQL statement: $DBI::errstr\n"};
