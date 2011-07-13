@@ -40,6 +40,7 @@ way to handle different data types passed around MVCimple-based applications
 #use Password;
 use lib "../";
 use MVCimple::String;
+use MVCimple::Select;
 use MVCimple::Number;
 use MVCimple::Integer;
 use MVCimple::IP;

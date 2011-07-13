@@ -18,6 +18,9 @@ my $config = new MVCimple::Config('myapp.conf','.');
 #Connect to the Database
 my $dbh = MVCimple::DBConnect::connect($config);
 
+my $app = app;
+$app->types->type(xsl => 'text/xml');
+
 get '/' => sub {
     my $self = shift;
     my $viewdata = $Person->get_forms();
@@ -48,6 +51,6 @@ any '/submit' => sub {
         $self->render_text(MVCimple::RenderView::render('templates/submit.html',$data));
     }
 };
-
 app->start;
+app->types->type(xsl => 'text/xml');
 
