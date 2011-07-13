@@ -78,10 +78,11 @@ sub to_input
     $html .= "<select name=\"$name\" id=\"$id\">\n";
 
     my $k;
-    foreach $k (sort keys %{$self->{'list'}}) 
+    foreach $k (@{$self->{'list'}}) 
     {
-        my $value = $self->{$k};
-        $html .= "<option value=\"$value\">$k</option>\n";
+        my $id = $k->{id};
+        my $name = $k->{name};
+        $html .= "<option value=\"$id\">$name</option>\n";
 
     }
     $html .= "</select>\n";
