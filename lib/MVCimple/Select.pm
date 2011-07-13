@@ -85,6 +85,7 @@ sub to_input
 
     }
     $html .= "</select>\n";
+    return $html;
 }
 
 
