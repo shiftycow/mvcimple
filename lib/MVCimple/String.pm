@@ -95,7 +95,7 @@ sub validate
 #
 sub to_input
 {
-    my ($self,$name_prefix) = @_;
+    my ($self,$name_prefix,$value) = @_;
 
     $name_prefix .= '_' if($name_prefix);
 
@@ -109,6 +109,7 @@ sub to_input
     $html .= " name=\"$name\"";
     $html .= " onkeyup=\"check_name($id,$length)\"";
     $html .= " maxlength=\"$length\"";
+    $html .= " value=\"$value\"" if $value ne undef;
     $html .= " />\n";
    
     return $html;

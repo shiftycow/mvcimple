@@ -59,11 +59,10 @@ sub get_forms {
     my $modelname = $self->{'name'};
 
     while( my($name,$column_data) = each(%{$self->{columns}})) {
-
         #We should probably check that we have the method for the type
-        $forms->{"$modelname\_$name\_form"} = $column_data->to_input($modelname); 
-
+        $forms->{"$modelname\_$name\_form"} = $column_data->to_input($modelname,$column_data->get_value()); 
     }
+
     return $forms;
 }#end get_forms
 
@@ -91,22 +90,20 @@ sub get_values {
 }#end get_values
 
 
-#validate all the elements in the model and return all the errors concatenated
+#validate all the elements in the model and return the errors in a hash
 sub validate {
     my ($self) = @_;
-    my $return = {};
-    my $error_messages;;
+    my $error_messages = {};
     my $error;
 
     while( my($name,$column_data) = each(%{$self->{columns}})) {
         if($column_data->validate()->{'error'} ne undef) {
-            $error =1;
-            $error_messages .= $column_data->validate()->{'error'} . " ";    
+            $error = 1;
+            $error_messages->{$name}  = $column_data->validate()->{'error'};
         }
     }
-    return {"error"=>"$error_messages"} if($error);    
+    return {"error" => $error_messages} if($error);
 }#end validate
-
 
 #
 # The save subroutine is responsible for generating, preparing, and executing our sql INSERT # operation. All data is validated before it is inserted into the database.
