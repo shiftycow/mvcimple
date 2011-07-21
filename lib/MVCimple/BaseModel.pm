@@ -100,6 +100,10 @@ sub validate {
         if($column_data->validate()->{'error'} ne undef) {
             $error = 1;
             $error_messages->{$name}  = $column_data->validate()->{'error'};
+            
+            #empty the element so that it doesn't persist in forms or sneak
+            #into a save() by accident
+            $column_data->set_value();
         }
     }
     return {"error" => $error_messages} if($error);
