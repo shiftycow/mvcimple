@@ -112,6 +112,9 @@ sub to_input
     $html .= " value=\"$value\"" if $value ne undef;
     $html .= " />\n";
    
+    #if we have an error flag set, we should put a little flag next to out input
+    $html .= "<span class=\"mvcimple-error-flag\">*</span>" if($self->{'error'});
+
     return $html;
 }#end input
 
