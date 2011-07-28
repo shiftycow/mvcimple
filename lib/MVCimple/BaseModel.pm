@@ -198,17 +198,37 @@ sub save {
     return {'row_id' => $row_id};
 } #end save
 
-#Return All data from the database for the model
+#Return data from the database for the model
 sub load {
-    my ($self,$dbh) = @_;
+    my ($self,$dbh,$params) = @_;
 
     my $modelname = $self->{'name'};
 
-    my $sql = "SELECT * FROM $modelname;";
+    my $sql = "SELECT * FROM $modelname";
+
+    #add search parameters
+    my @params;
+    if($params ne undef)
+    {
+        my $param_index = 0;
+        $sql .= " WHERE ";
+        while (my ($key, $value) = each %$params)
+        {
+            $sql .= " AND " if $param_index > 0;
+            $sql .= " $key = ?";
+            
+            push @params, $value;
+            $param_index++;
+        }
+    }
+    
+    #not sure if this is really needed
+    $sql .= ";";
+
     my $sth = $dbh->prepare($sql)
         or return {"error" => "load() can't prepare query: $DBI::errstr\n"};
 
-    $sth->execute()
+    $sth->execute(@params)
         or return {"error" => "Can't execute SQL statement: $DBI::errstr\n"};
     
     my $rows = [];
