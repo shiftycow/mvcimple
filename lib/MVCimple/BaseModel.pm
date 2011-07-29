@@ -221,7 +221,7 @@ sub load {
             $param_index++;
         }
     }
-    
+    #Append an order by clause if the user specified a base model column to sort by.
     $sql .= " ORDER BY $order_by " if($order_by ne undef);
 
 
