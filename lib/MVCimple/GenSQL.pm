@@ -48,11 +48,12 @@ sub generate_sql
     $sql.= "-- MVCimple SQL Generator --\n"; 
     foreach my $model_name (keys %$models)
     {
+        my @constraints; #table constraints have to be held until the end
+        
         $sql .= "-- Generating SQL for \"$model_name\" table --\n";
-
         $sql .= "DROP TABLE IF EXISTS \"$model_name\";\n";
         $sql .= "CREATE TABLE \"$model_name\"(\n";
-        
+
         my $model = $models->{$model_name};
         my $i = 0; #counter for figuring out where to put line separators (,\n)
 DEBUG: foreach my $column (keys %$model)
@@ -93,7 +94,7 @@ DEBUG: foreach my $column (keys %$model)
             }
             #output database constraints if specified
             $sql .= " PRIMARY KEY" if($PRIMARY_KEY);
-            $sql .= ",\n    FOREIGN KEY (\"$column\") REFERENCES $fk_model(\"$fk_column\")" if($FOREIGN_KEY);
+            push @constraints, "FOREIGN KEY(\"$column\") REFERENCES $fk_model($fk_column)" if($FOREIGN_KEY);
             
             #separate the columns, unless we're at the last one
             $sql .= ",\n" if($i lt (keys %$model) - 1);
@@ -101,9 +102,19 @@ DEBUG: foreach my $column (keys %$model)
             $i = $i + 1;
         }#end foreach column
         
+        #add table constraints
+        $sql .= ",\n" if(@constraints);
+        while(@constraints)
+        {
+            $sql .= pop @constraints;
+            $sql .= ",\n" if(@constraints gt 1);
+        }
+
         #I am pulling this out for now so I can pipe the output into SQLlite for testing
         #in the future we should be able to know what type of DB we are using.
         #print "\n)ENGINE = InnoDB;\n\n";
+        
+        #finalize the table declaration
         $sql .= "\n);\n\n";
     }#end model loop
 
