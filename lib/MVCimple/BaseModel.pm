@@ -152,7 +152,7 @@ sub save {
     #Add column names to sql statement
     while( my($name,$column_data) = each(%{$self->{columns}})) {
         #$data->{$name} = $column_data->get_value();
-      if(!$column_data->{'auto_increment'}){
+     if(!$column_data->{'auto_increment'}){
         $sql .= "$name";
         $sql .= "," if ($i < $columns - 1 );
         $row_key = $name if($column_data->{'primary_key'});
@@ -200,7 +200,7 @@ sub save {
 
 #Return data from the database for the model
 sub load {
-    my ($self,$dbh,$params) = @_;
+    my ($self,$dbh,$params,$order_by) = @_;
 
     my $modelname = $self->{'name'};
 
@@ -221,7 +221,10 @@ sub load {
             $param_index++;
         }
     }
-    
+    #Append an order by clause if the user specified a base model column to sort by.
+    $sql .= " ORDER BY $order_by " if($order_by ne undef);
+
+
     #not sure if this is really needed
     $sql .= ";";
 
