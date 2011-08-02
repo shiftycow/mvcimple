@@ -25,20 +25,33 @@ use DBI;
 #local includes
 use lib "../";
 
-use MVCimple::Types; #use all the datatypes
+use MVCimple::Types; #use all datatypes
 
 #This is the base model for any model Class
 
 
 sub new {
-   my ($class,$name,$modeldata) = @_;
+   my ($class,$name,$model,$models) = @_;
    my $self = {'name' => $name};
    $self->{'columns'} = {};
  
    #Go though each of the model elements and bless along with returning the constructor; 
-   while( my($column_name,$modelcolumn) = each(%{$modeldata})) 
+   while( my($column_name,$modelcolumn) = each(%{$model})) 
     {
+        # mirror the attirbutes of a foreign key column, if applicable
+        my $FOREIGN_KEY = lc $modelcolumn->{"foreign_key"};
+
+        print "fk: $FOREIGN_KEY\n";
+        if($FOREIGN_KEY)
+        {
+            my($fk_model,$fk_column) = split(/\./,$FOREIGN_KEY);
+            $modelcolumn = $models->{$fk_model}->{$fk_column};
+            
+            print Dumper($modelcolumn); #debug
+        }
+        
         $self->{'columns'}->{$column_name} = {};
+
         bless $self->{'columns'}->{$column_name},"MVCimple::$modelcolumn->{type}";
         $self->{'columns'}->{$column_name} = $self->{'columns'}->{$column_name}->new($column_name,$modelcolumn);   
     }
