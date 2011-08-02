@@ -41,13 +41,13 @@ sub new {
         # mirror the attirbutes of a foreign key column, if applicable
         my $FOREIGN_KEY = lc $modelcolumn->{"foreign_key"};
 
-        print "fk: $FOREIGN_KEY\n";
+        #print "fk: $FOREIGN_KEY\n"; #DEBUG
         if($FOREIGN_KEY)
         {
             my($fk_model,$fk_column) = split(/\./,$FOREIGN_KEY);
             $modelcolumn = $models->{$fk_model}->{$fk_column};
             
-            print Dumper($modelcolumn); #debug
+            #print Dumper($modelcolumn); #DEBUG
         }
         
         $self->{'columns'}->{$column_name} = {};
