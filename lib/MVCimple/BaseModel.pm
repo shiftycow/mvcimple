@@ -31,12 +31,22 @@ use MVCimple::Types; #use all datatypes
 
 
 sub new {
-   my ($class,$name,$model,$models) = @_;
-   my $self = {'name' => $name};
-   $self->{'columns'} = {};
- 
-   #Go though each of the model elements and bless along with returning the constructor; 
-   while( my($column_name,$modelcolumn) = each(%{$model})) 
+    my ($class,$params) = @_;
+
+    my $name = $params->{'object_name'};
+    my $model_name = $params->{'model'};
+    my $models = $params->{'models'};
+
+    my $model = $models->{$model_name};
+   
+    #print Dumper($model); #DEBUG
+
+    my $self = {};
+    $self->{'name'} = $name;
+    $self->{'columns'} = {};
+    
+    #Go though each of the model elements and bless along with returning the constructor; 
+    while( my($column_name,$modelcolumn) = each(%{$model})) 
     {
         # mirror the attirbutes of a foreign key column, if applicable
         my $FOREIGN_KEY = lc $modelcolumn->{"foreign_key"};
@@ -55,6 +65,7 @@ sub new {
         bless $self->{'columns'}->{$column_name},"MVCimple::$modelcolumn->{type}";
         $self->{'columns'}->{$column_name} = $self->{'columns'}->{$column_name}->new($column_name,$modelcolumn);   
     }
+
     bless $self;
     return $self;
 }#end new (constructor)
