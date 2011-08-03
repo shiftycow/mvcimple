@@ -44,11 +44,28 @@ my $models = {'greeting' => {
                         {'type' => 'String',
                          'length' => '64',
                          'value' => 'Hello'
+                        },#end tag
+                        
+                    'tag' =>
+                        {'foreign_key'=>'tag.id'
                         }
-                    }#end greeting
+                    },#end greeting
+
+                'tag' => {
+                    'id' =>
+                        {'type'=>'Integer',
+                         'primary_key' => 'true',
+                         'auto_increment' => 'true'
+                        },
+                    'name' =>
+                        {'type'=>'String',
+                         'length'=>32
+                        }
+                    }#end tag
                 };#end models
 
-my $Greeting = new MVCimple::BaseModel('greeting',$models->{'greeting'});
+my $Greeting = new MVCimple::BaseModel({object_name => 'greeting', model => 'greeting', models =>$models});
+my $Tag = new MVCimple::BaseModel({object_name => 'tag', model => 'greeting', models => $models});
 
 # configure 
 my $config = new MVCimple::Config();
@@ -70,7 +87,8 @@ get '/' => sub {
     my $viewdata = {};
     $viewdata->{"forms"} = $Greeting->get_forms();
     $viewdata->{"greetings"} = $Greeting->load($dbh);
-   
+    $viewdata->{"tags"} = $Tag->load($dbh);
+
     #
     # if we get an error that looks like the DB is incomplete, 
     # output something helpful

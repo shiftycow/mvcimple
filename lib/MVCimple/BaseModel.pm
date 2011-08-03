@@ -57,6 +57,8 @@ sub new {
             my($fk_model,$fk_column) = split(/\./,$FOREIGN_KEY);
             $modelcolumn = $models->{$fk_model}->{$fk_column};
             
+            $modelcolumn->{'fk_model'} = $fk_model; #remember that this column was an FK constraint
+            $modelcolumn->{'fk_column'} = $fk_column; #remember that this column was an FK constraint
             #print Dumper($modelcolumn); #DEBUG
         }
         
@@ -64,7 +66,7 @@ sub new {
 
         bless $self->{'columns'}->{$column_name},"MVCimple::$modelcolumn->{type}";
         $self->{'columns'}->{$column_name} = $self->{'columns'}->{$column_name}->new($column_name,$modelcolumn);   
-    }
+    }#end model blessing
 
     bless $self;
     return $self;
@@ -78,13 +80,31 @@ sub get_column {
 #This will return all the forms from a model that can easily be used with our template engine
 sub get_forms {
  
-    my ($self) = @_; 
+    my ($self,$params) = @_; 
     my $forms = {};
     my $modelname = $self->{'name'};
-
+    
     while( my($name,$column_data) = each(%{$self->{columns}})) {
-        #We should probably check that we have the method for the type
-        $forms->{"$modelname\_$name\_form"} = $column_data->to_input($modelname,$column_data->get_value()); 
+        
+        my $input_html;
+
+        #if our column is a foreign key, we need to make a special widget
+        if($column_data->{'fk_model'})
+        {
+            #create a temporary object used to load the data
+            my $Obj = new MVCimple::BaseModel({model => $column_data->{'fk_model'}, models => $params->{'models'}});
+            my $select = new MVCimple::Select();
+            $select->set_list($Obj->load($params->{'dbh'})->{'data'});
+            $input_html = $select->to_input($modelname);
+        }
+        
+        else
+        {
+            #We should probably check that we have the method for the type
+            $input_html = $column_data->to_input($modelname,$column_data->get_value()); 
+        }
+
+        $forms->{"$modelname\_$name\_form"} = $input_html;
     }
 
     return $forms;

@@ -94,8 +94,36 @@
                     </xsl:for-each>
                 </ul>
                 </xsl:otherwise>
-                </xsl:choose><!--end add new greeting section-->
+                </xsl:choose><!--end available greetings section-->
                 
+                <!--output messages and errors, if any-->
+                <xsl:if test="count(/opt/tags/message) &gt; 0">
+                    <div class="mvcimple-message ui-state-highlight ui-corner-all"><xsl:value-of select="/opt/tags/message" /></div>
+                </xsl:if>
+               
+                <h2>Tags</h2>
+                <xsl:choose>
+                <xsl:when test="count(/opt/tags/error) &gt; 0">
+                    <div class="mvcimple-error ui-state-error ui-corner-all">
+                        <h4>Error:</h4>
+                        <div class="mvcimple-error-text ui-corner-all">
+                        <xsl:value-of select="/opt/tags/error" />
+                        </div>
+                    </div>
+                </xsl:when>
+
+                <xsl:otherwise>
+                <ul>
+                    <xsl:for-each select="/opt/tags/data">
+                    <li>
+                        Tag <xsl:value-of select="id" />: 
+                        <xsl:value-of select="name"/> 
+                    </li>
+                    </xsl:for-each>
+                </ul>
+                </xsl:otherwise>
+                </xsl:choose><!--end tags section-->
+
                 </div><!--end container-->
                 
                 <script type="text/javascript">
