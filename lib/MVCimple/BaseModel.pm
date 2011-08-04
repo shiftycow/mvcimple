@@ -87,15 +87,23 @@ sub get_forms {
     while( my($name,$column_data) = each(%{$self->{columns}})) {
         
         my $input_html;
+        #print "foo\n";
 
         #if our column is a foreign key, we need to make a special widget
+        #print Dumper($column_data); #DEBUG
         if($column_data->{'fk_model'})
         {
+            print "foo\n"; #DEBUG
             #create a temporary object used to load the data
-            my $Obj = new MVCimple::BaseModel({model => $column_data->{'fk_model'}, models => $params->{'models'}});
-            my $select = new MVCimple::Select();
-            $select->set_list($Obj->load($params->{'dbh'})->{'data'});
-            $input_html = $select->to_input($modelname);
+            my $Obj = new MVCimple::BaseModel({object_name=> $column_data->{'fk_model'}, model => $column_data->{'fk_model'}, models => $params->{'models'}});
+            
+            #print Dumper($Obj); #DEBUG
+
+            my $Select = new MVCimple::Select();
+            #print Dumper($Obj->load($params->{'dbh'})); #DEBUG
+            $Select->set_list($Obj->load($params->{'dbh'})->{'data'});
+            $input_html = $Select->to_input($modelname);
+            #print "input: $input_html\n"; #DEBUG
         }
         
         else
@@ -106,7 +114,8 @@ sub get_forms {
 
         $forms->{"$modelname\_$name\_form"} = $input_html;
     }
-
+    
+    print Dumper($forms); #DEBUG
     return $forms;
 }#end get_forms
 

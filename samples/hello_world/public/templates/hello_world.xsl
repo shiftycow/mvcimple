@@ -59,6 +59,7 @@
                 <form id="add_greeting_form" action="javascript:add_greeting()" method="get">
                     <xsl:value-of select="/opt/forms/greeting_predicate_form" disable-output-escaping="yes" />,
                     <xsl:value-of select="/opt/forms/greeting_subject_form" disable-output-escaping="yes" />!
+                    Tag: <xsl:value-of select="/opt/forms/greeting_tag_form" disable-output-escaping="yes" />
                     <input type="submit" name="submit" value="Submit" />
                 </form>
 

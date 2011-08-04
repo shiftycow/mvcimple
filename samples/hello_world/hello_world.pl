@@ -85,7 +85,7 @@ get '/' => sub {
     my $self = shift;
 
     my $viewdata = {};
-    $viewdata->{"forms"} = $Greeting->get_forms();
+    $viewdata->{"forms"} = $Greeting->get_forms({'dbh'=>$dbh, 'models'=>$models});
     $viewdata->{"greetings"} = $Greeting->load($dbh);
     $viewdata->{"tags"} = $Tag->load($dbh);
 

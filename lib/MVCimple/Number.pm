@@ -40,7 +40,8 @@ sub new
     $self->{'scale'} = $model->{'scale'} if($model->{'scale'} ne undef);
     $self->{'auto_increment'} = $model->{'auto_increment'} if($model->{'auto_increment'} ne undef);
     $self->{'value'} = $model->{'value'} if($model->{'value'} ne undef);
-    $self->{'null'}= $model->{null};    
+    $self->{'null'} = $model->{'null'};    
+    $self->{'fk_model'} = $model->{'fk_model'};
 
     bless $self;
     return $self;

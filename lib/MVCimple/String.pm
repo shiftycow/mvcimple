@@ -29,10 +29,12 @@ sub new
 {
     my ($class,$name,$model) = @_;
 
-    my $self = {"length" => $model->{length},
-                "name" => $name,
-                "value" => $model->{value},
-                "null"=> $model->{null}};
+    my $self = {'length' => $model->{'length'},
+                'name' => $name,
+                'value' => $model->{'value'},
+                'null'=> $model->{'null'},
+                'fk_model'=>$model->{'fk_model'}
+                };
     bless $self;
     return $self;
 }#end constructor
