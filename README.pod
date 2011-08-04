@@ -1,6 +1,6 @@
 =head1 Name
 
-MVCimple - A data-focused Model-View-Controller framework for Perl
+MVCimple - An easy data model framework for Perl
 
 =head2 Copying
 
@@ -19,23 +19,38 @@ along with MVCimple.  If not, see <http://www.gnu.org/licenses/>.
 
 =head2 Synopsis
 
+MVCimple is a data framework designed to automate many common tasks
+that database-backed web applications perform. Although it includes
+some basic templating features, MVCimple was designed to be paired with 
+front-end frameworks like L<Mojolicious> to create full Model-View-Controller
+type applications.
+
 =head2 Features
 
 =over 4
 
 =item * Database Driven
 
-MVCimple models are designed to be stored in a relational database. 
-Work on the framework was started to automate manipulation of 
+MVCimple models are designed to be stored in a relational database. The framework 
+leverages database constraints like foreign keys to build relationships between 
+objects and build smarter input widgets.
 
 =item * Validation of User Input
 
-MVCimple model objects know their own constraints and can be easily validated
-with built-in methods
+MVCimple model objects know their own constraints and are easily validated
+with built-in methods. Validation is done automatically before any database interaction,
+preventing data errors and SQL injection attacks.
 
 =item * SQL Generation
 
 MVCimple dynamically generates SQL code from model definitions, so you don't have to!
+
+=item * Widget generation
+MVCimple can generate input widgets for its included datatypes, making it easy and 
+quick to design forms for user input. Widgets are aware of objects' constraints
+and come with Javascript methods to do client-side validation, catching problems 
+before the server has to. 
+"Smart" widgets are automatically generated for foreign keys and enum-type data models.
 
 =item * Templating
 
