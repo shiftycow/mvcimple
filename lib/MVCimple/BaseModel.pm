@@ -99,7 +99,8 @@ sub get_forms {
             
             #print Dumper($Obj); #DEBUG
 
-            my $Select = new MVCimple::Select();
+            #TODO: rename the "name" variables to something less confusing
+            my $Select = new MVCimple::Select($name);
             #print Dumper($Obj->load($params->{'dbh'})); #DEBUG
             $Select->set_list($Obj->load($params->{'dbh'})->{'data'});
             $input_html = $Select->to_input($modelname);
