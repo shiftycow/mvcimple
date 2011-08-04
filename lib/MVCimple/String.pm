@@ -33,7 +33,8 @@ sub new
                 'name' => $name,
                 'value' => $model->{'value'},
                 'null'=> $model->{'null'},
-                'fk_model'=>$model->{'fk_model'}
+                'fk_model'=>$model->{'fk_model'},
+                'widget'=>lc $model->{'widget'}
                 };
     bless $self;
     return $self;
@@ -101,19 +102,31 @@ sub to_input
 
     $name_prefix .= '_' if($name_prefix);
 
+    my $widget = $self->{'widget'};
+
     my $html = "";
     my $name = $name_prefix . $self->{"name"};
     my $id = $name."_input";
     my $length = $self->{"length"};
 
-    $html .= "<input type=\"text\"";
-    $html .= " id=\"$id\"";
-    $html .= " name=\"$name\"";
-    $html .= " onkeyup=\"check_name($id,$length)\"";
-    $html .= " maxlength=\"$length\"";
-    $html .= " value=\"$value\"" if $value ne undef;
-    $html .= " />\n";
-   
+    if($widget eq "textarea")
+    {
+        $html .= "<textarea id=\"$id\" name=\"$name\" maxlength=\"$length\">\n";
+        $html .= $value if $value ne undef;
+        $html .= "</textarea>\n";
+    }
+    
+    else #default is regular text
+    {
+        $html .= "<input type=\"text\"";
+        $html .= " id=\"$id\"";
+        $html .= " name=\"$name\"";
+        $html .= " onkeyup=\"check_name($id,$length)\"";
+        $html .= " maxlength=\"$length\"";
+        $html .= " value=\"$value\"" if $value ne undef;
+        $html .= " />\n";
+    }
+
     #if we have an error flag set, we should put a little flag next to out input
     $html .= "<span class=\"mvcimple-error-flag\">*</span>" if($self->{'error'});
 

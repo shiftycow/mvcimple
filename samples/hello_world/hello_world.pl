@@ -43,7 +43,8 @@ my $models = {'greeting' => {
                     'predicate' =>
                         {'type' => 'String',
                          'length' => '64',
-                         'value' => 'Hello'
+                         'value' => 'Hello',
+                         'widget' => 'text'
                         },#end tag
                         
                     'tag' =>
