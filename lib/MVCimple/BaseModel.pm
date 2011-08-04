@@ -93,7 +93,7 @@ sub get_forms {
         #print Dumper($column_data); #DEBUG
         if($column_data->{'fk_model'})
         {
-            print "foo\n"; #DEBUG
+            #print "foo\n"; #DEBUG
             #create a temporary object used to load the data
             my $Obj = new MVCimple::BaseModel({object_name=> $column_data->{'fk_model'}, model => $column_data->{'fk_model'}, models => $params->{'models'}});
             
@@ -115,7 +115,7 @@ sub get_forms {
         $forms->{"$modelname\_$name\_form"} = $input_html;
     }
     
-    print Dumper($forms); #DEBUG
+    #print Dumper($forms); #DEBUG
     return $forms;
 }#end get_forms
 
