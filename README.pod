@@ -1,6 +1,6 @@
 =head1 Name
 
-MVCimple - An easy data model framework for Perl
+MVCimple - An easy data model framework for Perl. It puts the "M" in "MVC"!
 
 =head2 Copying
 
