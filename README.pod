@@ -114,7 +114,7 @@ To use some fancier features (like automated unit tests), you'll also need:
 =back
 
 In addition to Perl dependencies, generated forms rely heavily on
-Jquery> and JqueryUI for a dynamic user experience.
+Jquery and JqueryUI for a dynamic user experience.
 
 =head2 Installation
 
