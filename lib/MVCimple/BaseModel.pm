@@ -180,17 +180,15 @@ sub save {
     my $validate = validate($self);
     return $validate if($validate->{error});
 
-
     # Strip out extraneous auto_increment field from our sql statement.
+    # *if the model is a foreign key, the auto_increment attribute can be ignored
+    #
     while( my($name,$column_data) = each(%{$self->{columns}})) {
-      delete $self->{columns}->{$name}if($column_data->{'auto_increment'});
+        delete $self->{columns}->{$name} if($column_data->{'auto_increment'} && $column_data->{'fk_model'} eq undef);
     }
-
-
 
     #print Dumper($return); #DEBUG 
     #print " \$error = " . $error; #DEBUG
-
 
     #my $table_prefix = MVCimple::Config::get_config_element('table_prefix');
 
@@ -205,13 +203,15 @@ sub save {
     my $row_key;
     #Add column names to sql statement
     while( my($name,$column_data) = each(%{$self->{columns}})) {
-        #$data->{$name} = $column_data->get_value();
-     if(!$column_data->{'auto_increment'}){
-        $sql .= "$name";
-        $sql .= "," if ($i < $columns - 1 );
-        $row_key = $name if($column_data->{'primary_key'});
-        $i++;
-    }   
+        #$data->{$name} = $column_data->get_value(); #TODO: line marked for deletion
+
+        #TODO: do we need this check anymore?
+        if(!($column_data->{'auto_increment'} && $column_data->{'fk_model'} eq undef)){
+            $sql .= "$name";
+            $sql .= "," if ($i < $columns - 1 );
+            $row_key = $name if($column_data->{'primary_key'});
+            $i++;
+        }   
     }  
 
 
@@ -230,7 +230,6 @@ sub save {
 
     my $sth = $dbh->prepare($sql)
         or return {"error" => "Can't prepare SQL statement: $DBI::errstr\n"};
-    #TODO return proper error
 
     my @data = ();    
     while( my($name,$column_data) = each(%{$self->{columns}})) {
@@ -248,8 +247,9 @@ sub save {
 
     $dbh->commit();
     $sth->finish();
-    
-    return {'row_id' => $row_id};
+   
+    #returning SQL for debugging purposes
+    return {'row_id' => $row_id,'sql' => $sql};
 } #end save
 
 #Return data from the database for the model
