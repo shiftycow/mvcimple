@@ -1,0 +1,32 @@
+<html>
+<body>
+
+    <h2>Hello</h2>
+
+    <ul>
+        <% while( my($key,$error) = each(%{stash->{errors}})) {%>             
+        <li style="color:red"><%= $error %></li>
+        <%}%>
+    
+    </ul>
+
+
+    <form action="submit" method="post">
+        <table>
+            <tr>
+                <td>First Name </td> <td><%== $person_fname_form %></td>
+            </tr>
+            <tr>
+                <td>Last Name </td> <td><%== $person_lname_form%></td>
+            </tr>
+            <tr>    
+                <td>Age </td> <td><%== $person_age_form%></td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit" />
+    </form>
+    <br/>
+    <a href="view">View Results</a>
+
+</body>    
+</html>

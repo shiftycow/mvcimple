@@ -1,17 +1,17 @@
 #!/usr/bin/env perl
+use strict;
 #This is an example of Using Mojolicious with MVCimple. I decided to use our MVCimple engine 
 use Mojolicious::Lite;
 use XML::Simple;
 use lib '../../lib/';
 use MVCimple::App;
-
+use Data::Dumper;
 #The model read from the config globally
 
 #Read our Model in from XML
 my $xml = new XML::Simple;
 my $xmldata = $xml->XMLin("people.xml");
-my $Person = new MVCimple::BaseModel('person',$xmldata->{models}->{person});
-
+my $Person = new MVCimple::BaseModel({object_name=>'person',model=>'person',models=>$xmldata->{models}});
 #Read in the Application config file
 my $config = new MVCimple::Config('myapp.conf','.');
 
@@ -24,7 +24,7 @@ $app->types->type(xsl => 'text/xml');
 get '/' => sub {
     my $self = shift;
     my $viewdata = $Person->get_forms();
-    $self->render_text(MVCimple::RenderView::render('templates/default.html',$viewdata));
+    $self->render('default',%$viewdata);
 };
 
 get '/view' => sub {
@@ -42,7 +42,8 @@ any '/submit' => sub {
     $Person->store_input($self);
     my $validate = $Person->validate();
     if($validate->{error}) {
-        $self->render_text($validate->{error});
+        my $viewdata = $Person->get_forms();
+        $self->render('default',(%$viewdata,errors=>$validate->{error}));
     }
     else {
         my $data = $Person->get_values();
