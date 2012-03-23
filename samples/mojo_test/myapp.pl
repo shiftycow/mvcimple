@@ -23,6 +23,7 @@ $app->types->type(xsl => 'text/xml');
 
 get '/' => sub {
     my $self = shift;
+    $self->stash(success=>$self->param('success')) if($self->param('success'));
     my $viewdata = $Person->get_forms();
     $self->render('default',%$viewdata);
 };
@@ -49,7 +50,7 @@ any '/submit' => sub {
         my $data = $Person->get_values();
         my $result = $Person->save($dbh);
         $data->{'id'} = $result->{'row_id'};
-        $self->render_text(MVCimple::RenderView::render('templates/submit.html',$data));
+        $self->redirect_to('/?success=Data%20Inserted');
     }
 };
 app->start;

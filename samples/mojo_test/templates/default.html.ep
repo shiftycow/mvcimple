@@ -1,7 +1,13 @@
 <html>
+    <head>
+        <title> MVCimple Mojolicious test </title>    
+    <style type="text/css">
+          .mvcimple-error-flag { color:red;}
+    </style>
+
 <body>
 
-    <h2>Hello</h2>
+    <h2>Simple MVCimple Mojolicious Test</h2>
 
     <ul>
         <% while( my($key,$error) = each(%{stash->{errors}})) {%>             
@@ -25,6 +31,9 @@
         </table>
         <input type="submit" value="Submit" />
     </form>
+    <div>
+        <h3 style="color:green"><%= stash->{success} %> </h3>
+    </div>
     <br/>
     <a href="view">View Results</a>
 
