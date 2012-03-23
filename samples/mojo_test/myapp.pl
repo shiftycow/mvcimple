@@ -32,6 +32,10 @@ get '/view' => sub {
 
     my $self = shift;
     my $person_data = $Person->load($dbh);
+    if($person_data->{error} =~ /no such table/) {
+        $self->render('db_error');
+        return;   
+    }
     my $person_xml = '<?xml-stylesheet type="text/xsl" href="xsl/person.xsl"?>' . "\n";
     $person_xml .= $xml->XMLout($person_data->{data});
     $self->render(data =>$person_xml, format=>'xml');
@@ -49,7 +53,10 @@ any '/submit' => sub {
     else {
         my $data = $Person->get_values();
         my $result = $Person->save($dbh);
-        $data->{'id'} = $result->{'row_id'};
+        if($result->{error} =~ /no such table/) {
+            $self->render('db_error');
+            return;   
+         }
         $self->redirect_to('/?success=Data%20Inserted');
     }
 };

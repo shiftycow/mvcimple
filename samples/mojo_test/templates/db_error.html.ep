@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title> MVCimple Mojolicious test </title>    
+    <style type="text/css">
+          .mvcimple-error-flag { color:red;}
+    </style>
+
+<body>
+
+    <h2>Simple MVCimple Mojolicious Test</h2>
+
+    <h3>Database is non existent or configured improperly</h3>
+
+    <div>Use the following command to create a SQLite databse</div>
+    <pre>./genSql.pl | sqlite3 myapp.db</pre>
+
+</body>    
+</html>
