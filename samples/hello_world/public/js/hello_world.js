@@ -27,7 +27,7 @@ function add_greeting()
     alert("adding greeting: "+form_data);
     
     //start up the waiting graphic
-    mvcimple_wating_spinner("result");
+    //mvcimple_wating_spinner("result");
     
     //send the form data to the server
     $.get("add",form_data,function(data)
